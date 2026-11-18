@@ -22,7 +22,7 @@
 </head>
 <body class="max-w-md mx-auto bg-white min-h-screen shadow-xl relative border-x border-slate-100">
 
-    <!-- هدر جدید -->
+    <!-- هدر -->
     <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-md px-4 pt-4 pb-3 border-b border-slate-100">
         <div class="flex items-center justify-between mb-3">
             <div class="flex items-center gap-2.5">
@@ -39,88 +39,102 @@
             </span>
         </div>
 
-        <!-- بنر تبلیغاتی به جای جستجو -->
-      <!-- بنر تبلیغاتی با ویدیو -->
-<div class="w-full h-36 rounded-2xl overflow-hidden relative shadow-sm border border-slate-200">
-    <video 
-        autoplay 
-        loop 
-        muted 
-        playsinline 
-        class="w-full h-full object-cover"
-        poster="لینک-عکس-پیشفرض-دلخواه"
-    >
-        <source src="لینک-مستقیم-ویدیو.mp4" type="video/mp4">
-        مرورگر شما از ویدیو پشتیبانی نمی‌کند.
-    </video>
-    
-    <!-- اگر خواستی روی ویدیو متنی هم باشه (مثلا اسم اسپانسر) -->
-    <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
-        <span class="text-white font-bold text-lg">تبلیغ اسپانسر</span>
-    </div>
-</div>
+        <!-- بنر -->
+        <div class="w-full h-36 rounded-2xl overflow-hidden relative shadow-sm border border-slate-200 bg-gradient-to-br from-emerald-500 via-teal-600 to-emerald-700 flex flex-col justify-center items-center text-white text-center p-4">
+            <h2 class="text-xl font-black mb-1">توان‌یار</h2>
+            <p class="text-sm font-medium opacity-90">اشتغال و درآمد پایدار برای معلولین</p>
+            <span class="text-xs mt-2 bg-white/20 px-3 py-1 rounded-full">هایپر محله اصفهان</span>
+        </div>
+    </header>
 
     <!-- کانتینر اصلی -->
     <main id="mainContent" class="px-4 pt-4">
         
+        <!-- صفحه خانه (فقط سفیران و خبر) -->
         <section id="view-home" class="animate-fade-in">
-            
-
-            <!-- سفیران -->
             <div class="mb-5">
                 <div class="flex items-center justify-between mb-2.5">
-                    <h2 class="text-sm font-extrabold text-slate-800">سفیران   </h2>
+                    <h2 class="text-sm font-extrabold text-slate-800">سفیران و متخصصین توان‌یار</h2>
                     <button onclick="filterByAmbassador(null)" id="resetAmbassadorBtn" class="hidden text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg">نمایش همه</button>
                 </div>
-                <div id="ambassadorsList" class="flex gap-3.5 overflow-x-auto no-scrollbar pb-1">
-                    <!-- با جاوااسکریپت پر می‌شود -->
+                <div id="ambassadorsList" class="flex gap-3.5 overflow-x-auto no-scrollbar pb-1"></div>
+            </div>
+            
+            <div class="mb-5 bg-slate-50 rounded-2xl border border-slate-200 p-4 flex flex-col gap-3">
+                <h2 class="text-sm font-extrabold text-slate-800">پایگاه خبری توان‌یار</h2>
+                <div class="bg-white p-3 rounded-xl shadow-sm border border-slate-100">
+                    <h3 class="text-sm font-bold text-slate-800">افتتاح اولین هایپر محله در شهرضا</h3>
+                    <p class="text-xs text-slate-500 mt-1">این هایپر با هدف ایجاد اشتغال برای معلولین راه‌اندازی شد...</p>
+                </div>
+                <div class="bg-white p-3 rounded-xl shadow-sm border border-slate-100">
+                    <h3 class="text-sm font-bold text-slate-800">دوره‌های مهارت‌آموزی رایگان</h3>
+                    <p class="text-xs text-slate-500 mt-1">ثبت‌نام دوره‌های جدید برای معلولین عزیز آغاز شد...</p>
                 </div>
             </div>
-          
-            <!-- بخش خبری -->
-<div class="mb-5 bg-slate-50 rounded-2xl border border-slate-200 p-4 flex flex-col gap-3">
-    <h2 class="text-sm font-extrabold text-slate-800">پایگاه خبری توان‌یار</h2>
-    
-    <div class="bg-white p-3 rounded-xl shadow-sm border border-slate-100">
-        <h3 class="text-sm font-bold text-slate-800">افتتاح اولین هایپر محله در شهرضا</h3>
-        <p class="text-xs text-slate-500 mt-1">این هایپر با هدف ایجاد اشتغال برای معلولین راه‌اندازی شد...</p>
-    </div>
+        </section>
 
-    <div class="bg-white p-3 rounded-xl shadow-sm border border-slate-100">
-        <h3 class="text-sm font-bold text-slate-800">دوره‌های مهارت‌آموزی رایگان</h3>
-        <p class="text-xs text-slate-500 mt-1">ثبت‌نام دوره‌های جدید برای معلولین عزیز آغاز شد...</p>
-    </div>
-</div>
+        <!-- صفحه مارکت (محصولات) -->
+        <section id="view-market" class="hidden animate-fade-in">
+            <!-- کارت‌های اصلی -->
+            <div class="grid grid-cols-3 gap-2.5 mb-5">
+                <button onclick="selectMainCategory('hyper')" id="tab-hyper" class="category-card p-3 rounded-2xl border-2 border-emerald-600 bg-emerald-600 text-white flex flex-col items-center justify-center text-center shadow-md shadow-emerald-100 transition-all min-h-[108px]">
+                    <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center mb-2">
+                        <i data-lucide="shopping-basket" class="w-6 h-6"></i>
+                    </div>
+                    <span class="text-xs font-extrabold leading-tight">هایپر محله</span>
+                    <span class="text-[10px] opacity-90 mt-0.5">خرید پرتخفیف</span>
+                </button>
 
-           
+                <button onclick="selectMainCategory('handicraft')" id="tab-handicraft" class="category-card p-3 rounded-2xl border-2 border-slate-100 bg-orange-50/70 text-slate-800 flex flex-col items-center justify-center text-center transition-all min-h-[108px]">
+                    <div class="w-10 h-10 rounded-xl bg-orange-500 text-white flex items-center justify-center mb-2">
+                        <i data-lucide="palette" class="w-6 h-6"></i>
+                    </div>
+                    <span class="text-xs font-extrabold leading-tight">صنایع دستی</span>
+                    <span class="text-[10px] text-slate-500 mt-0.5">هنر استان</span>
+                </button>
 
-        <!-- ================= صفحه سبد خرید و صدور فاکتور ================= -->
-        <section id="view-cart" class="hidden animate-fade-in">
-            <div class="flex items-center justify-between mb-4">
-                <h2 class="text-lg font-black text-slate-900">سبد خرید و ثبت سفارش</h2>
-                <button onclick="clearCart()" id="clearCartBtn" class="text-xs text-rose-600 font-bold px-2.5 py-1.5 rounded-lg bg-rose-50 hidden">
-                    حذف همه
+                <button onclick="selectMainCategory('skills')" id="tab-skills" class="category-card p-3 rounded-2xl border-2 border-slate-100 bg-blue-50/70 text-slate-800 flex flex-col items-center justify-center text-center transition-all min-h-[108px]">
+                    <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center mb-2">
+                        <i data-lucide="briefcase" class="w-6 h-6"></i>
+                    </div>
+                    <span class="text-xs font-extrabold leading-tight">پیشه و مهارت</span>
+                    <span class="text-[10px] text-slate-500 mt-0.5">خدمات آنلاین</span>
                 </button>
             </div>
 
-            <!-- حالت سبد خالی -->
+            <!-- زیرشاخه‌ها -->
+            <div id="hyperSubCategories" class="mb-4">
+                <div id="subCatChips" class="flex gap-2 overflow-x-auto no-scrollbar pb-1"></div>
+            </div>
+
+            <!-- ویترین -->
+            <div class="flex items-center justify-between mb-3">
+                <h3 id="sectionTitle" class="text-base font-black text-slate-900">تخفیف‌های روز هایپر محله</h3>
+                <span id="itemsCount" class="text-xs font-semibold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full"></span>
+            </div>
+
+            <div id="productsGrid" class="grid grid-cols-2 gap-3 pb-4"></div>
+        </section>
+
+        <!-- صفحه سبد خرید -->
+        <section id="view-cart" class="hidden animate-fade-in">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-lg font-black text-slate-900">سبد خرید و ثبت سفارش</h2>
+                <button onclick="clearCart()" id="clearCartBtn" class="text-xs text-rose-600 font-bold px-2.5 py-1.5 rounded-lg bg-rose-50 hidden">حذف همه</button>
+            </div>
+
             <div id="emptyCartState" class="text-center py-12 px-4 bg-slate-50 rounded-3xl border border-slate-100">
                 <div class="w-16 h-16 bg-slate-200/70 text-slate-400 rounded-full flex items-center justify-center mx-auto mb-3">
                     <i data-lucide="shopping-bag" class="w-8 h-8"></i>
                 </div>
                 <h3 class="text-base font-bold text-slate-800 mb-1">سبد خرید شما هنوز خالی است</h3>
                 <p class="text-xs text-slate-500 mb-5 leading-relaxed">با هر خرید از توان‌یار، هم در هزینه‌های روزمره صرفه‌جویی می‌کنید و هم از اشتغال عزیزان دارای معلولیت حمایت می‌کنید.</p>
-                <button onclick="switchTab('home')" class="btn-accessible px-6 bg-emerald-600 text-white rounded-2xl text-sm font-bold shadow-md shadow-emerald-200">
-                    بازگشت به فروشگاه
-                </button>
+                <button onclick="switchTab('market')" class="btn-accessible px-6 bg-emerald-600 text-white rounded-2xl text-sm font-bold shadow-md shadow-emerald-200">بازگشت به فروشگاه</button>
             </div>
 
-            <!-- محتوای سبد خرید پر -->
             <div id="filledCartState" class="hidden space-y-4">
-                <!-- لیست اقلام -->
                 <div id="cartItemsList" class="space-y-2.5"></div>
 
-                <!-- باکس جمع کل و قانون هوشمند پرداخت (زیر ۲ میلیون / بالای ۲ میلیون) -->
                 <div class="bg-slate-50 p-4 rounded-3xl border border-slate-200 space-y-3">
                     <div class="flex justify-between items-center text-xs text-slate-500">
                         <span>سود شما از تخفیف‌های توان‌یار:</span>
@@ -130,18 +144,12 @@
                         <span class="text-sm font-extrabold text-slate-800">مبلغ قابل پرداخت:</span>
                         <span id="totalPriceText" class="text-lg font-black text-slate-900">۰ تومان</span>
                     </div>
-
-                    <!-- بنر پویا برای قانون پرداخت زیر ۲ میلیون و بالای ۲ میلیون -->
-                    <div id="paymentRuleBanner" class="p-3.5 rounded-2xl text-xs font-bold leading-relaxed border">
-                        <!-- با جاوااسکریپت پر می‌شود -->
-                    </div>
+                    <div id="paymentRuleBanner" class="p-3.5 rounded-2xl text-xs font-bold leading-relaxed border"></div>
                 </div>
 
-                <!-- فرم مشخصات تحویل -->
                 <div class="bg-white p-4 rounded-3xl border border-slate-200 space-y-3">
                     <h3 class="text-sm font-extrabold text-slate-800 flex items-center gap-1.5">
-                        <i data-lucide="map-pin" class="w-4 h-4 text-emerald-600"></i>
-                        مشخصات تحویل سفارش
+                        <i data-lucide="map-pin" class="w-4 h-4 text-emerald-600"></i> مشخصات تحویل سفارش
                     </h3>
                     <div>
                         <label class="block text-xs font-bold text-slate-600 mb-1">نام و نام خانوادگی</label>
@@ -157,15 +165,13 @@
                     </div>
                 </div>
 
-                <!-- دکمه نهایی ثبت سفارش -->
                 <button onclick="submitOrder()" class="btn-accessible w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl text-base font-black shadow-lg shadow-emerald-200 gap-2">
-                    <i data-lucide="check-circle-2" class="w-5 h-5"></i>
-                    تایید نهایی و صدور فاکتور لحظه‌ای
+                    <i data-lucide="check-circle-2" class="w-5 h-5"></i> تایید نهایی و صدور فاکتور لحظه‌ای
                 </button>
             </div>
         </section>
 
-        <!-- ================= صفحه درباره توان‌یار ================= -->
+        <!-- صفحه درباره توان‌یار -->
         <section id="view-about" class="hidden animate-fade-in space-y-4">
             <div class="bg-gradient-to-br from-emerald-600 to-teal-700 text-white p-5 rounded-3xl shadow-md">
                 <h2 class="text-lg font-black mb-2">داستان و هدف توان‌یار</h2>
@@ -192,37 +198,40 @@
             <button onclick="openAdmin()" class="btn-accessible w-full bg-slate-900 text-white rounded-2xl text-sm font-bold gap-2 mt-3">⚙️ ورود به پنل مدیریت فروشگاه</button>
         </section>
 
+        <!-- پنل مدیریت -->
+        <section id="view-admin" class="hidden px-4 pt-4 pb-24 max-w-md mx-auto">
+            <div class="flex items-center justify-between mb-4"><h2 class="text-lg font-black">مدیریت توان‌یار</h2><button onclick="switchTab('about')" class="text-sm text-emerald-700 font-bold">بازگشت</button></div>
+            <div id="adminLogin" class="bg-white border rounded-2xl p-4 space-y-3">
+                <p class="text-sm text-slate-600">ورود مدیر با ایمیلی که در Supabase به‌عنوان مدیر مجاز شده است.</p>
+                <input id="adminEmail" type="email" placeholder="ایمیل مدیر" class="w-full h-12 px-3 border rounded-xl text-left" dir="ltr">
+                <input id="adminPassword" type="password" placeholder="رمز عبور" class="w-full h-12 px-3 border rounded-xl text-left" dir="ltr">
+                <button onclick="adminLogin()" class="btn-accessible w-full bg-emerald-600 text-white rounded-xl font-bold">ورود امن</button>
+            </div>
+            <div id="adminDashboard" class="hidden space-y-4">
+                <div class="grid grid-cols-2 gap-2"><button onclick="showAdminSection('products')" class="p-3 bg-emerald-50 text-emerald-800 rounded-xl font-bold">مدیریت محصولات</button><button onclick="showAdminSection('orders')" class="p-3 bg-blue-50 text-blue-800 rounded-xl font-bold">سفارش‌ها</button></div>
+                <div id="adminProductsSection" class="space-y-3">
+                    <div class="flex justify-between items-center"><h3 class="font-black">محصولات</h3><button onclick="newProduct()" class="bg-emerald-600 text-white px-3 py-2 rounded-lg text-sm font-bold">+ محصول جدید</button></div>
+                    <div id="adminProductsList" class="space-y-2"></div>
+                    <div id="productEditor" class="hidden border rounded-2xl p-3 space-y-2">
+                        <h4 class="font-bold" id="productEditorTitle">محصول</h4>
+                        <input id="pTitle" placeholder="نام محصول" class="w-full p-3 border rounded-xl text-sm">
+                        <input id="pStore" placeholder="نام فروشگاه / فروشنده" class="w-full p-3 border rounded-xl text-sm">
+                        <div class="grid grid-cols-2 gap-2"><input id="pPrice" type="number" placeholder="قیمت فروش (تومان)" class="w-full p-3 border rounded-xl text-sm"><input id="pOldPrice" type="number" placeholder="قیمت قبلی" class="w-full p-3 border rounded-xl text-sm"></div>
+                        <div class="grid grid-cols-2 gap-2"><input id="pStock" type="number" placeholder="موجودی" class="w-full p-3 border rounded-xl text-sm"><input id="pEmoji" placeholder="ایموجی تصویر" class="w-full p-3 border rounded-xl text-sm"></div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <select id="pMainCat" class="p-3 border rounded-xl text-sm"><option value="hyper">هایپر محله</option><option value="handicraft">صنایع دستی</option><option value="skills">پیشه و مهارت</option></select>
+                            <select id="pSubCat" class="p-3 border rounded-xl text-sm"><option value="all">همه</option><option value="supermarket">سوپرمارکت</option><option value="bakery">نانوایی</option><option value="butcher">قصابی</option><option value="poultry">مرغ و ماهی</option><option value="fruit">میوه فروشی</option><option value="fastfood">فست فود</option></select>
+                        </div>
+                        <div class="flex gap-2"><button onclick="saveProduct()" class="flex-1 bg-emerald-600 text-white rounded-xl p-3 font-bold">ذخیره</button><button onclick="cancelProductEdit()" class="px-4 bg-slate-100 rounded-xl">انصراف</button></div>
+                    </div>
+                </div>
+                <div id="adminOrdersSection" class="hidden space-y-2"><h3 class="font-black">سفارش‌های ثبت‌شده</h3><div id="adminOrdersList" class="space-y-2"></div></div>
+                <button onclick="adminLogout()" class="w-full p-3 border border-rose-200 text-rose-700 rounded-xl font-bold">خروج از حساب مدیر</button>
+            </div>
+        </section>
     </main>
 
-    <!-- ================= مودال فاکتور دیجیتال لحظه‌ای ================= -->
-    <!-- پنل مدیریت متصل به پایگاه داده مرکزی -->
-    <section id="view-admin" class="hidden px-4 pt-4 pb-24 max-w-md mx-auto">
-      <div class="flex items-center justify-between mb-4"><h2 class="text-lg font-black">مدیریت توان‌یار</h2><button onclick="switchTab('about')" class="text-sm text-emerald-700 font-bold">بازگشت</button></div>
-      <div id="adminLogin" class="bg-white border rounded-2xl p-4 space-y-3">
-        <p class="text-sm text-slate-600">ورود مدیر با ایمیلی که در Supabase به‌عنوان مدیر مجاز شده است.</p>
-        <input id="adminEmail" type="email" placeholder="ایمیل مدیر" class="w-full h-12 px-3 border rounded-xl text-left" dir="ltr">
-        <input id="adminPassword" type="password" placeholder="رمز عبور" class="w-full h-12 px-3 border rounded-xl text-left" dir="ltr">
-        <button onclick="adminLogin()" class="btn-accessible w-full bg-emerald-600 text-white rounded-xl font-bold">ورود امن</button>
-      </div>
-      <div id="adminDashboard" class="hidden space-y-4">
-        <div class="grid grid-cols-2 gap-2"><button onclick="showAdminSection('products')" class="p-3 bg-emerald-50 text-emerald-800 rounded-xl font-bold">مدیریت محصولات</button><button onclick="showAdminSection('orders')" class="p-3 bg-blue-50 text-blue-800 rounded-xl font-bold">سفارش‌ها</button></div>
-        <div id="adminProductsSection" class="space-y-3">
-          <div class="flex justify-between items-center"><h3 class="font-black">محصولات</h3><button onclick="newProduct()" class="bg-emerald-600 text-white px-3 py-2 rounded-lg text-sm font-bold">+ محصول جدید</button></div>
-          <div id="adminProductsList" class="space-y-2"></div>
-          <div id="productEditor" class="hidden border rounded-2xl p-3 space-y-2">
-            <h4 class="font-bold" id="productEditorTitle">محصول</h4><input id="pTitle" placeholder="نام محصول" class="w-full p-3 border rounded-xl text-sm">
-            <input id="pStore" placeholder="نام فروشگاه / فروشنده" class="w-full p-3 border rounded-xl text-sm">
-            <div class="grid grid-cols-2 gap-2"><input id="pPrice" type="number" placeholder="قیمت فروش (تومان)" class="w-full p-3 border rounded-xl text-sm"><input id="pOldPrice" type="number" placeholder="قیمت قبلی" class="w-full p-3 border rounded-xl text-sm"></div>
-            <div class="grid grid-cols-2 gap-2"><input id="pStock" type="number" placeholder="موجودی" class="w-full p-3 border rounded-xl text-sm"><input id="pEmoji" placeholder="ایموجی تصویر" class="w-full p-3 border rounded-xl text-sm"></div>
-            <div class="grid grid-cols-2 gap-2"><select id="pMainCat" class="p-3 border rounded-xl text-sm"><option value="hyper">هایپر شهرضا</option><option value="handicraft">صنایع دستی</option><option value="skills">پیشه و مهارت</option></select><select id="pSubCat" class="p-3 border rounded-xl text-sm"><option value="all">همه</option><option value="supermarket">سوپرمارکت</option><option value="bakery">نانوایی</option><option value="butcher">قصابی</option><option value="poultry">مرغ و ماهی</option><option value="fruit">میوه فروشی</option><option value="fastfood">فست فود</option></select></div>
-            <div class="flex gap-2"><button onclick="saveProduct()" class="flex-1 bg-emerald-600 text-white rounded-xl p-3 font-bold">ذخیره</button><button onclick="cancelProductEdit()" class="px-4 bg-slate-100 rounded-xl">انصراف</button></div>
-          </div>
-        </div>
-        <div id="adminOrdersSection" class="hidden space-y-2"><h3 class="font-black">سفارش‌های ثبت‌شده</h3><div id="adminOrdersList" class="space-y-2"></div></div>
-        <button onclick="adminLogout()" class="w-full p-3 border border-rose-200 text-rose-700 rounded-xl font-bold">خروج از حساب مدیر</button>
-      </div>
-    </section>
-
+    <!-- مودال فاکتور -->
     <div id="invoiceModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-end sm:items-center justify-center p-3">
         <div class="bg-white w-full max-w-md rounded-3xl p-5 shadow-2xl animate-fade-in max-h-[90vh] overflow-y-auto">
             <div class="text-center border-b border-dashed border-slate-200 pb-4 mb-4">
@@ -232,70 +241,38 @@
                 <h3 class="text-lg font-black text-slate-900">سفارش شما با موفقیت ثبت شد!</h3>
                 <p class="text-xs text-slate-500 mt-1">کد پیگیری فاکتور: <span id="invCode" class="font-mono font-bold text-slate-800 bg-slate-100 px-2 py-0.5 rounded"></span></p>
             </div>
-
-            <!-- زمان تقریبی تحویل -->
             <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-3.5 mb-4 flex items-center gap-3">
-                <div class="w-10 h-10 bg-emerald-600 text-white rounded-xl flex items-center justify-center shrink-0">
-                    <i data-lucide="clock" class="w-5 h-5"></i>
-                </div>
-                <div>
-                    <p class="text-xs text-emerald-800 font-bold">زمان تقریبی رسیدن کالا به منزل شما:</p>
-                    <p id="invDeliveryTime" class="text-sm font-black text-emerald-950 mt-0.5">حدود ۳۵ تا ۴۵ دقیقه دیگر</p>
-                </div>
+                <div class="w-10 h-10 bg-emerald-600 text-white rounded-xl flex items-center justify-center shrink-0"><i data-lucide="clock" class="w-5 h-5"></i></div>
+                <div><p class="text-xs text-emerald-800 font-bold">زمان تقریبی رسیدن کالا به منزل شما:</p><p id="invDeliveryTime" class="text-sm font-black text-emerald-950 mt-0.5">حدود ۳۵ تا ۴۵ دقیقه دیگر</p></div>
             </div>
-
-            <!-- جزئیات فاکتور -->
             <div class="space-y-2 text-xs mb-4 bg-slate-50 p-3.5 rounded-2xl border border-slate-100">
-                <div class="flex justify-between">
-                    <span class="text-slate-500">تحویل‌گیرنده:</span>
-                    <span id="invCustomer" class="font-bold text-slate-800"></span>
-                </div>
-                <div class="flex justify-between">
-                    <span class="text-slate-500">آدرس:</span>
-                    <span id="invAddress" class="font-bold text-slate-800 text-left max-w-[200px] truncate"></span>
-                </div>
-                <div class="border-t border-slate-200 my-2 pt-2 space-y-1.5" id="invItemsList">
-                    <!-- اقلام فاکتور -->
-                </div>
-                <div class="border-t border-slate-200 pt-2 flex justify-between text-sm font-black text-slate-900">
-                    <span>جمع کل فاکتور:</span>
-                    <span id="invTotal"></span>
-                </div>
+                <div class="flex justify-between"><span class="text-slate-500">تحویل‌گیرنده:</span><span id="invCustomer" class="font-bold text-slate-800"></span></div>
+                <div class="flex justify-between"><span class="text-slate-500">آدرس:</span><span id="invAddress" class="font-bold text-slate-800 text-left max-w-[200px] truncate"></span></div>
+                <div class="border-t border-slate-200 my-2 pt-2 space-y-1.5" id="invItemsList"></div>
+                <div class="border-t border-slate-200 pt-2 flex justify-between text-sm font-black text-slate-900"><span>جمع کل فاکتور:</span><span id="invTotal"></span></div>
             </div>
-
-            <!-- وضعیت پرداخت در فاکتور -->
             <div id="invPaymentStatus" class="p-3 rounded-2xl text-xs font-bold mb-4 border"></div>
-
-            <!-- دکمه‌های اقدام فاکتور -->
             <div class="space-y-2.5">
-                <button onclick="sendToTelegram()" class="btn-accessible w-full bg-sky-500 hover:bg-sky-600 text-white rounded-2xl text-sm font-bold gap-2 shadow-md shadow-sky-100">
-                    <i data-lucide="send" class="w-4 h-4"></i>
-                    اشتراک‌گذاری متن فاکتور در تلگرام
-                </button>
-                <button onclick="copyInvoiceText()" class="btn-accessible w-full bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-2xl text-xs font-bold gap-2">
-                    <i data-lucide="copy" class="w-4 h-4"></i>
-                    کپی متن فاکتور در حافظه گوشی
-                </button>
-                <button onclick="closeInvoiceModal()" class="btn-accessible w-full text-slate-500 text-xs font-bold">
-                    بستن و بازگشت به صفحه اصلی
-                </button>
+                <button onclick="sendToTelegram()" class="btn-accessible w-full bg-sky-500 hover:bg-sky-600 text-white rounded-2xl text-sm font-bold gap-2 shadow-md shadow-sky-100"><i data-lucide="send" class="w-4 h-4"></i> اشتراک‌گذاری متن فاکتور در تلگرام</button>
+                <button onclick="copyInvoiceText()" class="btn-accessible w-full bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-2xl text-xs font-bold gap-2"><i data-lucide="copy" class="w-4 h-4"></i> کپی متن فاکتور در حافظه گوشی</button>
+                <button onclick="closeInvoiceModal()" class="btn-accessible w-full text-slate-500 text-xs font-bold">بستن و بازگشت به صفحه اصلی</button>
             </div>
         </div>
     </div>
 
-    <!-- پیامک/توست اطلاع‌رسانی داخلی (بدون استفاده از alert) -->
+    <!-- پیام توست -->
     <div id="toastMessage" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white text-xs font-bold px-4 py-3 rounded-2xl shadow-xl opacity-0 pointer-events-none transition-opacity duration-300 flex items-center gap-2 whitespace-nowrap">
-        <i data-lucide="info" class="w-4 h-4 text-emerald-400"></i>
-        <span id="toastText"></span>
+        <i data-lucide="info" class="w-4 h-4 text-emerald-400"></i><span id="toastText"></span>
     </div>
 
-    <!-- ۵. نوار ناوبری پایین صفحه (حداکثر ۳ گزینه درشت و استاندارد) -->
+    <!-- نوار ناوبری پایین -->
     <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white/95 backdrop-blur-md border-t border-slate-200 px-4 py-2 flex justify-around items-center z-40">
         <button onclick="switchTab('home')" id="nav-home" class="nav-btn flex flex-col items-center justify-center py-1.5 px-4 rounded-2xl text-emerald-600 font-extrabold min-h-[52px]">
-            <i data-lucide="home" class="w-6 h-6 mb-0.5"></i>
-            <span class="text-xs">خانه</span>
+            <i data-lucide="home" class="w-6 h-6 mb-0.5"></i><span class="text-xs">خانه</span>
         </button>
-
+        <button onclick="switchTab('market')" id="nav-market" class="nav-btn flex flex-col items-center justify-center py-1.5 px-4 rounded-2xl text-slate-400 font-bold min-h-[52px]">
+            <i data-lucide="store" class="w-6 h-6 mb-0.5"></i><span class="text-xs">مارکت</span>
+        </button>
         <button onclick="switchTab('cart')" id="nav-cart" class="nav-btn relative flex flex-col items-center justify-center py-1.5 px-4 rounded-2xl text-slate-400 font-bold min-h-[52px]">
             <div class="relative">
                 <i data-lucide="shopping-cart" class="w-6 h-6 mb-0.5"></i>
@@ -303,16 +280,13 @@
             </div>
             <span class="text-xs">سبد خرید</span>
         </button>
-
         <button onclick="switchTab('about')" id="nav-about" class="nav-btn flex flex-col items-center justify-center py-1.5 px-4 rounded-2xl text-slate-400 font-bold min-h-[52px]">
-            <i data-lucide="sparkles" class="w-6 h-6 mb-0.5"></i>
-            <span class="text-xs">درباره توان‌یار</span>
+            <i data-lucide="info" class="w-6 h-6 mb-0.5"></i><span class="text-xs">درباره ما</span>
         </button>
     </nav>
 
-    <!-- اسکریپت منطق برنامه -->
     <script>
-        // ================= داده‌های اولیه پایلوت توان‌یار =================
+        // ================= داده‌ها =================
         const ambassadors = [
             { id: 'alireza', name: 'علیرضا (سفیر شهرضا)', role: 'مدیر هایپر محله', color: 'bg-emerald-100 text-emerald-700', icon: '♿' },
             { id: 'zahra', name: 'زهرا (هنرمند چرم)', role: 'صنایع دستی اصفهان', color: 'bg-orange-100 text-orange-700', icon: '👜' },
@@ -330,429 +304,156 @@
             { id: 'fastfood', title: 'فست فود', icon: '🍕' }
         ];
 
-        // لیست کالاها و خدمات (با قیمت‌های تخفیف‌دار و واقعی)
-        let catalog = [
-            // بخش ۱: هایپر شهرضا
-            { id: 1, mainCat: 'hyper', subCat: 'supermarket', ambassador: 'alireza', title: 'برنج ایرانی هاشمی ۱۰ کیلویی', store: 'سوپرمارکت تخفیفی مرکزی', oldPrice: 1450000, price: 1280000, emoji: '🌾' },
-            { id: 2, mainCat: 'hyper', subCat: 'bakery', ambassador: 'alireza', title: 'نان سنگک کنجدی تازه (۵ عدد)', store: 'نانوایی سنتی شهرضا', oldPrice: 50000, price: 42000, emoji: '🥖' },
-            { id: 3, mainCat: 'hyper', subCat: 'butcher', ambassador: 'alireza', title: 'گوشت گوسفندی تازه مخلوط (۱ کیلو)', store: 'قصابی برادران', oldPrice: 690000, price: 620000, emoji: '🥩' },
-            { id: 4, mainCat: 'hyper', subCat: 'poultry', ambassador: 'alireza', title: 'مرغ تازه کشتار روز (بسته ۲ کیلویی)', store: 'پروتئینی ساحل', oldPrice: 240000, price: 205000, emoji: '🍗' },
-            { id: 5, mainCat: 'hyper', subCat: 'fruit', ambassador: 'alireza', title: 'سیب قرمز درجه یک سمیرم (۲ کیلو)', store: 'میوه‌سرای بهار', oldPrice: 130000, price: 98000, emoji: '🍎' },
-            { id: 6, mainCat: 'hyper', subCat: 'fastfood', ambassador: 'alireza', title: 'پیتزا مخصوص خانواده + نوشابه', store: 'فست‌فود آفتاب', oldPrice: 340000, price: 275000, emoji: '🍕' },
-            { id: 7, mainCat: 'hyper', subCat: 'supermarket', ambassador: 'alireza', title: 'روغن سرخ‌کردنی ۳ لیتری + رب گوجه', store: 'سوپرمارکت تخفیفی مرکزی', oldPrice: 290000, price: 245000, emoji: '🫙' },
+        let catalog = []; // از دیتابیس پر می‌شود
 
-            // بخش ۲: صنایع دستی استان
-            { id: 8, mainCat: 'handicraft', subCat: 'all', ambassador: 'zahra', title: 'کیف دوشی چرم طبیعی دست‌دوز', store: 'کارگاه چرم زهرا (اصفهان)', oldPrice: 1200000, price: 950000, emoji: '👜' },
-            { id: 9, mainCat: 'handicraft', subCat: 'all', ambassador: 'sara', title: 'شال و کلاه دست‌بافت پشمی اعلا', store: 'هنرکده سارا', oldPrice: 550000, price: 440000, emoji: '🧣' },
-            { id: 10, mainCat: 'handicraft', subCat: 'all', ambassador: 'zahra', title: 'تابلو معرق چوب طرح اسلیمی نفیس', store: 'گالری هنر استان', oldPrice: 2600000, price: 2150000, emoji: '🖼️' },
-
-            // بخش ۳: پیشه و مهارت
-            { id: 11, mainCat: 'skills', subCat: 'all', ambassador: 'mohammad', title: 'تایپ و صفحه‌آرایی پایان‌نامه (هر ۲۰ صفحه)', store: 'دفتر فنی آنلاین محمد', oldPrice: 180000, price: 130000, emoji: '⌨️' },
-            { id: 12, mainCat: 'skills', subCat: 'all', ambassador: 'mohammad', title: 'طراحی لوگو و پوستر تبلیغاتی کسب‌وکار', store: 'استودیو گرافیک توان‌یار', oldPrice: 800000, price: 590000, emoji: '🎨' },
-            { id: 13, mainCat: 'skills', subCat: 'all', ambassador: 'sara', title: 'تدریس خصوصی آنلاین زبان انگلیسی (۱ جلسه)', store: 'آکادمی مهارت استان', oldPrice: 250000, price: 180000, emoji: '📚' }
-        ];
-
-        // ================= وضعیت (State) برنامه =================
-        let state = {
-            mainCat: 'hyper',
-            subCat: 'all',
-            ambassador: null,
-            searchQuery: '',
-            cart: [], // { product, qty }
-            lastInvoiceText: ''
-        };
-
-        const PAYMENT_THRESHOLD = 2000000; // مرز ۲ میلیون تومان
+        let state = { mainCat: 'hyper', subCat: 'all', ambassador: null, searchQuery: '', cart: [], lastInvoiceText: '' };
+        const PAYMENT_THRESHOLD = 2000000;
 
         // ================= توابع کمکی =================
-        function formatPrice(num) {
-            return num.toLocaleString('fa-IR') + ' تومان';
-        }
+        function formatPrice(num) { return num.toLocaleString('fa-IR') + ' تومان'; }
+        function showToast(msg) { const toast = document.getElementById('toastMessage'); document.getElementById('toastText').innerText = msg; toast.classList.remove('opacity-0'); setTimeout(() => toast.classList.add('opacity-0'), 2800); }
+        function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 
-        function showToast(msg) {
-            const toast = document.getElementById('toastMessage');
-            document.getElementById('toastText').innerText = msg;
-            toast.classList.remove('opacity-0');
-            setTimeout(() => toast.classList.add('opacity-0'), 2800);
-        }
-
-        // ================= رندر بخش‌های مختلف =================
+        // ================= رندر =================
         function renderAmbassadors() {
             const container = document.getElementById('ambassadorsList');
             container.innerHTML = ambassadors.map(amb => {
                 const isSelected = state.ambassador === amb.id;
-                return `
-                    <button onclick="filterByAmbassador('${amb.id}')" class="flex flex-col items-center shrink-0 w-20 group">
-                        <div class="w-16 h-16 rounded-full ${amb.color} flex items-center justify-center text-2xl mb-1.5 border-2 ${isSelected ? 'border-slate-900 scale-105 shadow-md' : 'border-white shadow-sm'} transition-all">
-                            ${amb.icon}
-                        </div>
-                        <span class="text-[11px] font-bold text-slate-800 text-center leading-tight line-clamp-1">${amb.name.split(' ')[0]}</span>
-                        <span class="text-[9px] text-slate-500 text-center line-clamp-1">${amb.role}</span>
-                    </button>
-                `;
+                return `<button onclick="filterByAmbassador('${amb.id}')" class="flex flex-col items-center shrink-0 w-20 group">
+                    <div class="w-16 h-16 rounded-full ${amb.color} flex items-center justify-center text-2xl mb-1.5 border-2 ${isSelected ? 'border-slate-900 scale-105 shadow-md' : 'border-white shadow-sm'} transition-all">${amb.icon}</div>
+                    <span class="text-[11px] font-bold text-slate-800 text-center leading-tight line-clamp-1">${amb.name.split(' ')[0]}</span>
+                    <span class="text-[9px] text-slate-500 text-center line-clamp-1">${amb.role}</span>
+                </button>`;
             }).join('');
-
-            const resetBtn = document.getElementById('resetAmbassadorBtn');
-            if (state.ambassador) {
-                resetBtn.classList.remove('hidden');
-            } else {
-                resetBtn.classList.add('hidden');
-            }
+            document.getElementById('resetAmbassadorBtn').classList.toggle('hidden', !state.ambassador);
         }
 
         function renderSubCategories() {
             const container = document.getElementById('subCatChips');
             const wrapper = document.getElementById('hyperSubCategories');
-            
-            if (state.mainCat !== 'hyper') {
-                wrapper.classList.add('hidden');
-                return;
-            }
+            if (state.mainCat !== 'hyper') { wrapper.classList.add('hidden'); return; }
             wrapper.classList.remove('hidden');
-
             container.innerHTML = hyperSubCategories.map(sub => {
                 const active = state.subCat === sub.id;
-                return `
-                    <button onclick="selectSubCategory('${sub.id}')" class="px-3.5 py-2 rounded-full text-xs font-bold whitespace-nowrap flex items-center gap-1.5 transition-all min-h-[40px] ${active ? 'bg-slate-900 text-white shadow-sm' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}">
-                        <span>${sub.icon}</span>
-                        <span>${sub.title}</span>
-                    </button>
-                `;
+                return `<button onclick="selectSubCategory('${sub.id}')" class="px-3.5 py-2 rounded-full text-xs font-bold whitespace-nowrap flex items-center gap-1.5 transition-all min-h-[40px] ${active ? 'bg-slate-900 text-white shadow-sm' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}"><span>${sub.icon}</span><span>${sub.title}</span></button>`;
             }).join('');
         }
 
         function renderProducts() {
             const grid = document.getElementById('productsGrid');
-            
-            // فیلتر کردن محصولات
             let filtered = catalog.filter(item => {
-                if (state.searchQuery.trim() !== '') {
-                    return item.title.includes(state.searchQuery) || item.store.includes(state.searchQuery);
-                }
+                if (state.searchQuery.trim() !== '') return item.title.includes(state.searchQuery) || item.store.includes(state.searchQuery);
                 if (state.ambassador && item.ambassador !== state.ambassador) return false;
                 if (!state.ambassador && item.mainCat !== state.mainCat) return false;
                 if (state.mainCat === 'hyper' && state.subCat !== 'all' && item.subCat !== state.subCat) return false;
                 return true;
             });
 
-            // آپدیت عنوان بخش
-            const titles = {
-                'hyper': 'تخفیف‌های روز هایپر شهرضا',
-                'handicraft': 'گالری صنایع دستی هنرمندان استان',
-                'skills': 'خدمات و مهارت‌های تخصصی آنلاین'
-            };
-            document.getElementById('sectionTitle').innerText = state.ambassador 
-                ? `محصولات ${ambassadors.find(a => a.id === state.ambassador).name}`
-                : (state.searchQuery ? 'نتایج جستجو' : titles[state.mainCat]);
-            
+            const titles = { 'hyper': 'تخفیف‌های روز هایپر محله', 'handicraft': 'گالری صنایع دستی هنرمندان استان', 'skills': 'خدمات و مهارت‌های تخصصی آنلاین' };
+            document.getElementById('sectionTitle').innerText = state.ambassador ? `محصولات ${ambassadors.find(a => a.id === state.ambassador).name}` : (state.searchQuery ? 'نتایج جستجو' : titles[state.mainCat]);
             document.getElementById('itemsCount').innerText = `${filtered.length.toLocaleString('fa-IR')} مورد`;
 
             if (filtered.length === 0) {
-                grid.innerHTML = `
-                    <div class="col-span-2 text-center py-10 bg-slate-50 rounded-3xl border border-slate-100">
-                        <p class="text-sm font-bold text-slate-600">موردی با این فیلتر پیدا نشد!</p>
-                        <button onclick="resetFilters()" class="mt-3 text-xs font-bold text-emerald-600 bg-emerald-50 px-4 py-2 rounded-xl">نمایش همه موارد</button>
-                    </div>
-                `;
+                grid.innerHTML = `<div class="col-span-2 text-center py-10 bg-slate-50 rounded-3xl border border-slate-100"><p class="text-sm font-bold text-slate-600">موردی پیدا نشد!</p></div>`;
                 return;
             }
 
             grid.innerHTML = filtered.map(item => {
                 const discountPercent = Math.round(((item.oldPrice - item.price) / item.oldPrice) * 100);
-                return `
-                    <div class="bg-white rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow p-3 flex flex-col justify-between">
-                        <div>
-                            <!-- تصویر ایموجی بزرگ و تمیز + بج تخفیف -->
-                            <div class="relative h-28 bg-slate-50 rounded-2xl flex items-center justify-center text-5xl mb-2.5">
-                                ${item.emoji}
-                                <span class="absolute top-2 right-2 bg-rose-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full">
-                                    ${discountPercent.toLocaleString('fa-IR')}٪ تخفیف
-                                </span>
-                            </div>
-                            <span class="text-[10px] font-bold text-emerald-600 block mb-0.5 line-clamp-1">${item.store}</span>
-                            <h4 class="text-xs font-extrabold text-slate-900 leading-snug mb-2 line-clamp-2 min-h-[34px]">${item.title}</h4>
+                return `<div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-3 flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-28 bg-slate-50 rounded-2xl flex items-center justify-center text-5xl mb-2.5">${item.emoji}
+                            <span class="absolute top-2 right-2 bg-rose-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full">${discountPercent.toLocaleString('fa-IR')}٪ تخفیف</span>
                         </div>
-
-                        <div>
-                            <div class="mb-2.5">
-                                <span class="text-[10px] text-slate-400 line-through block">${formatPrice(item.oldPrice)}</span>
-                                <span class="text-sm font-black text-slate-900">${formatPrice(item.price)}</span>
-                            </div>
-                            <button onclick="addToCart(${item.id})" class="btn-accessible w-full bg-slate-900 hover:bg-emerald-600 text-white rounded-xl text-xs font-bold gap-1.5">
-                                <i data-lucide="plus" class="w-4 h-4"></i>
-                                افزودن به سبد
-                            </button>
-                        </div>
+                        <span class="text-[10px] font-bold text-emerald-600 block mb-0.5 line-clamp-1">${item.store}</span>
+                        <h4 class="text-xs font-extrabold text-slate-900 leading-snug mb-2 line-clamp-2 min-h-[34px]">${item.title}</h4>
                     </div>
-                `;
+                    <div>
+                        <div class="mb-2.5"><span class="text-[10px] text-slate-400 line-through block">${formatPrice(item.oldPrice)}</span><span class="text-sm font-black text-slate-900">${formatPrice(item.price)}</span></div>
+                        <button onclick="addToCart(${item.id})" class="btn-accessible w-full bg-slate-900 hover:bg-emerald-600 text-white rounded-xl text-xs font-bold gap-1.5"><i data-lucide="plus" class="w-4 h-4"></i> افزودن به سبد</button>
+                    </div>
+                </div>`;
             }).join('');
-
             lucide.createIcons();
         }
 
-        // ================= کنترلرهای تعامل کاربر =================
+        // ================= کنترلرها =================
         function selectMainCategory(cat) {
-            state.mainCat = cat;
-            state.subCat = 'all';
-            state.ambassador = null;
-            state.searchQuery = '';
-            document.getElementById('searchInput').value = '';
-
-            // تغییر استایل کارت‌های سه‌گانه بالا
+            state.mainCat = cat; state.subCat = 'all'; state.ambassador = null; state.searchQuery = '';
             const cards = {
                 hyper: { el: document.getElementById('tab-hyper'), activeClass: 'border-emerald-600 bg-emerald-600 text-white shadow-md shadow-emerald-100', inactiveClass: 'border-slate-100 bg-emerald-50/70 text-slate-800' },
                 handicraft: { el: document.getElementById('tab-handicraft'), activeClass: 'border-orange-500 bg-orange-500 text-white shadow-md shadow-orange-100', inactiveClass: 'border-slate-100 bg-orange-50/70 text-slate-800' },
                 skills: { el: document.getElementById('tab-skills'), activeClass: 'border-blue-600 bg-blue-600 text-white shadow-md shadow-blue-100', inactiveClass: 'border-slate-100 bg-blue-50/70 text-slate-800' }
             };
-
-            Object.keys(cards).forEach(key => {
-                const c = cards[key];
-                c.el.className = `category-card p-3 rounded-2xl border-2 flex flex-col items-center justify-center text-center transition-all min-h-[108px] ${key === cat ? c.activeClass : c.inactiveClass}`;
-            });
-
-            renderAmbassadors();
-            renderSubCategories();
-            renderProducts();
+            Object.keys(cards).forEach(key => { const c = cards[key]; c.el.className = `category-card p-3 rounded-2xl border-2 flex flex-col items-center justify-center text-center transition-all min-h-[108px] ${key === cat ? c.activeClass : c.inactiveClass}`; });
+            renderAmbassadors(); renderSubCategories(); renderProducts();
         }
 
-        function selectSubCategory(subId) {
-            state.subCat = subId;
-            renderSubCategories();
-            renderProducts();
-        }
+        function selectSubCategory(subId) { state.subCat = subId; renderSubCategories(); renderProducts(); }
+        function filterByAmbassador(ambId) { state.ambassador = (state.ambassador === ambId) ? null : ambId; renderAmbassadors(); renderProducts(); }
 
-        function filterByAmbassador(ambId) {
-            state.ambassador = (state.ambassador === ambId) ? null : ambId;
-            renderAmbassadors();
-            renderProducts();
-        }
-
-        function handleSearch(val) {
-            state.searchQuery = val;
-            renderProducts();
-        }
-
-        function simulateVoiceSearch() {
-            showToast('🎤 در حال گوش دادن... (مثلاً بگویید: برنج یا نان)');
-            setTimeout(() => {
-                const sampleQuery = 'نان';
-                document.getElementById('searchInput').value = sampleQuery;
-                handleSearch(sampleQuery);
-                showToast('جستجوی صوتی انجام شد: «نان»');
-            }, 1500);
-        }
-
-        function resetFilters() {
-            selectMainCategory('hyper');
-        }
-
-        // ================= مدیریت سبد خرید و قوانین پرداخت =================
+        // ================= سبد خرید =================
         function addToCart(productId) {
             const product = catalog.find(p => p.id === productId);
+            if (product.stock !== undefined && product.stock <= 0) return showToast('این کالا ناموجود است');
+            const current = state.cart.find(c => c.product.id === productId)?.qty || 0;
+            if (product.stock !== undefined && current >= product.stock) return showToast('تعداد درخواستی بیشتر از موجودی است');
             const existing = state.cart.find(c => c.product.id === productId);
-            if (existing) {
-                existing.qty += 1;
-            } else {
-                state.cart.push({ product, qty: 1 });
-            }
-            updateCartBadge();
-            showToast(`«${product.title}» به سبد اضافه شد`);
+            if (existing) existing.qty += 1; else state.cart.push({ product, qty: 1 });
+            updateCartBadge(); showToast(`«${product.title}» به سبد اضافه شد`);
         }
 
         function updateQty(productId, delta) {
             const idx = state.cart.findIndex(c => c.product.id === productId);
             if (idx === -1) return;
             state.cart[idx].qty += delta;
-            if (state.cart[idx].qty <= 0) {
-                state.cart.splice(idx, 1);
-            }
-            updateCartBadge();
-            renderCartView();
+            if (state.cart[idx].qty <= 0) state.cart.splice(idx, 1);
+            updateCartBadge(); renderCartView();
         }
 
-        function clearCart() {
-            state.cart = [];
-            updateCartBadge();
-            renderCartView();
-            showToast('سبد خرید خالی شد');
-        }
+        function clearCart() { state.cart = []; updateCartBadge(); renderCartView(); showToast('سبد خرید خالی شد'); }
 
         function updateCartBadge() {
             const totalItems = state.cart.reduce((sum, item) => sum + item.qty, 0);
             const badge = document.getElementById('cartBadge');
-            if (totalItems > 0) {
-                badge.innerText = totalItems.toLocaleString('fa-IR');
-                badge.classList.remove('hidden');
-            } else {
-                badge.classList.add('hidden');
-            }
+            if (totalItems > 0) { badge.innerText = totalItems.toLocaleString('fa-IR'); badge.classList.remove('hidden'); }
+            else badge.classList.add('hidden');
         }
 
         function renderCartView() {
             const emptyState = document.getElementById('emptyCartState');
             const filledState = document.getElementById('filledCartState');
             const clearBtn = document.getElementById('clearCartBtn');
+            if (state.cart.length === 0) { emptyState.classList.remove('hidden'); filledState.classList.add('hidden'); clearBtn.classList.add('hidden'); return; }
+            emptyState.classList.add('hidden'); filledState.classList.remove('hidden'); clearBtn.classList.remove('hidden');
 
-            if (state.cart.length === 0) {
-                emptyState.classList.remove('hidden');
-                filledState.classList.add('hidden');
-                clearBtn.classList.add('hidden');
-                return;
-            }
-
-            emptyState.classList.add('hidden');
-            filledState.classList.remove('hidden');
-            clearBtn.classList.remove('hidden');
-
-            let totalPrice = 0;
-            let totalOldPrice = 0;
-
+            let totalPrice = 0, totalOldPrice = 0;
             const listHtml = state.cart.map(item => {
                 const subTotal = item.product.price * item.qty;
-                totalPrice += subTotal;
-                totalOldPrice += item.product.oldPrice * item.qty;
-
-                return `
-                    <div class="bg-white p-3.5 rounded-2xl border border-slate-200 flex items-center justify-between gap-3">
-                        <div class="flex items-center gap-3">
-                            <div class="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center text-2xl shrink-0">
-                                ${item.product.emoji}
-                            </div>
-                            <div>
-                                <h4 class="text-xs font-extrabold text-slate-900 line-clamp-1">${item.product.title}</h4>
-                                <span class="text-xs font-bold text-emerald-600">${formatPrice(subTotal)}</span>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-2 bg-slate-100 p-1 rounded-xl">
-                            <button onclick="updateQty(${item.product.id}, 1)" class="w-8 h-8 rounded-lg bg-white text-slate-900 font-black shadow-sm flex items-center justify-center">+</button>
-                            <span class="text-xs font-black w-5 text-center">${item.qty.toLocaleString('fa-IR')}</span>
-                            <button onclick="updateQty(${item.product.id}, -1)" class="w-8 h-8 rounded-lg bg-white text-rose-600 font-black shadow-sm flex items-center justify-center">-</button>
-                        </div>
+                totalPrice += subTotal; totalOldPrice += item.product.oldPrice * item.qty;
+                return `<div class="bg-white p-3.5 rounded-2xl border border-slate-200 flex items-center justify-between gap-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center text-2xl shrink-0">${item.product.emoji}</div>
+                        <div><h4 class="text-xs font-extrabold text-slate-900 line-clamp-1">${item.product.title}</h4><span class="text-xs font-bold text-emerald-600">${formatPrice(subTotal)}</span></div>
                     </div>
-                `;
+                    <div class="flex items-center gap-2 bg-slate-100 p-1 rounded-xl">
+                        <button onclick="updateQty(${item.product.id}, 1)" class="w-8 h-8 rounded-lg bg-white text-slate-900 font-black shadow-sm flex items-center justify-center">+</button>
+                        <span class="text-xs font-black w-5 text-center">${item.qty.toLocaleString('fa-IR')}</span>
+                        <button onclick="updateQty(${item.product.id}, -1)" class="w-8 h-8 rounded-lg bg-white text-rose-600 font-black shadow-sm flex items-center justify-center">-</button>
+                    </div>
+                </div>`;
             }).join('');
 
             document.getElementById('cartItemsList').innerHTML = listHtml;
             document.getElementById('totalPriceText').innerText = formatPrice(totalPrice);
             document.getElementById('totalDiscountText').innerText = formatPrice(totalOldPrice - totalPrice);
 
-            // اعمال قانون هوشمند پرداخت (زیر ۲ میلیون / بالای ۲ میلیون)
             const ruleBanner = document.getElementById('paymentRuleBanner');
-            if (totalPrice < PAYMENT_THRESHOLD) {
-                ruleBanner.className = 'p-3.5 rounded-2xl text-xs font-bold leading-relaxed border bg-emerald-50 border-emerald-200 text-emerald-900';
-                ruleBanner.innerHTML = '✅ <strong>خرید زیر ۲ میلیون تومان:</strong> بدون نیاز به پرداخت آنلاین؛ مبلغ فاکتور هنگام تحویل درب منزل (کارت‌خوان پیک) تسویه می‌شود.';
-            } else {
-                ruleBanner.className = 'p-3.5 rounded-2xl text-xs font-bold leading-relaxed border bg-orange-50 border-orange-200 text-orange-900';
-                ruleBanner.innerHTML = '💳 <strong>خرید بالای ۲ میلیون تومان:</strong> به محض رسیدن سفیر به فروشگاه و تایید کالا، فاکتور ارسال شده و تسویه لحظه‌ای انجام می‌شود.';
-            }
+            if (totalPrice < PAYMENT_THRESHOLD) { ruleBanner.className = 'p-3.5 rounded-2xl text-xs font-bold leading-relaxed border bg-emerald-50 border-emerald-200 text-emerald-900'; ruleBanner.innerHTML = '✅ <strong>خرید زیر ۲ میلیون تومان:</strong> بدون نیاز به پرداخت آنلاین؛ مبلغ فاکتور هنگام تحویل درب منزل (کارت‌خوان پیک) تسویه می‌شود.'; }
+            else { ruleBanner.className = 'p-3.5 rounded-2xl text-xs font-bold leading-relaxed border bg-orange-50 border-orange-200 text-orange-900'; ruleBanner.innerHTML = '💳 <strong>خرید بالای ۲ میلیون تومان:</strong> به محض رسیدن سفیر به فروشگاه و تایید کالا، فاکتور ارسال شده و تسویه لحظه‌ای انجام می‌شود.'; }
         }
 
-        // ================= صدور فاکتور لحظه‌ای و ارسال به تلگرام =================
-        function submitOrder() {
-            const name = document.getElementById('customerName').value.trim();
-            const phone = document.getElementById('customerPhone').value.trim();
-            const address = document.getElementById('customerAddress').value.trim();
-
-            if (!name || !phone || !address) {
-                showToast('⚠️ لطفاً نام، شماره تماس و آدرس را کامل وارد کنید');
-                return;
-            }
-
-            const totalPrice = state.cart.reduce((sum, item) => sum + (item.product.price * item.qty), 0);
-            const trackingCode = 'TV-' + Math.floor(10000 + Math.random() * 90000);
-            const isUnderThreshold = totalPrice < PAYMENT_THRESHOLD;
-
-            // پر کردن اطلاعات مودال فاکتور
-            document.getElementById('invCode').innerText = trackingCode;
-            document.getElementById('invCustomer').innerText = `${name} (${phone})`;
-            document.getElementById('invAddress').innerText = address;
-            document.getElementById('invTotal').innerText = formatPrice(totalPrice);
-
-            // تشخیص زمان تحویل (اگر کالا از استان باشد زمان‌بندی استانی وگرنه ۳۵ دقیقه‌ای شهرضا)
-            const hasProvincialItem = state.cart.some(c => c.product.mainCat !== 'hyper');
-            document.getElementById('invDeliveryTime').innerText = hasProvincialItem 
-                ? 'هماهنگی ارسال استانی (حداکثر ۲۴ تا ۴۸ ساعت)' 
-                : 'حدود ۳۵ تا ۴۵ دقیقه دیگر (تحویل فوری شهرضا)';
-
-            document.getElementById('invItemsList').innerHTML = state.cart.map(c => `
-                <div class="flex justify-between text-slate-700">
-                    <span>${c.product.title} (${c.qty.toLocaleString('fa-IR')} عدد)</span>
-                    <span class="font-bold">${formatPrice(c.product.price * c.qty)}</span>
-                </div>
-            `).join('');
-
-            const statusBox = document.getElementById('invPaymentStatus');
-            if (isUnderThreshold) {
-                statusBox.className = 'p-3 rounded-2xl text-xs font-bold mb-4 border bg-emerald-50 border-emerald-200 text-emerald-900';
-                statusBox.innerText = 'وضعیت پرداخت: پرداخت در محل هنگام تحویل (زیر ۲ میلیون تومان)';
-            } else {
-                statusBox.className = 'p-3 rounded-2xl text-xs font-bold mb-4 border bg-orange-50 border-orange-200 text-orange-900';
-                statusBox.innerText = 'وضعیت پرداخت: تسویه هنگام تهیه کالا در فروشگاه (بالای ۲ میلیون تومان)';
-            }
-
-            // ساخت متن استاندارد فاکتور برای ارسال در تلگرام یا کپی
-            const itemsLines = state.cart.map(c => `▫️ ${c.product.title} (${c.qty} عدد): ${formatPrice(c.product.price * c.qty)}`).join('\n');
-            state.lastInvoiceText = `🧾 فاکتور جدید سفارش - سامانه توان‌یار\n` +
-                `🔖 کد پیگیری: ${trackingCode}\n` +
-                `👤 مشتری: ${name}\n` +
-                `📞 تماس: ${phone}\n` +
-                `📍 آدرس: ${address}\n` +
-                `-------------------\n` +
-                `${itemsLines}\n` +
-                `-------------------\n` +
-                `💰 مبلغ کل: ${formatPrice(totalPrice)}\n` +
-                `💳 روش پرداخت: ${isUnderThreshold ? 'پرداخت در محل (زیر ۲ میلیون)' : 'تسویه لحظه خرید از فروشگاه (بالای ۲ میلیون)'}`;
-
-            document.getElementById('invoiceModal').classList.remove('hidden');
-            lucide.createIcons();
-        }
-
-        function sendToTelegram() {
-            const encodedText = encodeURIComponent(state.lastInvoiceText);
-            // باز کردن اشتراک‌گذاری تلگرام؛ شناسه پشتیبانی هنوز تنظیم نشده است
-            window.open(`https://t.me/share/url?url=${encodeURIComponent('https://tavanyar.ir')}&text=${encodedText}`, '_blank');
-        }
-
-        function copyInvoiceText() {
-            const textarea = document.createElement('textarea');
-            textarea.value = state.lastInvoiceText;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
-            showToast('✅ متن فاکتور در حافظه گوشی کپی شد');
-        }
-
-        function closeInvoiceModal() {
-            document.getElementById('invoiceModal').classList.add('hidden');
-            state.cart = [];
-            updateCartBadge();
-            switchTab('home');
-        }
-
-        // ================= جابجایی بین تب‌های پایین صفحه =================
-        function switchTab(tabName) {
-            document.getElementById('view-admin')?.classList.add('hidden');
-            ['home', 'cart', 'about'].forEach(t => {
-                document.getElementById(`view-${t}`).classList.add('hidden');
-                const navBtn = document.getElementById(`nav-${t}`);
-                navBtn.classList.remove('text-emerald-600', 'font-extrabold');
-                navBtn.classList.add('text-slate-400', 'font-bold');
-            });
-
-            document.getElementById(`view-${tabName}`).classList.remove('hidden');
-            const activeNav = document.getElementById(`nav-${tabName}`);
-            activeNav.classList.remove('text-slate-400', 'font-bold');
-            activeNav.classList.add('text-emerald-600', 'font-extrabold');
-
-            if (tabName === 'cart') {
-                renderCartView();
-            }
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-
-        // ===== اتصال فروشگاه زنده به Supabase =====
+        // ================= ثبت سفارش =================
         const SB_URL = window.TAVANYAR_CONFIG?.url || '';
         const SB_KEY = window.TAVANYAR_CONFIG?.anonKey || '';
         const db = (SB_URL && SB_KEY && window.supabase) ? window.supabase.createClient(SB_URL, SB_KEY) : null;
@@ -760,48 +461,77 @@
         const dbReady = () => !!db;
         function dbNotice(){ showToast('اتصال پایگاه داده هنوز تنظیم نشده؛ فایل راهنمای نصب را اجرا کنید.'); }
         function dbProduct(row){ return {id:row.id, mainCat:row.main_cat, subCat:row.sub_cat, ambassador:row.ambassador || 'alireza', title:row.title, store:row.store, oldPrice:Number(row.old_price||row.price), price:Number(row.price), emoji:row.emoji||'🛍️', stock:Number(row.stock ?? 0), active:row.active}; }
+
         async function loadLiveProducts(){
-          if(!db) return;
-          const {data,error}=await db.from('products').select('*').eq('active',true).order('id');
-          if(error){console.error(error);showToast('خطا در دریافت محصولات از پایگاه داده');return;}
-          catalog=data.map(dbProduct); renderProducts();
+            if(!db) return;
+            const {data,error}=await db.from('products').select('*').eq('active',true).order('id');
+            if(error){console.error(error);showToast('خطا در دریافت محصولات');return;}
+            catalog=data.map(dbProduct); renderProducts();
         }
-        // جایگزین ثبت سفارش نمایشی: ثبت واقعی و ماندگار در دیتابیس
+
         async function submitOrder(){
-          if(!db){dbNotice();return;}
-          const name=document.getElementById('customerName').value.trim();
-          const phone=document.getElementById('customerPhone').value.trim();
-          const address=document.getElementById('customerAddress').value.trim();
-          if(!name||!phone||!address||!state.cart.length){showToast('لطفاً مشخصات و سبد خرید را کامل کنید');return;}
-          const items=state.cart.map(x=>({product_id:x.product.id,quantity:x.qty}));
-          const {data,error}=await db.rpc('create_tavanyar_order',{p_customer_name:name,p_customer_phone:phone,p_customer_address:address,p_items:items});
-          if(error){console.error(error);showToast(error.message.includes('stock')?'موجودی یکی از کالاها کافی نیست':'ثبت سفارش ناموفق بود؛ دوباره تلاش کنید');return;}
-          const order=data;
-          const total=Number(order.total_amount);
-          document.getElementById('invCode').innerText=order.tracking_code;
-          document.getElementById('invCustomer').innerText=`${name} (${phone})`;
-          document.getElementById('invAddress').innerText=address;
-          document.getElementById('invTotal').innerText=formatPrice(total);
-          document.getElementById('invDeliveryTime').innerText=state.cart.some(c=>c.product.mainCat!=='hyper')?'هماهنگی ارسال استانی':'هماهنگی تحویل در شهرضا';
-          document.getElementById('invItemsList').innerHTML=state.cart.map(c=>`<div class="flex justify-between text-slate-700"><span>${c.product.title} (${c.qty} عدد)</span><span class="font-bold">${formatPrice(c.product.price*c.qty)}</span></div>`).join('');
-          const status=document.getElementById('invPaymentStatus');status.className='p-3 rounded-2xl text-xs font-bold mb-4 border bg-emerald-50 border-emerald-200 text-emerald-900';status.innerText='سفارش با موفقیت در سامانه ثبت شد؛ پرداخت طبق هماهنگی با فروشگاه انجام می‌شود.';
-          state.lastInvoiceText=`فاکتور توان‌یار\nکد پیگیری: ${order.tracking_code}\nمشتری: ${name}\nتلفن: ${phone}\nآدرس: ${address}\nمبلغ: ${formatPrice(total)}`;
-          document.getElementById('invoiceModal').classList.remove('hidden');
+            if(!db){dbNotice();return;}
+            const name=document.getElementById('customerName').value.trim();
+            const phone=document.getElementById('customerPhone').value.trim();
+            const address=document.getElementById('customerAddress').value.trim();
+            if(!name||!phone||!address||!state.cart.length){showToast('لطفاً مشخصات و سبد خرید را کامل کنید');return;}
+            const items=state.cart.map(x=>({product_id:x.product.id,quantity:x.qty}));
+            const {data,error}=await db.rpc('create_tavanyar_order',{p_customer_name:name,p_customer_phone:phone,p_customer_address:address,p_items:items});
+            if(error){console.error(error);showToast(error.message.includes('stock')?'موجودی یکی از کالاها کافی نیست':'ثبت سفارش ناموفق بود؛ دوباره تلاش کنید');return;}
+            const order=data;
+            const total=Number(order.total_amount);
+            document.getElementById('invCode').innerText=order.tracking_code;
+            document.getElementById('invCustomer').innerText=`${name} (${phone})`;
+            document.getElementById('invAddress').innerText=address;
+            document.getElementById('invTotal').innerText=formatPrice(total);
+            document.getElementById('invDeliveryTime').innerText=state.cart.some(c=>c.product.mainCat!=='hyper')?'هماهنگی ارسال استانی':'هماهنگی تحویل در شهرضا';
+            document.getElementById('invItemsList').innerHTML=state.cart.map(c=>`<div class="flex justify-between text-slate-700"><span>${c.product.title} (${c.qty} عدد)</span><span class="font-bold">${formatPrice(c.product.price*c.qty)}</span></div>`).join('');
+            const status=document.getElementById('invPaymentStatus');status.className='p-3 rounded-2xl text-xs font-bold mb-4 border bg-emerald-50 border-emerald-200 text-emerald-900';status.innerText='سفارش با موفقیت در سامانه ثبت شد؛ پرداخت طبق هماهنگی با فروشگاه انجام می‌شود.';
+            state.lastInvoiceText=`فاکتور توان‌یار\nکد پیگیری: ${order.tracking_code}\nمشتری: ${name}\nتلفن: ${phone}\nآدرس: ${address}\nمبلغ: ${formatPrice(total)}`;
+            document.getElementById('invoiceModal').classList.remove('hidden');
         }
-        function openAdmin(){ document.getElementById('view-home').classList.add('hidden');document.getElementById('view-cart').classList.add('hidden');document.getElementById('view-about').classList.add('hidden');document.getElementById('view-admin').classList.remove('hidden');window.scrollTo(0,0); }
+
+        function sendToTelegram() {
+            const encodedText = encodeURIComponent(state.lastInvoiceText);
+            window.open(`https://t.me/share/url?url=${encodeURIComponent('https://tavanyar.ir')}&text=${encodedText}`, '_blank');
+        }
+        function copyInvoiceText() {
+            const textarea = document.createElement('textarea'); textarea.value = state.lastInvoiceText; document.body.appendChild(textarea); textarea.select(); document.execCommand('copy'); document.body.removeChild(textarea); showToast('✅ متن فاکتور کپی شد');
+        }
+        function closeInvoiceModal() { document.getElementById('invoiceModal').classList.add('hidden'); state.cart = []; updateCartBadge(); switchTab('home'); }
+
+        // ================= مدیریت تب‌ها =================
+        function switchTab(tabName) {
+            document.getElementById('view-admin')?.classList.add('hidden');
+            ['home', 'market', 'cart', 'about'].forEach(t => {
+                document.getElementById(`view-${t}`).classList.add('hidden');
+                const navBtn = document.getElementById(`nav-${t}`);
+                navBtn.classList.remove('text-emerald-600', 'font-extrabold');
+                navBtn.classList.add('text-slate-400', 'font-bold');
+            });
+            document.getElementById(`view-${tabName}`).classList.remove('hidden');
+            const activeNav = document.getElementById(`nav-${tabName}`);
+            activeNav.classList.remove('text-slate-400', 'font-bold');
+            activeNav.classList.add('text-emerald-600', 'font-extrabold');
+            if (tabName === 'cart') renderCartView();
+            if (tabName === 'market' && catalog.length === 0 && db) loadLiveProducts();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ================= پنل مدیریت =================
+        function openAdmin(){ document.getElementById('view-home').classList.add('hidden'); document.getElementById('view-market').classList.add('hidden'); document.getElementById('view-cart').classList.add('hidden'); document.getElementById('view-about').classList.add('hidden'); document.getElementById('view-admin').classList.remove('hidden'); window.scrollTo(0,0); }
         async function adminLogin(){
-          if(!db){dbNotice();return;}
-          const email=document.getElementById('adminEmail').value.trim(),password=document.getElementById('adminPassword').value;
-          const {error}=await db.auth.signInWithPassword({email,password});
-          if(error){showToast('ورود انجام نشد؛ ایمیل، رمز و دسترسی مدیر را بررسی کنید');return;}
-          const {data:role}=await db.from('user_roles').select('role').eq('user_id',(await db.auth.getUser()).data.user.id).maybeSingle();
-          if(role?.role!=='admin'){await db.auth.signOut();showToast('این حساب دسترسی مدیریت ندارد');return;}
-          document.getElementById('adminLogin').classList.add('hidden');document.getElementById('adminDashboard').classList.remove('hidden');await loadAdminProducts();
+            if(!db){dbNotice();return;}
+            const email=document.getElementById('adminEmail').value.trim(),password=document.getElementById('adminPassword').value;
+            const {error}=await db.auth.signInWithPassword({email,password});
+            if(error){showToast('ورود انجام نشد؛ ایمیل، رمز و دسترسی مدیر را بررسی کنید');return;}
+            const {data:role}=await db.from('user_roles').select('role').eq('user_id',(await db.auth.getUser()).data.user.id).maybeSingle();
+            if(role?.role!=='admin'){await db.auth.signOut();showToast('این حساب دسترسی مدیریت ندارد');return;}
+            document.getElementById('adminLogin').classList.add('hidden');document.getElementById('adminDashboard').classList.remove('hidden');await loadAdminProducts();
         }
         async function adminLogout(){if(db)await db.auth.signOut();document.getElementById('adminDashboard').classList.add('hidden');document.getElementById('adminLogin').classList.remove('hidden');}
         function showAdminSection(which){document.getElementById('adminProductsSection').classList.toggle('hidden',which!=='products');document.getElementById('adminOrdersSection').classList.toggle('hidden',which!=='orders');if(which==='orders')loadAdminOrders();}
         async function loadAdminProducts(){const box=document.getElementById('adminProductsList');box.innerHTML='در حال دریافت...';const {data,error}=await db.from('products').select('*').order('id');if(error){box.innerText='خطا در دریافت محصولات';return;}box.innerHTML=data.map(p=>`<div class="p-3 border rounded-xl flex items-center justify-between gap-2"><div class="min-w-0"><div class="font-bold text-sm">${escapeHtml(p.emoji||'🛍️')} ${escapeHtml(p.title)}</div><div class="text-xs text-slate-500">${formatPrice(p.price)} · موجودی: ${p.stock}</div></div><div class="flex gap-1"><button onclick="editProduct(${p.id})" class="px-3 py-2 bg-blue-50 text-blue-700 rounded-lg text-xs">ویرایش</button><button onclick="deleteProduct(${p.id})" class="px-3 py-2 bg-rose-50 text-rose-700 rounded-lg text-xs">حذف</button></div></div>`).join('');}
-        function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
         function newProduct(){adminEditingId=null;document.getElementById('productEditorTitle').innerText='افزودن محصول';['pTitle','pStore','pPrice','pOldPrice','pStock','pEmoji'].forEach(id=>document.getElementById(id).value='');document.getElementById('productEditor').classList.remove('hidden');}
         async function editProduct(id){const {data,error}=await db.from('products').select('*').eq('id',id).single();if(error)return showToast('دریافت محصول ناموفق بود');adminEditingId=id;document.getElementById('productEditorTitle').innerText='ویرایش محصول';document.getElementById('pTitle').value=data.title;document.getElementById('pStore').value=data.store;document.getElementById('pPrice').value=data.price;document.getElementById('pOldPrice').value=data.old_price;document.getElementById('pStock').value=data.stock;document.getElementById('pEmoji').value=data.emoji;document.getElementById('pMainCat').value=data.main_cat;document.getElementById('pSubCat').value=data.sub_cat;document.getElementById('productEditor').classList.remove('hidden');}
         function cancelProductEdit(){document.getElementById('productEditor').classList.add('hidden');}
@@ -809,13 +539,8 @@
         async function deleteProduct(id){if(!confirm('این محصول از ویترین حذف شود؟'))return;const {error}=await db.from('products').update({active:false}).eq('id',id);if(error)return showToast('حذف محصول ناموفق بود');await loadAdminProducts();await loadLiveProducts();}
         async function loadAdminOrders(){const box=document.getElementById('adminOrdersList');box.innerHTML='در حال دریافت...';const {data,error}=await db.from('orders').select('id,tracking_code,customer_name,customer_phone,customer_address,total_amount,status,created_at').order('created_at',{ascending:false}).limit(100);if(error){box.innerText='خطا در دریافت سفارش‌ها';return;}box.innerHTML=data.map(o=>`<div class="p-3 border rounded-xl space-y-2"><div class="flex justify-between"><b>${escapeHtml(o.tracking_code)}</b><span class="text-xs text-slate-500">${new Date(o.created_at).toLocaleString('fa-IR')}</span></div><div class="text-sm">${escapeHtml(o.customer_name)} · ${escapeHtml(o.customer_phone)}</div><div class="text-xs text-slate-600">${escapeHtml(o.customer_address)}</div><b class="text-sm">${formatPrice(o.total_amount)}</b><div class="flex gap-2"><select id="status-${o.id}" class="flex-1 border rounded-lg p-2 text-sm"><option value="new" ${o.status==='new'?'selected':''}>جدید</option><option value="processing" ${o.status==='processing'?'selected':''}>در حال آماده‌سازی</option><option value="sent" ${o.status==='sent'?'selected':''}>ارسال شده</option><option value="done" ${o.status==='done'?'selected':''}>تحویل شده</option><option value="cancelled" ${o.status==='cancelled'?'selected':''}>لغو شده</option></select><button onclick="updateOrderStatus(${o.id})" class="bg-emerald-600 text-white rounded-lg px-3 text-xs">ثبت وضعیت</button></div></div>`).join('')||'هنوز سفارشی ثبت نشده است.';}
         async function updateOrderStatus(id){const status=document.getElementById(`status-${id}`).value;const {error}=await db.from('orders').update({status}).eq('id',id);showToast(error?'به‌روزرسانی وضعیت ناموفق بود':'وضعیت سفارش به‌روز شد');}
-        // Override cart add: keep stock limits in mind when products have been loaded
-        const _originalAddToCart=addToCart;
-        addToCart=function(id){const p=catalog.find(x=>x.id===id);if(p&&p.stock!==undefined&&p.stock<=0)return showToast('این کالا ناموجود است');const current=state.cart.find(x=>x.product.id===id)?.qty||0;if(p&&p.stock!==undefined&&current>=p.stock)return showToast('تعداد درخواستی بیشتر از موجودی است');_originalAddToCart(id);};
-        const _originalRenderProducts=renderProducts;
-        renderProducts=function(){_originalRenderProducts();};
 
-        // راه‌اندازی اولیه در هنگام بارگذاری صفحه
+        // ================= راه‌اندازی اولیه =================
         window.onload = function() {
             renderAmbassadors();
             renderSubCategories();
@@ -825,5 +550,4 @@
         };
     </script>
 </body>
-<script src="config.js"></script>
-    
+</html> 
