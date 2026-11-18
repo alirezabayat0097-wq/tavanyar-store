@@ -40,8 +40,24 @@
         </div>
 
         <!-- بنر تبلیغاتی به جای جستجو -->
-       <div class="w-full h-36 rounded-2xl overflow-hidden relative shadow-sm border border-slate-200 bg-gradient-to-r from-emerald-100 to-teal-50 flex flex-col justify-center items-center text-slate-600">
-    <span class="text-sm font-bold text-emerald-800">فضای تبلیغات اسپانسرها</span>
+      <!-- بنر تبلیغاتی با ویدیو -->
+<div class="w-full h-36 rounded-2xl overflow-hidden relative shadow-sm border border-slate-200">
+    <video 
+        autoplay 
+        loop 
+        muted 
+        playsinline 
+        class="w-full h-full object-cover"
+        poster="لینک-عکس-پیشفرض-دلخواه"
+    >
+        <source src="لینک-مستقیم-ویدیو.mp4" type="video/mp4">
+        مرورگر شما از ویدیو پشتیبانی نمی‌کند.
+    </video>
+    
+    <!-- اگر خواستی روی ویدیو متنی هم باشه (مثلا اسم اسپانسر) -->
+    <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+        <span class="text-white font-bold text-lg">تبلیغ اسپانسر</span>
+    </div>
 </div>
 
     <!-- کانتینر اصلی -->
