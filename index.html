@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>توان‌یار | اشتغال و درآمد پایدار برای معلولین</title>
+    <title>توان‌یار | هایپر محله شهرضا و بازار توانمندی‌های استان</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
@@ -17,37 +17,31 @@
             background-color: #F8FAFC;
             color: #0F172A;
             -webkit-tap-highlight-color: transparent;
-            padding-bottom: 90px;
+            padding-bottom: 92px;
         }
 
         .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
         .btn-accessible {
             min-height: 48px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.1s ease, background-color 0.2s ease;
+            transition: transform 0.12s ease, background-color 0.2s ease;
         }
-
         .btn-accessible:active { transform: scale(0.97); }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        .animate-fade-in { animation: fadeIn 0.25s ease-out forwards; }
 
-        .animate-fade-in {
-            animation: fadeIn 0.25s ease-out forwards;
-        }
-
+        /* نمودار دایره‌ای پروفایل */
         .circle-chart {
-            width: 120px;
-            height: 120px;
+            width: 110px;
+            height: 110px;
             border-radius: 50%;
             background: conic-gradient(#10b981 75%, #e2e8f0 0);
             display: flex;
@@ -55,28 +49,26 @@
             justify-content: center;
             position: relative;
         }
-
         .circle-chart::before {
             content: "";
             position: absolute;
-            width: 100px;
-            height: 100px;
+            width: 90px;
+            height: 90px;
             background: white;
             border-radius: 50%;
         }
-
         .circle-chart span {
             position: relative;
             z-index: 10;
             font-weight: 900;
-            font-size: 20px;
+            font-size: 18px;
             color: #0f172a;
         }
 
-        /* شهر توان */
+        /* استایل‌های اختصاصی بازی شهر توان */
         #city-hub {
             background: radial-gradient(circle at 85% 0%, #475569 0%, transparent 34%),
-            linear-gradient(145deg, #101b35, #172554 55%, #312e81);
+                        linear-gradient(145deg, #101b35, #172554 55%, #312e81);
             border: 1px solid rgba(255,255,255,.12);
             box-shadow: 0 18px 45px rgba(15,23,42,.22);
             border-radius: 24px;
@@ -85,7 +77,6 @@
             min-height: 500px;
             overflow: hidden;
         }
-
         .city-card {
             background: rgba(255,255,255,.1);
             backdrop-filter: blur(10px);
@@ -93,9 +84,7 @@
             border-radius: 16px;
             transition: transform .2s;
         }
-
         .city-card:active { transform: scale(.96); }
-
         .city-hero {
             background: linear-gradient(120deg,rgba(16,185,129,.22),rgba(59,130,246,.13));
             border: 1px solid rgba(255,255,255,.13);
@@ -104,25 +93,12 @@
             position: relative;
             overflow: hidden;
         }
-
-        .city-hero:after {
-            content: "✦";
-            position: absolute;
-            left: 18px;
-            top: 8px;
-            font-size: 46px;
-            color: #fde68a;
-            opacity: .25;
-        }
-
         .city-stat {
             background: rgba(255,255,255,.09);
             border: 1px solid rgba(255,255,255,.12);
             border-radius: 14px;
             padding: 9px 5px;
-            min-width: 0;
         }
-
         .city-nav {
             display: flex;
             gap: 7px;
@@ -130,63 +106,44 @@
             padding: 4px 1px 10px;
             scrollbar-width: none;
         }
-
         .city-nav::-webkit-scrollbar { display: none; }
-
         .city-nav button {
             flex: 0 0 auto;
-            padding: 10px 13px;
+            padding: 9px 12px;
             border-radius: 13px;
             background: rgba(255,255,255,.09);
             color: #dbeafe;
             font-size: 11px;
             font-weight: 800;
             border: 1px solid rgba(255,255,255,.1);
-            min-height: 42px;
+            min-height: 40px;
         }
-
         .city-nav button.active {
             background: #fbbf24;
             color: #1e293b;
             border-color: #fde68a;
-            box-shadow: 0 5px 15px #0003;
         }
-
         .city-panel {
             background: rgba(255,255,255,.075);
             border: 1px solid rgba(255,255,255,.13);
             border-radius: 19px;
             padding: 14px;
         }
-
         .city-action {
-            min-height: 46px;
+            min-height: 44px;
             border-radius: 13px;
-            padding: 10px 14px;
+            padding: 8px 14px;
             font-size: 12px;
             font-weight: 900;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 7px;
+            gap: 6px;
             transition: .18s;
         }
-
         .city-action:active { transform: scale(.96); }
-
-        .resource-line {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid #ffffff18;
-            font-size: 12px;
-        }
-
-        .resource-line:last-child { border: 0; }
-
         .world-scene {
-            min-height: 205px;
+            min-height: 190px;
             border-radius: 18px;
             display: flex;
             flex-direction: column;
@@ -197,78 +154,23 @@
             background: linear-gradient(180deg,#7dd3fc 0%,#bae6fd 48%,#86efac 49%,#166534 100%);
             color: #123;
         }
-
-        .world-scene.mine {
-            background: linear-gradient(180deg,#64748b,#334155 52%,#1e293b);
-            color: white;
-        }
-
-        .world-scene.magic {
-            background: linear-gradient(180deg,#312e81,#6d28d9 55%,#14532d);
-            color: white;
-        }
-
+        .world-scene.mine { background: linear-gradient(180deg,#64748b,#334155 52%,#1e293b); color: white; }
+        .world-scene.magic { background: linear-gradient(180deg,#312e81,#6d28d9 55%,#14532d); color: white; }
         .world-target {
-            font-size: 86px;
+            font-size: 80px;
             line-height: 1.2;
             filter: drop-shadow(0 8px 8px #0003);
             cursor: pointer;
             user-select: none;
             transition: transform .12s;
         }
-
-        .world-target:active {
-            transform: scale(.9) rotate(-4deg);
-        }
-
-        .progress-track {
-            height: 9px;
-            background: #0003;
-            border-radius: 99px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            border-radius: 99px;
-            background: linear-gradient(90deg,#fbbf24,#f97316);
-            transition: width .2s;
-        }
-
-        .city-small {
-            font-size: 10px;
-            color: #cbd5e1;
-            line-height: 1.8;
-        }
-
-        .city-pill {
-            background: #ffffff12;
-            border: 1px solid #ffffff1b;
-            border-radius: 999px;
-            padding: 5px 9px;
-            font-size: 10px;
-            color: #e2e8f0;
-        }
-
-        .tree-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 200px;
-            cursor: pointer;
-            user-select: none;
-        }
-
-        .tree-icon {
-            font-size: 100px;
-            transition: transform .05s;
-        }
-
-        .tree-icon:active { transform: scale(.9); }
+        .world-target:active { transform: scale(.9) rotate(-4deg); }
+        .progress-track { height: 9px; background: #0003; border-radius: 99px; overflow: hidden; }
+        .progress-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg,#fbbf24,#f97316); transition: width .2s; }
+        .city-small { font-size: 10px; color: #cbd5e1; line-height: 1.7; }
+        .city-pill { background: #ffffff12; border: 1px solid #ffffff1b; border-radius: 999px; padding: 4px 9px; font-size: 10px; color: #e2e8f0; }
 
         .tree-shake { animation: shake .3s; }
-
         @keyframes shake {
             0% { transform: translate(1px,1px) rotate(0deg); }
             25% { transform: translate(-3px,0) rotate(1deg); }
@@ -276,7 +178,6 @@
             75% { transform: translate(3px,1px) rotate(-1deg); }
             100% { transform: translate(1px,-2px) rotate(0deg); }
         }
-
         .floating-text {
             position: absolute;
             color: #fbbf24;
@@ -285,25 +186,9 @@
             pointer-events: none;
             animation: floatUp .8s ease-out forwards;
         }
-
         @keyframes floatUp {
             0% { opacity: 1; transform: translateY(0); }
-            100% { opacity: 0; transform: translateY(-50px); }
-        }
-
-        .game-tab { transition: all .2s; }
-
-        .game-tab.active {
-            background: #fbbf24;
-            color: #1e1b4b;
-            font-weight: 900;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .tree-shake, .animate-fade-in {
-                animation: none !important;
-                transition: none !important;
-            }
+            100% { opacity: 0; transform: translateY(-45px); }
         }
     </style>
 </head>
@@ -311,469 +196,663 @@
 <body class="max-w-md mx-auto bg-white min-h-screen shadow-xl relative border-x border-slate-100">
 
     <!-- هدر اصلی -->
-    <header id="mainHeader" class="sticky top-0 z-30 bg-white/95 backdrop-blur-md px-4 pt-4 pb-3 border-b border-slate-100">
-        <div class="flex items-center justify-between mb-3">
+    <header id="mainHeader" class="sticky top-0 z-30 bg-white/95 backdrop-blur-md px-4 pt-3.5 pb-3 border-b border-slate-100">
+        <div class="flex items-center justify-between">
             <div class="flex items-center gap-2.5">
                 <div class="w-11 h-11 rounded-2xl bg-emerald-600 text-white flex items-center justify-center shadow-md shadow-emerald-200">
                     <i data-lucide="heart-handshake" class="w-6 h-6"></i>
                 </div>
                 <div>
                     <h1 class="text-xl font-black text-slate-900 tracking-tight">توان‌یار</h1>
-                    <p class="text-xs text-slate-500 font-medium">اشتغال و درآمد پایدار برای معلولین</p>
+                    <p class="text-[11px] text-slate-500 font-medium">هایپر محله شهرضا و بازار توانمندی‌های استان</p>
                 </div>
             </div>
-            <span class="text-xs font-bold bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-full border border-emerald-200">📍 اصفهان</span>
+            <div class="flex items-center gap-1.5">
+                <button onclick="switchTab('city')" class="text-[11px] font-black bg-amber-100 text-amber-900 px-2.5 py-1.5 rounded-full border border-amber-300 flex items-center gap-1">
+                    🪙 <span id="headerGoldCount">۰</span>
+                </button>
+                <span class="text-[11px] font-bold bg-emerald-50 text-emerald-700 px-2.5 py-1.5 rounded-full border border-emerald-200">
+                    📍 شهرضا
+                </span>
+            </div>
         </div>
     </header>
 
     <main id="mainContent" class="px-4 pt-4">
 
-        ```html
-        <!-- ================== صفحه خانه (فروشگاه) ================== -->
+        <!-- ================== ۱. صفحه خانه ================== -->
         <section id="view-home" class="animate-fade-in space-y-5">
-            <div class="w-full h-36 rounded-2xl overflow-hidden relative shadow-sm border border-slate-200 bg-gradient-to-br from-emerald-500 via-teal-600 to-emerald-700 flex flex-col justify-center items-center text-white text-center p-4">
-                <h2 class="text-xl font-black mb-1">توان‌یار</h2>
-                <p class="text-sm font-medium opacity-90">اشتغال و درآمد پایدار برای معلولین</p>
-                <span class="text-xs mt-2 bg-white/20 px-3 py-1 rounded-full">هایپر محله اصفهان</span>
+            <!-- بنر اصلی شهرضا -->
+            <div class="w-full rounded-3xl overflow-hidden relative shadow-sm border border-emerald-200 bg-gradient-to-br from-emerald-600 via-teal-600 to-emerald-800 text-white p-5">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <span class="text-[10px] font-bold bg-white/20 px-2.5 py-1 rounded-full">فاز پایلوت شهرضا</span>
+                        <h2 class="text-xl font-black mt-2 mb-1">خرید پرتخفیف + اشتغال پایدار</h2>
+                        <p class="text-xs opacity-90 leading-relaxed">سفارش روزمره از ارزان‌ترین فروشگاه‌های شهرضا و حمایت مستقیم از هنرمندان دارای معلولیت استان</p>
+                    </div>
+                </div>
+                <div class="mt-4 flex gap-2">
+                    <button onclick="switchTab('market')" class="bg-white text-emerald-800 font-black text-xs px-4 py-2.5 rounded-xl shadow-sm">
+                        🛒 ورود به فروشگاه
+                    </button>
+                    <button onclick="switchTab('city')" class="bg-amber-400 text-slate-900 font-black text-xs px-3.5 py-2.5 rounded-xl shadow-sm">
+                        🏰 بازی و ارسال رایگان
+                    </button>
+                </div>
             </div>
+
+            <!-- کارت وضعیت گاوصندوق مشتری در صفحه خانه -->
+            <div onclick="switchTab('city')" class="bg-slate-900 text-white p-4 rounded-2xl flex items-center justify-between cursor-pointer shadow-md">
+                <div class="flex items-center gap-3">
+                    <div class="w-11 h-11 rounded-xl bg-amber-400/20 text-amber-300 flex items-center justify-center text-2xl">🏦</div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h3 class="text-xs font-black">گاوصندوق ارسال رایگان شما</h3>
+                            <span id="homeVaultStatusBadge" class="text-[10px] px-2 py-0.5 rounded-full font-bold bg-emerald-500/20 text-emerald-300">باز است</span>
+                        </div>
+                        <p class="text-[11px] text-slate-300 mt-0.5">اعتبار فعلی: <b id="homeVaultValue" class="text-amber-300">۰ تومان</b> (هر سکه = ۱,۰۰۰ تومان)</p>
+                    </div>
+                </div>
+                <i data-lucide="chevron-left" class="w-5 h-5 text-slate-400"></i>
+            </div>
+
+            <!-- سفیران و متخصصین -->
             <div>
                 <div class="flex items-center justify-between mb-3">
                     <h2 class="text-sm font-extrabold text-slate-800">سفیران و متخصصین توان‌یار</h2>
-                    <button onclick="openAmbassadorSearch()" class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg flex items-center gap-1"><i data-lucide="search" class="w-3 h-3"></i> جستجو</button>
+                    <button onclick="openAmbassadorSearch()" class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg flex items-center gap-1">
+                        <i data-lucide="search" class="w-3 h-3"></i> جستجو
+                    </button>
                 </div>
                 <div id="ambassadorsList" class="flex gap-3.5 overflow-x-auto no-scrollbar pb-1"></div>
             </div>
+
+            <!-- پایگاه خبری توان‌یار -->
             <div>
                 <div class="flex items-center justify-between mb-3">
-                    <h2 class="text-sm font-extrabold text-slate-800">پایگاه خبری توان‌یار</h2>
-                    <button onclick="openNewsArchive()" class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg">مشاهده همه</button>
+                    <h2 class="text-sm font-extrabold text-slate-800">پایگاه خبری و اطلاع‌رسانی شهرضا</h2>
+                    <button onclick="openNewsArchive()" class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg">آرشیو</button>
                 </div>
-                <div class="space-y-3">
-                    <div onclick="openNewsArticle(1)" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex gap-3 cursor-pointer hover:shadow-md transition-shadow">
-                        <div class="w-16 h-16 bg-emerald-50 rounded-xl flex items-center justify-center shrink-0 text-emerald-600"><i data-lucide="store" class="w-8 h-8"></i></div>
-                        <div><h3 class="text-sm font-bold text-slate-800 line-clamp-2">افتتاح اولین هایپر محله در شهرضا</h3><p class="text-[10px] text-slate-500 mt-1 line-clamp-2">این هایپر با هدف ایجاد اشتغال برای معلولین راه‌اندازی شد...</p><span class="text-[9px] text-emerald-600 font-bold mt-1 block">۲ ساعت پیش</span></div>
+                <div class="space-y-2.5">
+                    <div onclick="openNewsArticle(1)" class="bg-white p-3.5 rounded-2xl shadow-sm border border-slate-100 flex gap-3 cursor-pointer hover:border-emerald-200 transition-all">
+                        <div class="w-14 h-14 bg-emerald-50 rounded-xl flex items-center justify-center shrink-0 text-emerald-600">
+                            <i data-lucide="store" class="w-7 h-7"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xs font-black text-slate-800">آغاز به کار پایلوت هایپر محله در شهرضا</h3>
+                            <p class="text-[10px] text-slate-500 mt-1 line-clamp-2">تخفیف‌های روزانه سوپرمارکت، نانوایی و پروتئینی‌های شهرضا با تحویل فوری در دسترس قرار گرفت.</p>
+                            <span class="text-[9px] text-emerald-600 font-bold mt-1 block">جدید</span>
+                        </div>
                     </div>
-                    <div onclick="openNewsArticle(2)" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex gap-3 cursor-pointer hover:shadow-md transition-shadow">
-                        <div class="w-16 h-16 bg-blue-50 rounded-xl flex items-center justify-center shrink-0 text-blue-600"><i data-lucide="book-open" class="w-8 h-8"></i></div>
-                        <div><h3 class="text-sm font-bold text-slate-800 line-clamp-2">دوره‌های مهارت‌آموزی رایگان</h3><p class="text-[10px] text-slate-500 mt-1 line-clamp-2">ثبت‌نام دوره‌های جدید برای معلولین عزیز آغاز شد...</p><span class="text-[9px] text-emerald-600 font-bold mt-1 block">دیروز</span></div>
+                    <div onclick="openNewsArticle(2)" class="bg-white p-3.5 rounded-2xl shadow-sm border border-slate-100 flex gap-3 cursor-pointer hover:border-blue-200 transition-all">
+                        <div class="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center shrink-0 text-blue-600">
+                            <i data-lucide="award" class="w-7 h-7"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xs font-black text-slate-800">عرضه مستقیم صنایع دستی و مهارت‌های استان اصفهان</h3>
+                            <p class="text-[10px] text-slate-500 mt-1 line-clamp-2">هنرمندان و متخصصین دارای معلولیت سراسر استان می‌توانند محصولات و خدمات خود را ثبت کنند.</p>
+                            <span class="text-[9px] text-blue-600 font-bold mt-1 block">اطلاعیه استانی</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ================== صفحه مارکت ================== -->
+        <!-- ================== ۲. صفحه فروشگاه (مارکت) ================== -->
         <section id="view-market" class="hidden animate-fade-in">
-            <div class="grid grid-cols-3 gap-2.5 mb-5">
-                <button onclick="selectMainCategory('hyper')" id="tab-hyper" class="category-card p-3 rounded-2xl border-2 border-emerald-600 bg-emerald-600 text-white flex flex-col items-center justify-center text-center shadow-md shadow-emerald-100 transition-all min-h-[108px]">
-                    <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center mb-2"><i data-lucide="shopping-basket" class="w-6 h-6"></i></div>
-                    <span class="text-xs font-extrabold leading-tight">هایپر محله</span><span class="text-[10px] opacity-90 mt-0.5">خرید پرتخفیف</span>
+            <!-- نوار جستجو -->
+            <div class="relative mb-4">
+                <input type="text" id="marketSearchInput" oninput="handleMarketSearch(this.value)" placeholder="جستجوی کالا یا فروشگاه در شهرضا..." class="w-full h-11 pr-10 pl-4 bg-slate-100 rounded-2xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white">
+                <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute right-3.5 top-3.5"></i>
+            </div>
+
+            <!-- سه دسته‌بندی اصلی -->
+            <div class="grid grid-cols-3 gap-2.5 mb-4">
+                <button onclick="selectMainCategory('hyper')" id="tab-hyper" class="category-card p-3 rounded-2xl border-2 border-emerald-600 bg-emerald-600 text-white flex flex-col items-center justify-center text-center shadow-md shadow-emerald-100 transition-all min-h-[102px]">
+                    <div class="w-9 h-9 rounded-xl bg-white/20 flex items-center justify-center mb-1.5"><i data-lucide="shopping-basket" class="w-5 h-5"></i></div>
+                    <span class="text-xs font-extrabold leading-tight">هایپر شهرضا</span><span class="text-[10px] opacity-90 mt-0.5">خرید پرتخفیف</span>
                 </button>
-                <button onclick="selectMainCategory('handicraft')" id="tab-handicraft" class="category-card p-3 rounded-2xl border-2 border-slate-100 bg-orange-50/70 text-slate-800 flex flex-col items-center justify-center text-center transition-all min-h-[108px]">
-                    <div class="w-10 h-10 rounded-xl bg-orange-500 text-white flex items-center justify-center mb-2"><i data-lucide="palette" class="w-6 h-6"></i></div>
+                <button onclick="selectMainCategory('handicraft')" id="tab-handicraft" class="category-card p-3 rounded-2xl border-2 border-slate-100 bg-orange-50/70 text-slate-800 flex flex-col items-center justify-center text-center transition-all min-h-[102px]">
+                    <div class="w-9 h-9 rounded-xl bg-orange-500 text-white flex items-center justify-center mb-1.5"><i data-lucide="palette" class="w-5 h-5"></i></div>
                     <span class="text-xs font-extrabold leading-tight">صنایع دستی</span><span class="text-[10px] text-slate-500 mt-0.5">هنر استان</span>
                 </button>
-                <button onclick="selectMainCategory('skills')" id="tab-skills" class="category-card p-3 rounded-2xl border-2 border-slate-100 bg-blue-50/70 text-slate-800 flex flex-col items-center justify-center text-center transition-all min-h-[108px]">
-                    <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center mb-2"><i data-lucide="briefcase" class="w-6 h-6"></i></div>
+                <button onclick="selectMainCategory('skills')" id="tab-skills" class="category-card p-3 rounded-2xl border-2 border-slate-100 bg-blue-50/70 text-slate-800 flex flex-col items-center justify-center text-center transition-all min-h-[102px]">
+                    <div class="w-9 h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center mb-1.5"><i data-lucide="briefcase" class="w-5 h-5"></i></div>
                     <span class="text-xs font-extrabold leading-tight">پیشه و مهارت</span><span class="text-[10px] text-slate-500 mt-0.5">خدمات آنلاین</span>
                 </button>
             </div>
-            <div id="hyperSubCategories" class="mb-4"><div id="subCatChips" class="flex gap-2 overflow-x-auto no-scrollbar pb-1"></div></div>
-            <div class="flex items-center justify-between mb-3"><h3 id="sectionTitle" class="text-base font-black text-slate-900">تخفیف‌های روز هایپر محله</h3><span id="itemsCount" class="text-xs font-semibold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full"></span></div>
+
+            <!-- زیرشاخه‌های هایپر -->
+            <div id="hyperSubCategories" class="mb-4">
+                <div id="subCatChips" class="flex gap-2 overflow-x-auto no-scrollbar pb-1"></div>
+            </div>
+
+            <div class="flex items-center justify-between mb-3">
+                <h3 id="sectionTitle" class="text-sm font-black text-slate-900">تخفیف‌های روز هایپر شهرضا</h3>
+                <span id="itemsCount" class="text-[11px] font-semibold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full"></span>
+            </div>
+
             <div id="productsGrid" class="grid grid-cols-2 gap-3 pb-4"></div>
         </section>
 
-        <!-- ================== صفحه پروفایل سفیر ================== -->
+        <!-- ================== ۳. صفحه پروفایل سفیر ================== -->
         <section id="view-ambassador-profile" class="hidden animate-fade-in pb-4">
-            <button onclick="switchTab('home')" class="flex items-center gap-1 text-sm text-slate-500 hover:text-emerald-600 mb-4 font-bold"><i data-lucide="arrow-right" class="w-4 h-4"></i> بازگشت به خانه</button>
-            <div class="bg-white rounded-3xl p-5 shadow-sm border border-slate-100 text-center relative overflow-hidden mb-5">
-                <div class="absolute top-0 right-0 w-24 h-24 bg-emerald-50 rounded-bl-full -z-10"></div>
-                <div id="profIcon" class="w-24 h-24 rounded-full flex items-center justify-center text-5xl mx-auto mb-3 border-4 border-white shadow-lg relative z-10"></div>
-                <h2 id="profName" class="text-xl font-black text-slate-900 mb-1"></h2>
+            <button onclick="switchTab('home')" class="flex items-center gap-1 text-xs text-slate-500 hover:text-emerald-600 mb-4 font-bold">
+                <i data-lucide="arrow-right" class="w-4 h-4"></i> بازگشت به خانه
+            </button>
+            <div class="bg-white rounded-3xl p-5 shadow-sm border border-slate-100 text-center relative overflow-hidden mb-4">
+                <div id="profIcon" class="w-20 h-20 rounded-full flex items-center justify-center text-4xl mx-auto mb-3 border-4 border-white shadow-md"></div>
+                <h2 id="profName" class="text-lg font-black text-slate-900 mb-1"></h2>
                 <p id="profRole" class="text-xs font-bold text-emerald-600 mb-2"></p>
-                <span class="inline-flex items-center gap-1 text-[10px] font-bold text-slate-500 bg-slate-100 px-3 py-1 rounded-full mb-3"><i data-lucide="map-pin" class="w-3 h-3"></i> <span id="profLocation">اصفهان، ایران</span></span>
+                <span class="inline-flex items-center gap-1 text-[10px] font-bold text-slate-500 bg-slate-100 px-3 py-1 rounded-full mb-3">
+                    <i data-lucide="map-pin" class="w-3 h-3"></i> <span id="profLocation">شهرضا، استان اصفهان</span>
+                </span>
                 <p id="profBio" class="text-xs text-slate-600 leading-relaxed bg-slate-50 p-3 rounded-xl border border-slate-100 text-right"></p>
-                <div class="mt-3 bg-slate-900 text-white rounded-xl h-12 flex items-center justify-center gap-2 cursor-pointer hover:bg-slate-800 transition-colors"><i data-lucide="play-circle" class="w-5 h-5 text-rose-400"></i><span class="text-xs font-bold">پخش ویدیوی معرفی سفیر</span></div>
             </div>
+
             <div class="flex gap-2 mb-4 bg-slate-100 p-1 rounded-2xl">
-                <button onclick="switchAmbTab('products')" id="ambTab-products" class="flex-1 py-2 text-xs font-bold rounded-xl bg-white text-emerald-600 shadow-sm transition-all">محصولات</button>
-                <button onclick="switchAmbTab('dashboard')" id="ambTab-dashboard" class="flex-1 py-2 text-xs font-bold rounded-xl text-slate-500 hover:text-slate-800 transition-all">داشبورد</button>
-                <button onclick="switchAmbTab('marketing')" id="ambTab-marketing" class="flex-1 py-2 text-xs font-bold rounded-xl text-slate-500 hover:text-slate-800 transition-all">بازاریابی</button>
+                <button onclick="switchAmbTab('products')" id="ambTab-products" class="flex-1 py-2 text-xs font-bold rounded-xl bg-white text-emerald-600 shadow-sm">محصولات و خدمات</button>
+                <button onclick="switchAmbTab('dashboard')" id="ambTab-dashboard" class="flex-1 py-2 text-xs font-bold rounded-xl text-slate-500">عملکرد و امتیاز</button>
             </div>
+
             <div id="ambContent-products" class="space-y-2"></div>
-            <div id="ambContent-dashboard" class="hidden space-y-4">
+            <div id="ambContent-dashboard" class="hidden">
                 <div class="bg-white p-5 rounded-3xl border border-slate-100 shadow-sm flex flex-col items-center text-center">
-                    <h3 class="text-sm font-black text-slate-800 mb-4">پاداش و اعتبار سکه‌های سفیر</h3>
-                    <div class="circle-chart"><span>۷۵٪</span></div>
-                    <p class="text-xs text-slate-500 mt-4 leading-relaxed">این سفیر تاکنون موفق به دریافت <span class="font-bold text-emerald-600">۱,۲۵۰ امتیاز</span> شده است.</p>
+                    <h3 class="text-sm font-black text-slate-800 mb-3">شاخص رضایت و تحویل به موقع</h3>
+                    <div class="circle-chart"><span>۹۸٪</span></div>
+                    <p class="text-xs text-slate-500 mt-3">سفیر فعال پایلوت شهرضا و نماینده کیفیت استان</p>
                 </div>
-            </div>
-            <div id="ambContent-marketing" class="hidden space-y-3">
-                <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm"><h3 class="text-sm font-bold text-slate-800 mb-1">همکاری با هنرمندان بومی</h3><p class="text-[10px] text-slate-500">این سفیر در حال جذب هنرمندان صنایع دستی محله است.</p></div>
             </div>
         </section>
 
-        <!-- ================== صفحه سبد خرید ================== -->
-        <section id="view-cart" class="hidden animate-fade-in">
-            <div class="flex items-center justify-between mb-4"><h2 class="text-lg font-black text-slate-900">سبد خرید و ثبت سفارش</h2><button onclick="clearCart()" id="clearCartBtn" class="text-xs text-rose-600 font-bold px-2.5 py-1.5 rounded-lg bg-rose-50 hidden">حذف همه</button></div>
-            <div id="emptyCartState" class="text-center py-12 px-4 bg-slate-50 rounded-3xl border border-slate-100">
-                <div class="w-16 h-16 bg-slate-200/70 text-slate-400 rounded-full flex items-center justify-center mx-auto mb-3"><i data-lucide="shopping-bag" class="w-8 h-8"></i></div>
-                <h3 class="text-base font-bold text-slate-800 mb-1">سبد خرید شما هنوز خالی است</h3>
-                <p class="text-xs text-slate-500 mb-5 leading-relaxed">با هر خرید از توان‌یار، از اشتغال عزیزان دارای معلولیت حمایت می‌کنید.</p>
-                <button onclick="switchTab('market')" class="btn-accessible px-6 bg-emerald-600 text-white rounded-2xl text-sm font-bold shadow-md shadow-emerald-200">بازگشت به فروشگاه</button>
-            </div>
-            <div id="filledCartState" class="hidden space-y-4">
-                <div id="cartItemsList" class="space-y-2.5"></div>
-                <div class="bg-slate-50 p-4 rounded-3xl border border-slate-200 space-y-3">
-                    <div class="flex justify-between items-center text-xs text-slate-500"><span>سود شما از تخفیف‌ها:</span><span id="totalDiscountText" class="font-bold text-emerald-600">۰ تومان</span></div>
-                    <div class="flex justify-between items-center pt-2 border-t border-slate-200"><span class="text-sm font-extrabold text-slate-800">مبلغ قابل پرداخت:</span><span id="totalPriceText" class="text-lg font-black text-slate-900">۰ تومان</span></div>
-                    <div id="paymentRuleBanner" class="p-3.5 rounded-2xl text-xs font-bold leading-relaxed border"></div>
-                </div>
-                <div class="bg-white p-4 rounded-3xl border border-slate-200 space-y-3">
-                    <h3 class="text-sm font-extrabold text-slate-800 flex items-center gap-1.5"><i data-lucide="map-pin" class="w-4 h-4 text-emerald-600"></i> مشخصات تحویل سفارش</h3>
-                    <div><label class="block text-xs font-bold text-slate-600 mb-1">نام و نام خانوادگی</label><input type="text" id="customerName" placeholder="نام" class="w-full h-12 px-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm"></div>
-                    <div><label class="block text-xs font-bold text-slate-600 mb-1">شماره موبایل</label><input type="tel" id="customerPhone" placeholder="موبایل" class="w-full h-12 px-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-left" dir="ltr"></div>
-                    <div><label class="block text-xs font-bold text-slate-600 mb-1">آدرس دقیق</label><textarea id="customerAddress" rows="2" placeholder="آدرس" class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm"></textarea></div>
-                </div>
-                <button onclick="submitOrder()" class="btn-accessible w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl text-base font-black shadow-lg shadow-emerald-200 gap-2"><i data-lucide="check-circle-2" class="w-5 h-5"></i> تایید نهایی و صدور فاکتور</button>
-            </div>
-        </section>
-
-        <!-- ================== صفحه درباره ما ================== -->
-        <section id="view-about" class="hidden animate-fade-in space-y-4">
-            <div class="bg-gradient-to-br from-emerald-600 to-teal-700 text-white p-5 rounded-3xl shadow-md">
-                <h2 class="text-lg font-black mb-2">داستان و هدف توان‌یار</h2>
-                <p class="text-xs leading-relaxed opacity-95">«توان‌یار» یک پلتفرم نوآورانه برای اشتغال پایدار افراد دارای معلولیت است. در فاز اول (شهرضا)، ما فروشگاه‌های پرتخفیف محله را به خانه شما وصل می‌کنیم.</p>
-            </div>
-            <button onclick="openAdmin()" class="btn-accessible w-full bg-slate-900 text-white rounded-2xl text-sm font-bold gap-2 mt-3">⚙️ ورود به پنل مدیریت فروشگاه</button>
-        </section>
-
-        <!-- پنل مدیریت -->
-        <section id="view-admin" class="hidden px-4 pt-4 pb-24 max-w-md mx-auto">
-            <div class="flex items-center justify-between mb-4"><h2 class="text-lg font-black">مدیریت توان‌یار</h2><button onclick="switchTab('about')" class="text-sm text-emerald-700 font-bold">بازگشت</button></div>
-            <div id="adminLogin" class="bg-white border rounded-2xl p-4 space-y-3">
-                <input id="adminEmail" type="email" placeholder="ایمیل مدیر" class="w-full h-12 px-3 border rounded-xl text-left" dir="ltr">
-                <input id="adminPassword" type="password" placeholder="رمز عبور" class="w-full h-12 px-3 border rounded-xl text-left" dir="ltr">
-                <button onclick="adminLogin()" class="btn-accessible w-full bg-emerald-600 text-white rounded-xl font-bold">ورود امن</button>
-            </div>
-            <div id="adminDashboard" class="hidden space-y-4">
-                <div class="grid grid-cols-2 gap-2">
-                    <button onclick="showAdminSection('products')" class="p-3 bg-emerald-50 text-emerald-800 rounded-xl font-bold">محصولات</button>
-                    <button onclick="showAdminSection('orders')" class="p-3 bg-blue-50 text-blue-800 rounded-xl font-bold">سفارش‌ها</button>
-                </div>
-                <div id="adminProductsSection" class="space-y-3">
-                    <div class="flex justify-between items-center"><h3 class="font-black">محصولات</h3><button onclick="newProduct()" class="bg-emerald-600 text-white px-3 py-2 rounded-lg text-sm font-bold">+ جدید</button></div>
-                    <div id="adminProductsList" class="space-y-2"></div>
-                    <div id="productEditor" class="hidden border rounded-2xl p-3 space-y-2">
-                        <h4 id="productEditorTitle" class="font-black text-sm">افزودن محصول</h4>
-                        <input id="pTitle" placeholder="نام محصول" class="w-full p-3 border rounded-xl text-sm">
-                        <input id="pStore" placeholder="نام فروشگاه" class="w-full p-3 border rounded-xl text-sm">
-                        <div class="grid grid-cols-2 gap-2"><input id="pPrice" type="number" placeholder="قیمت" class="w-full p-3 border rounded-xl text-sm"><input id="pOldPrice" type="number" placeholder="قیمت قبلی" class="w-full p-3 border rounded-xl text-sm"></div>
-                        <div class="grid grid-cols-2 gap-2">
-                            <input id="pStock" type="number" placeholder="موجودی" class="w-full p-3 border rounded-xl text-sm">
-                            <input id="pEmoji" placeholder="ایموجی" class="w-full p-3 border rounded-xl text-sm">
-                        </div>
-                        <div class="grid grid-cols-2 gap-2">
-                            <select id="pMainCat" class="w-full p-3 border rounded-xl text-sm"><option value="hyper">هایپر محله</option><option value="handicraft">صنایع دستی</option><option value="skills">پیشه و مهارت</option></select>
-                            <select id="pSubCat" class="w-full p-3 border rounded-xl text-sm"><option value="all">عمومی</option><option value="supermarket">سوپرمارکت</option><option value="bakery">نانوایی</option></select>
-                        </div>
-                        <div class="flex gap-2"><button onclick="saveProduct()" class="flex-1 bg-emerald-600 text-white rounded-xl p-3 font-bold">ذخیره</button><button onclick="cancelProductEdit()" class="px-4 bg-slate-100 rounded-xl">انصراف</button></div>
-                    </div>
-                </div>
-                <div id="adminOrdersSection" class="hidden space-y-2"><h3 class="font-black">سفارش‌ها</h3><div id="adminOrdersList" class="space-y-2"></div></div>
-                <button onclick="adminLogout()" class="w-full p-3 border border-rose-200 text-rose-700 rounded-xl font-bold">خروج</button>
-            </div>
-        </section>
-                <!-- ================== صفحه شهر توان ================== -->
+        <!-- ================== ۴. صفحه بازی شهر توان و گاوصندوق ================== -->
         <section id="view-city" class="hidden animate-fade-in pb-4">
             <div id="city-hub" class="space-y-4">
+                <!-- هدر بازی -->
                 <div class="city-hero">
-                    <div class="flex items-center justify-between gap-2 relative z-10">
+                    <div class="flex items-center justify-between gap-2">
                         <div>
-                            <span class="text-[10px] text-emerald-200 font-bold">دنیای بازی توان‌یار</span>
-                            <h2 class="text-xl font-black mt-1">شهر توان</h2>
-                            <p class="text-[11px] text-blue-100 mt-1">بساز، کشف کن، منابع جمع کن و شهر خودت را گسترش بده.</p>
+                            <span class="text-[10px] text-amber-300 font-bold">بازی وفاداری توان‌یار</span>
+                            <h2 class="text-xl font-black mt-0.5">شهر توان</h2>
+                            <p class="text-[11px] text-blue-100 mt-1">سکه طلا جمع کن و هزینه ارسال سفارشت رو رایگان کن!</p>
                         </div>
-                        <div class="text-5xl drop-shadow-lg">🏰</div>
+                        <div class="text-5xl">🏰</div>
                     </div>
-                    <div class="flex flex-wrap gap-2 mt-4 relative z-10">
+                    <div class="flex flex-wrap gap-2 mt-3">
                         <span class="city-pill">⭐ سطح <b id="uiLevel">۱</b></span>
                         <span class="city-pill">✨ تجربه <b id="uiXp">۰</b></span>
                         <span class="city-pill">🔥 زنجیره <b id="uiStreak">۰</b> روز</span>
                     </div>
                 </div>
 
+                <!-- باکس گاوصندوق هوشمند در بازی -->
+                <div class="bg-gradient-to-r from-amber-500/20 to-yellow-500/10 border border-amber-400/40 rounded-2xl p-3.5">
+                    <div class="flex items-center justify-between mb-1.5">
+                        <span class="text-xs font-black text-amber-300 flex items-center gap-1.5">🏦 وضعیت گاوصندوق ارسال رایگان</span>
+                        <span id="cityVaultStatusBadge" class="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-emerald-500 text-slate-900">باز و قابل استفاده</span>
+                    </div>
+                    <p class="text-[11px] text-slate-200 leading-relaxed">
+                        موجودی شما: <b id="vaultGoldDisplay" class="text-amber-300">۰ سکه</b> معادل <b id="vaultTomanDisplay" class="text-emerald-300">۰ تومان</b> اعتبار هزینه ارسال در فروشگاه.
+                    </p>
+                </div>
+
+                <!-- منابع ۴ گانه -->
                 <div class="grid grid-cols-4 gap-2">
                     <div class="city-stat text-center"><span class="block text-[10px] text-amber-200">🪵 چوب</span><b id="uiWood" class="text-sm text-amber-300">۰</b></div>
                     <div class="city-stat text-center"><span class="block text-[10px] text-slate-200">🪨 سنگ</span><b id="uiStone" class="text-sm text-slate-100">۰</b></div>
-                    <div class="city-stat text-center"><span class="block text-[10px] text-yellow-200">🪙 طلا</span><b id="uiGold" class="text-sm text-yellow-300">۰</b></div>
-                    <div class="city-stat text-center"><span class="block text-[10px] text-blue-200">⚡ انرژی</span><b id="uiEnergy" class="text-sm text-blue-300">۰</b></div>
+                    <div class="city-stat text-center"><span class="block text-[10px] text-yellow-200">🪙 سکه طلا</span><b id="uiGold" class="text-sm text-yellow-300">۰</b></div>
+                    <div class="city-stat text-center"><span class="block text-[10px] text-blue-200">⚡ انرژی</span><b id="uiEnergy" class="text-sm text-blue-300">۶۰</b></div>
                 </div>
 
-                <div class="flex items-center justify-between text-[10px] text-blue-100">
-                    <span>پیشرفت تا سطح بعد</span><span id="xpProgressText">۰ / ۱۰۰</span>
+                <!-- نوار پیشرفت سطح -->
+                <div>
+                    <div class="flex items-center justify-between text-[10px] text-blue-100 mb-1">
+                        <span>پیشرفت تا سطح بعد</span><span id="xpProgressText">۰ / ۱۰۰</span>
+                    </div>
+                    <div class="progress-track"><div id="xpProgress" class="progress-fill" style="width:0%"></div></div>
                 </div>
-                <div class="progress-track"><div id="xpProgress" class="progress-fill" style="width:0%"></div></div>
 
+                <!-- تب‌های داخلی بازی -->
                 <div class="city-nav">
                     <button onclick="switchCityTab('home')" id="cityTab-home" class="active">🏡 شهر من</button>
                     <button onclick="switchCityTab('wood')" id="cityTab-wood">🌳 جنگل</button>
-                    <button onclick="switchCityTab('mine')" id="cityTab-mine">⛏️ معدن</button>
-                    <button onclick="switchCityTab('magic')" id="cityTab-magic">✨ باغ جادویی</button>
-                    <button onclick="switchCityTab('inventory')" id="cityTab-inventory">🎒 انبار</button>
+                    <button onclick="switchCityTab('mine')" id="cityTab-mine">⛏️ معدن طلا</button>
+                    <button onclick="switchCityTab('magic')" id="cityTab-magic">✨ باغ جادو</button>
                     <button onclick="switchCityTab('crafting')" id="cityTab-crafting">🛠️ کارگاه</button>
                     <button onclick="switchCityTab('missions')" id="cityTab-missions">🎯 مأموریت‌ها</button>
                 </div>
 
+                <!-- تب خانه بازی -->
                 <div id="cityContent-home" class="space-y-3">
-                    <div class="city-panel">
-                        <div class="flex items-center justify-between mb-3">
-                            <div><h3 class="font-black text-sm">به شهر توان خوش آمدی!</h3><p class="city-small">هر فعالیت، تجربه و منابع مخصوص خودش را دارد.</p></div>
-                            <span class="text-3xl">🌄</span>
+                    <!-- کارت اسپانسر محلی برای سکه فوری -->
+                    <div class="bg-emerald-500/20 border border-emerald-400/40 rounded-2xl p-3.5 flex items-center justify-between gap-2">
+                        <div>
+                            <span class="text-[10px] font-bold text-emerald-300">⭐ پیشنهاد ویژه اسپانسر شهرضا</span>
+                            <b class="block text-xs mt-0.5">تخفیف ۲۰٪ سوپرمارکت مرکزی و قصابی برادران</b>
+                            <span class="city-small">مشاهده تخفیف‌ها = +۱۵ سکه طلا (۱۵,۰۰۰ تومان)</span>
                         </div>
-                        <div class="grid grid-cols-2 gap-2">
-                            <button onclick="switchCityTab('wood')" class="city-card p-3 text-right"><span class="text-3xl">🌳</span><b class="block text-xs mt-2">جنگل چوب</b><span class="city-small">جمع‌آوری چوب</span></button>
-                            <button onclick="switchCityTab('mine')" class="city-card p-3 text-right"><span class="text-3xl">⛏️</span><b class="block text-xs mt-2">معدن سنگ و طلا</b><span class="city-small">کشف منابع معدنی</span></button>
-                            <button onclick="switchCityTab('magic')" class="city-card p-3 text-right"><span class="text-3xl">🪄</span><b class="block text-xs mt-2">باغ جادویی</b><span class="city-small">برداشت شبنم جادویی</span></button>
-                            <button onclick="switchCityTab('crafting')" class="city-card p-3 text-right"><span class="text-3xl">⚒️</span><b class="block text-xs mt-2">کارگاه ساخت</b><span class="city-small">ساخت ابزار و ارتقا</span></button>
-                        </div>
+                        <button id="sponsorRewardBtn" onclick="claimSponsorReward()" class="city-action bg-emerald-400 text-slate-950 shrink-0">دریافت سکه</button>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2">
+                        <button onclick="switchCityTab('wood')" class="city-card p-3 text-right"><span class="text-2xl">🌳</span><b class="block text-xs mt-1.5">جنگل چوب</b><span class="city-small">جمع‌آوری چوب و تجربه</span></button>
+                        <button onclick="switchCityTab('mine')" class="city-card p-3 text-right"><span class="text-2xl">⛏️</span><b class="block text-xs mt-1.5">معدن سنگ و طلا</b><span class="city-small">استخراج سکه طلا</span></button>
+                        <button onclick="switchCityTab('magic')" class="city-card p-3 text-right"><span class="text-2xl">🪻</span><b class="block text-xs mt-1.5">باغ جادویی</b><span class="city-small">برداشت قطره انرژی</span></button>
+                        <button onclick="switchCityTab('crafting')" class="city-card p-3 text-right"><span class="text-2xl">⚒️</span><b class="block text-xs mt-1.5">کارگاه ساخت</b><span class="city-small">تبدیل منابع به سکه طلا</span></button>
                     </div>
 
                     <div class="city-panel flex items-center justify-between gap-3">
-                        <div><b class="text-sm">🎁 پاداش ورود روزانه</b><p class="city-small">هر روز یک‌بار انرژی رایگان دریافت کن.</p></div>
+                        <div><b class="text-xs">🎁 پاداش ورود روزانه</b><p class="city-small">هر روز ۲۵ انرژی + ۵ سکه طلا هدیه بگیر.</p></div>
                         <button id="dailyRewardBtn" onclick="claimDailyReward()" class="city-action bg-amber-400 text-slate-900">دریافت</button>
                     </div>
-
-                    <div class="city-panel">
-                        <div class="flex justify-between items-center mb-2"><b class="text-sm">📜 مأموریت پیشنهادی</b><button onclick="switchCityTab('missions')" class="text-[10px] text-amber-300">همه مأموریت‌ها ←</button></div>
-                        <p id="homeMissionText" class="city-small">۱۰ چوب جمع کن تا پاداش تجربه بگیری.</p>
-                    </div>
-
-                    <p class="text-center city-small">اعتبارها و منابع این بخش امتیازهای مجازی بازی هستند و ارزش نقدی یا قابلیت برداشت ندارند.</p>
                 </div>
 
+                <!-- تب جنگل -->
                 <div id="cityContent-wood" class="hidden space-y-3">
-                    <div class="city-panel">
-                        <div class="flex justify-between items-center">
-                            <div><h3 class="font-black text-sm">🌳 جنگل زمردی</h3><p class="city-small">با هر ضربه یک واحد چوب به دست می‌آوری.</p></div>
-                            <span class="city-pill">ابزار: <b id="axeLevel">دستی</b></span>
+                    <div class="city-panel space-y-3">
+                        <div class="flex justify-between items-center"><h3 class="font-black text-sm">🌳 جنگل زمردی</h3><span class="city-pill">سطح تبر: <b id="uiAxe">۱</b></span></div>
+                        <div id="forestScene" class="world-scene" onclick="chopTree()">
+                            <div id="treeIcon" class="world-target">🌳</div>
+                            <span class="text-xs font-bold bg-white/80 text-slate-900 px-3 py-1 rounded-full">روی درخت ضربه بزن (هزینه: ۱ انرژی)</span>
                         </div>
-                        <div class="world-scene mt-3" id="forestScene">
-                            <div class="absolute top-3 right-3 text-xs font-bold text-emerald-950">جنگل آرام</div>
-                            <div id="treeIcon" class="world-target" role="button" aria-label="جمع‌آوری چوب" onclick="chopTree(event)">🌳</div>
-                            <span class="text-xs font-black text-emerald-950">برای جمع‌آوری ضربه بزن</span>
-                        </div>
-                        <div class="flex justify-between text-[10px] text-blue-100 mt-3 mb-1"><span>سلامت درخت</span><b id="treeHpText">۱۰ / ۱۰</b></div>
+                        <div class="flex justify-between text-xs"><span>سلامت درخت</span><b id="treeHpText">۱۰ / ۱۰</b></div>
                         <div class="progress-track"><div id="treeHpBar" class="progress-fill" style="width:100%"></div></div>
-                        <div class="flex justify-between items-center mt-3"><span class="city-small">هزینه هر ضربه: ۱ انرژی</span><span class="city-pill">پاداش: 🪵 چوب</span></div>
                     </div>
                 </div>
 
+                <!-- تب معدن -->
                 <div id="cityContent-mine" class="hidden space-y-3">
-                    <div class="city-panel">
-                        <h3 class="font-black text-sm">⛏️ معدن سنگ خاموش</h3>
-                        <p class="city-small">سنگ برای ساخت ابزار و طلا برای ارتقای کارگاه کاربرد دارد.</p>
-                        <div class="world-scene mine mt-3">
-                            <span class="absolute top-3 right-3 text-xs text-slate-100">عمق معدن: <b id="mineDepth">۱</b></span>
-                            <div id="mineTarget" class="world-target" role="button" aria-label="استخراج معدن" onclick="mineRock(event)">🪨</div>
-                            <span class="text-xs font-bold">برای استخراج ضربه بزن</span>
+                    <div class="city-panel space-y-3">
+                        <div class="flex justify-between items-center"><h3 class="font-black text-sm">⛏️ معدن سنگ و طلا</h3><span class="city-pill">عمق معدن: <b id="uiDepth">۱</b></span></div>
+                        <div id="mineScene" class="world-scene mine" onclick="mineRock()">
+                            <div id="mineTarget" class="world-target">🪨</div>
+                            <span class="text-xs font-bold bg-black/50 text-white px-3 py-1 rounded-full">ضربه بزن (شانس بالای کشف سکه طلا!)</span>
                         </div>
-                        <div class="flex justify-between text-[10px] text-slate-200 mt-3 mb-1"><span>سلامت رگه معدنی</span><b id="rockHpText">۸ / ۸</b></div>
+                        <div class="flex justify-between text-xs"><span>سلامت رگه معدنی</span><b id="rockHpText">۸ / ۸</b></div>
                         <div class="progress-track"><div id="rockHpBar" class="progress-fill" style="width:100%"></div></div>
-                        <p class="city-small mt-2">هر ضربه ۲ انرژی مصرف می‌کند؛ گاهی طلا هم پیدا می‌کنی.</p>
                     </div>
                 </div>
 
+                <!-- تب باغ جادویی -->
                 <div id="cityContent-magic" class="hidden space-y-3">
-                    <div class="city-panel">
-                        <h3 class="font-black text-sm">✨ باغ شبنم جادویی</h3>
-                        <p class="city-small">گل‌های درخشان را برداشت کن و قطره جادویی به دست بیاور.</p>
-                        <div class="world-scene magic mt-3">
-                            <span class="absolute top-3 right-3 text-xs">باغ مهتابی</span>
-                            <div id="magicTarget" class="world-target" role="button" aria-label="برداشت شبنم جادویی" onclick="harvestMagic(event)">🪻</div>
-                            <span class="text-xs font-bold">برای برداشت ضربه بزن</span>
+                    <div class="city-panel space-y-3">
+                        <div class="flex justify-between items-center"><h3 class="font-black text-sm">✨ باغ شبنم جادویی</h3><span class="city-pill">قطره جادو: <b id="uiMagic">۰</b></span></div>
+                        <div id="magicScene" class="world-scene magic" onclick="harvestMagic()">
+                            <div id="magicTarget" class="world-target">🪻</div>
+                            <span class="text-xs font-bold bg-black/50 text-white px-3 py-1 rounded-full">برداشت گل جادویی (۳ انرژی)</span>
                         </div>
-                        <p class="city-small mt-3">هر برداشت ۳ انرژی مصرف می‌کند و یک قطره جادویی می‌دهد.</p>
                     </div>
                 </div>
 
-                <div id="cityContent-inventory" class="hidden">
-                    <div class="city-panel">
-                        <h3 class="font-black text-sm text-amber-300 mb-2">🎒 انبار منابع</h3>
-                        <div class="resource-line"><span>🪵 چوب</span><b id="invWood">۰</b></div>
-                        <div class="resource-line"><span>🪨 سنگ</span><b id="invStone">۰</b></div>
-                        <div class="resource-line"><span>🪙 طلا</span><b id="invGold">۰</b></div>
-                        <div class="resource-line"><span>✨ قطره جادویی</span><b id="invMagic">۰</b></div>
-                        <div class="resource-line"><span>⚡ انرژی</span><b id="invEnergy">۰</b></div>
-                        <div class="resource-line"><span>🪓 سطح تبر</span><b id="invAxe">۱</b></div>
-                        <div class="resource-line"><span>⛏️ سطح کلنگ</span><b id="invPickaxe">۱</b></div>
-                    </div>
-                </div>
-
+                <!-- تب کارگاه -->
                 <div id="cityContent-crafting" class="hidden space-y-3">
-                    <div class="city-panel">
-                        <h3 class="font-black text-sm text-orange-300 mb-1">🛠️ کارگاه سازندگان</h3>
-                        <p class="city-small mb-3">منابع را برای ساخت ابزار بهتر مصرف کن.</p>
-
-                        <div class="bg-black/20 rounded-xl p-3 mb-2 flex items-center justify-between gap-2">
-                            <div><b class="text-xs">🪓 ارتقای تبر</b><p class="city-small">۱۰ چوب + ۵ سنگ · ضربه قوی‌تر در جنگل</p><span id="axeUpgradeInfo" class="text-[10px] text-amber-200">سطح فعلی: ۱</span></div>
-                            <button onclick="upgradeTool('axe')" class="city-action bg-amber-400 text-slate-900">ارتقا</button>
+                    <div class="city-panel space-y-3">
+                        <h3 class="font-black text-sm">🛠️ کارگاه تبدیل و ارتقا</h3>
+                        <div class="flex items-center justify-between border-b border-white/10 pb-2.5">
+                            <div><b class="text-xs text-amber-300">🪙 ضرب سکه طلا</b><p class="city-small">۱۰ چوب + ۵ سنگ = ۵ سکه طلا (۵,۰۰۰ تومان)</p></div>
+                            <button onclick="craftGoldCoins()" class="city-action bg-amber-400 text-slate-900">تبدیل</button>
                         </div>
-
-                        <div class="bg-black/20 rounded-xl p-3 mb-2 flex items-center justify-between gap-2">
-                            <div><b class="text-xs">⛏️ ارتقای کلنگ</b><p class="city-small">۸ چوب + ۸ سنگ + ۲ طلا · استخراج بهتر</p><span id="pickaxeUpgradeInfo" class="text-[10px] text-amber-200">سطح فعلی: ۱</span></div>
-                            <button onclick="upgradeTool('pickaxe')" class="city-action bg-amber-400 text-slate-900">ارتقا</button>
+                        <div class="flex items-center justify-between border-b border-white/10 pb-2.5">
+                            <div><b class="text-xs">⚡ بازیابی انرژی</b><p class="city-small">۳ قطره جادویی = ۲۰ انرژی</p></div>
+                            <button onclick="craftEnergy()" class="city-action bg-blue-400 text-slate-900">ساخت</button>
                         </div>
-
-                        <div class="bg-black/20 rounded-xl p-3 flex items-center justify-between gap-2">
-                            <div><b class="text-xs">⚡ بازیابی انرژی</b><p class="city-small">۵ قطره جادویی = ۲۰ انرژی</p></div>
-                            <button onclick="craftEnergy()" class="city-action bg-blue-400 text-slate-950">ساخت</button>
+                        <div class="flex items-center justify-between">
+                            <div><b class="text-xs">🪓 ارتقای تبر</b><p class="city-small">۱۵ چوب + ۱۰ سنگ</p></div>
+                            <button onclick="upgradeTool('axe')" class="city-action bg-emerald-400 text-slate-900">ارتقا</button>
                         </div>
                     </div>
                 </div>
 
+                <!-- تب مأموریت‌ها -->
                 <div id="cityContent-missions" class="hidden space-y-3">
-                    <div class="city-panel">
-                        <h3 class="font-black text-sm mb-3">🎯 دفتر مأموریت‌ها</h3>
-
-                        <div class="resource-line">
-                            <div><b>🪵 تازه‌کار جنگل</b><p class="city-small">۱۰ چوب جمع‌آوری کن</p><span id="missionWoodProgress" class="text-[10px] text-amber-200">۰ / ۱۰</span></div>
-                            <button id="missionWoodBtn" onclick="claimMission('wood')" class="city-action bg-emerald-500 text-white">جایزه</button>
+                    <div class="city-panel space-y-3">
+                        <h3 class="font-black text-sm">🎯 دفتر مأموریت‌های جایزه‌دار</h3>
+                        <div class="flex items-center justify-between border-b border-white/10 pb-2.5">
+                            <div><b class="text-xs">🪵 هیزم‌شکن شهر</b><p class="city-small">۱۰ چوب جمع کن (پاداش: ۱۰ سکه طلا)</p></div>
+                            <button id="missionBtn-wood" onclick="claimMission('wood')" class="city-action bg-amber-400 text-slate-900">دریافت</button>
                         </div>
-
-                        <div class="resource-line">
-                            <div><b>🪨 معدن‌کار</b><p class="city-small">۸ سنگ استخراج کن</p><span id="missionStoneProgress" class="text-[10px] text-amber-200">۰ / ۸</span></div>
-                            <button id="missionStoneBtn" onclick="claimMission('stone')" class="city-action bg-emerald-500 text-white">جایزه</button>
+                        <div class="flex items-center justify-between border-b border-white/10 pb-2.5">
+                            <div><b class="text-xs">🪨 معدن‌کار پرتلاش</b><p class="city-small">۸ سنگ استخراج کن (پاداش: ۱۵ سکه طلا)</p></div>
+                            <button id="missionBtn-stone" onclick="claimMission('stone')" class="city-action bg-amber-400 text-slate-900">دریافت</button>
                         </div>
-
-                        <div class="resource-line">
-                            <div><b>✨ باغبان جادو</b><p class="city-small">۳ قطره جادویی جمع کن</p><span id="missionMagicProgress" class="text-[10px] text-amber-200">۰ / ۳</span></div>
-                            <button id="missionMagicBtn" onclick="claimMission('magic')" class="city-action bg-emerald-500 text-white">جایزه</button>
+                        <div class="flex items-center justify-between">
+                            <div><b class="text-xs">✨ باغبان جادو</b><p class="city-small">۳ قطره جادویی بگیر (پاداش: ۲۰ سکه طلا)</p></div>
+                            <button id="missionBtn-magic" onclick="claimMission('magic')" class="city-action bg-amber-400 text-slate-900">دریافت</button>
                         </div>
-
-                        <p class="city-small mt-3">پاداش هر مأموریت: ۲۵ تجربه و ۵ انرژی. هر مأموریت فقط یک‌بار قابل دریافت است.</p>
                     </div>
                 </div>
             </div>
         </section>
+
+        <!-- ================== ۵. صفحه سبد خرید و اتصال گاوصندوق ================== -->
+        <section id="view-cart" class="hidden animate-fade-in">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-lg font-black text-slate-900">سبد خرید و صدور فاکتور</h2>
+                <button onclick="clearCart()" id="clearCartBtn" class="text-xs text-rose-600 font-bold px-2.5 py-1.5 rounded-lg bg-rose-50 hidden">حذف همه</button>
+            </div>
+
+            <div id="emptyCartState" class="text-center py-12 px-4 bg-slate-50 rounded-3xl border border-slate-100">
+                <div class="w-16 h-16 bg-slate-200/70 text-slate-400 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <i data-lucide="shopping-bag" class="w-8 h-8"></i>
+                </div>
+                <h3 class="text-base font-bold text-slate-800 mb-1">سبد خرید شما هنوز خالی است</h3>
+                <p class="text-xs text-slate-500 mb-5 leading-relaxed">با هر خرید از توان‌یار، هم ارزان‌تر خرید می‌کنید و هم از اشتغال عزیزان دارای معلولیت حمایت می‌کنید.</p>
+                <button onclick="switchTab('market')" class="btn-accessible px-6 bg-emerald-600 text-white rounded-2xl text-sm font-bold shadow-md shadow-emerald-200">
+                    رفتن به فروشگاه شهرضا
+                </button>
+            </div>
+
+            <div id="filledCartState" class="hidden space-y-4">
+                <div id="cartItemsList" class="space-y-2.5"></div>
+
+                <!-- باکس گاوصندوق برای رایگان کردن کرایه ارسال -->
+                <div id="cartVaultBox" class="bg-amber-50 border border-amber-200 p-3.5 rounded-2xl space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-black text-amber-950 flex items-center gap-1.5">🏦 استفاده از سکه‌های گاوصندوق</span>
+                        <span id="cartVaultStatus" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">باز است</span>
+                    </div>
+                    <p id="cartVaultDesc" class="text-[11px] text-amber-900 leading-relaxed"></p>
+                    <label id="useVaultToggleWrapper" class="flex items-center gap-2 pt-1 cursor-pointer">
+                        <input type="checkbox" id="useVaultCheckbox" onchange="renderCartView()" class="w-4 h-4 accent-emerald-600 rounded">
+                        <span class="text-xs font-extrabold text-slate-800">کسر هزینه ارسال از سکه‌های بازی من</span>
+                    </label>
+                </div>
+
+                <!-- خلاصه مالی فاکتور -->
+                <div class="bg-slate-50 p-4 rounded-3xl border border-slate-200 space-y-2.5">
+                    <div class="flex justify-between items-center text-xs text-slate-500">
+                        <span>سود شما از تخفیف کالاها:</span>
+                        <span id="totalDiscountText" class="font-bold text-emerald-600">۰ تومان</span>
+                    </div>
+                    <div class="flex justify-between items-center text-xs text-slate-600">
+                        <span>هزینه ارسال (پیک شهرضا):</span>
+                        <span id="deliveryFeeText" class="font-bold text-slate-800">۳۵,۰۰۰ تومان</span>
+                    </div>
+                    <div id="vaultSavingsRow" class="hidden flex justify-between items-center text-xs text-amber-700 font-bold">
+                        <span>تخفیف ارسال از گاوصندوق شهر توان:</span>
+                        <span id="vaultSavingsText">-۰ تومان</span>
+                    </div>
+                    <div class="flex justify-between items-center pt-2.5 border-t border-slate-200">
+                        <span class="text-sm font-extrabold text-slate-800">مبلغ قابل پرداخت:</span>
+                        <span id="totalPriceText" class="text-lg font-black text-slate-900">۰ تومان</span>
+                    </div>
+
+                    <!-- بنر قانون ۲ میلیون تومان -->
+                    <div id="paymentRuleBanner" class="p-3.5 rounded-2xl text-xs font-bold leading-relaxed border"></div>
+                </div>
+
+                <!-- فرم مشخصات مشتری -->
+                <div class="bg-white p-4 rounded-3xl border border-slate-200 space-y-3">
+                    <h3 class="text-sm font-extrabold text-slate-800 flex items-center gap-1.5">
+                        <i data-lucide="map-pin" class="w-4 h-4 text-emerald-600"></i> مشخصات تحویل سفارش
+                    </h3>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 mb-1">نام و نام خانوادگی</label>
+                        <input type="text" id="customerName" placeholder="مثلاً: رضا محمدی" class="w-full h-11 px-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 mb-1">شماره موبایل</label>
+                        <input type="tel" id="customerPhone" placeholder="09130000000" class="w-full h-11 px-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-left" dir="ltr">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 mb-1">آدرس دقیق (شهرضا / استان)</label>
+                        <textarea id="customerAddress" rows="2" placeholder="خیابان، کوچه، پلاک..." class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm"></textarea>
+                    </div>
+                </div>
+
+                <button onclick="submitOrder()" class="btn-accessible w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl text-base font-black shadow-lg shadow-emerald-200 gap-2">
+                    <i data-lucide="check-circle-2" class="w-5 h-5"></i> تایید نهایی و صدور فاکتور لحظه‌ای
+                </button>
+            </div>
+        </section>
+
+        <!-- ================== ۶. صفحه پروفایل من / درباره توان‌یار ================== -->
+        <section id="view-about" class="hidden animate-fade-in space-y-4">
+            <div class="bg-gradient-to-br from-emerald-600 to-teal-700 text-white p-5 rounded-3xl shadow-md">
+                <h2 class="text-lg font-black mb-2">پروفایل و قوانین توان‌یار</h2>
+                <p class="text-xs leading-relaxed opacity-95">
+                    «توان‌یار» پلتفرم اشتغال پایدار افراد دارای معلولیت است. در فاز اول (شهرضا)، فروشگاه‌های پرتخفیف محله به خانه شما وصل می‌شوند و همزمان محصولات و مهارت‌های هنرمندان استان عرضه می‌گردد.
+                </p>
+            </div>
+
+            <!-- قوانین شفاف مالی -->
+            <div class="bg-white p-4 rounded-3xl border border-slate-200 space-y-2.5 text-xs text-slate-600">
+                <h3 class="font-black text-slate-900 text-sm">قوانین شفاف پرداخت و تحویل:</h3>
+                <p>✅ <strong>سفارش‌های زیر ۲ میلیون تومان:</strong> پرداخت در محل هنگام تحویل کالا درب منزل.</p>
+                <p>💳 <strong>سفارش‌های بالای ۲ میلیون تومان:</strong> تسویه هنگام تهیه کالا در فروشگاه و ارسال فاکتور لحظه‌ای.</p>
+                <p>🏦 <strong>قانون گاوصندوق:</strong> هر ۱ سکه طلای بازی شهر توان = ۱,۰۰۰ تومان اعتبار برای رایگان کردن هزینه ارسال.</p>
+            </div>
+
+            <button onclick="openAdmin()" class="btn-accessible w-full bg-slate-900 text-white rounded-2xl text-sm font-bold gap-2">
+                ⚙️ ورود به پنل مدیریت و کنترل گاوصندوق
+            </button>
+        </section>
+
+        <!-- ================== ۷. پنل مدیریت (Admin) ================== -->
+        <section id="view-admin" class="hidden pb-10 space-y-4">
+            <div class="flex items-center justify-between">
+                <h2 class="text-lg font-black">پنل مدیریت توان‌یار</h2>
+                <button onclick="switchTab('about')" class="text-xs text-emerald-700 font-bold bg-emerald-50 px-3 py-1.5 rounded-lg">بازگشت</button>
+            </div>
+
+            <div id="adminLogin" class="bg-white border border-slate-200 rounded-2xl p-4 space-y-3">
+                <p class="text-xs text-slate-500">برای ورود به مدیریت (یا تست سریع روی گوشی خودت) اطلاعات را وارد کن:</p>
+                <input id="adminEmail" type="email" placeholder="ایمیل مدیر (یا admin)" class="w-full h-11 px-3 border rounded-xl text-left text-sm" dir="ltr">
+                <input id="adminPassword" type="password" placeholder="رمز عبور (پیش‌فرض: 1234)" class="w-full h-11 px-3 border rounded-xl text-left text-sm" dir="ltr">
+                <button onclick="adminLogin()" class="btn-accessible w-full bg-emerald-600 text-white rounded-xl font-bold text-sm">ورود به مدیریت</button>
+            </div>
+
+            <div id="adminDashboard" class="hidden space-y-4">
+                <!-- کنترل اختصاصی گاوصندوق بازی توسط مدیر -->
+                <div class="bg-amber-50 border border-amber-300 rounded-2xl p-4 space-y-2.5">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-sm font-black text-amber-950">🏦 کنترل کلید گاوصندوق مشتریان</h3>
+                        <span id="adminVaultStatusText" class="text-xs font-black px-2.5 py-1 rounded-full bg-emerald-600 text-white">باز است</span>
+                    </div>
+                    <p class="text-[11px] text-amber-900">با این دکمه تعیین می‌کنی که مشتریان امروز بتوانند سکه‌های بازی را برای ارسال رایگان خرج کنند یا قفل باشد:</p>
+                    <button onclick="toggleVaultLock()" id="toggleVaultBtn" class="btn-accessible w-full bg-slate-900 text-white rounded-xl text-xs font-bold">
+                        🔒 قفل کردن موقت گاوصندوق
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                    <button onclick="showAdminSection('products')" class="p-3 bg-emerald-100 text-emerald-900 rounded-xl font-bold text-xs">📦 مدیریت محصولات</button>
+                    <button onclick="showAdminSection('orders')" class="p-3 bg-blue-100 text-blue-900 rounded-xl font-bold text-xs">🧾 سفارش‌های ثبت‌شده</button>
+                </div>
+
+                <!-- بخش محصولات در ادمین -->
+                <div id="adminProductsSection" class="space-y-3">
+                    <div class="flex justify-between items-center">
+                        <h3 class="font-black text-sm">لیست کالاها</h3>
+                        <button onclick="newProduct()" class="bg-emerald-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold">+ افزودن کالا</button>
+                    </div>
+                    <div id="adminProductsList" class="space-y-2"></div>
+
+                    <div id="productEditor" class="hidden border border-slate-200 bg-slate-50 rounded-2xl p-3.5 space-y-2.5">
+                        <h4 id="productEditorTitle" class="font-black text-sm">افزودن محصول جدید</h4>
+                        <input id="pTitle" placeholder="نام محصول" class="w-full p-2.5 bg-white border rounded-xl text-xs">
+                        <input id="pStore" placeholder="نام فروشگاه (مثلاً: سوپرمارکت مرکزی)" class="w-full p-2.5 bg-white border rounded-xl text-xs">
+                        <div class="grid grid-cols-2 gap-2">
+                            <input id="pPrice" type="number" placeholder="قیمت با تخفیف (تومان)" class="w-full p-2.5 bg-white border rounded-xl text-xs">
+                            <input id="pOldPrice" type="number" placeholder="قیمت اصلی (تومان)" class="w-full p-2.5 bg-white border rounded-xl text-xs">
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <select id="pMainCat" class="w-full p-2.5 bg-white border rounded-xl text-xs">
+                                <option value="hyper">هایپر شهرضا</option>
+                                <option value="handicraft">صنایع دستی استان</option>
+                                <option value="skills">پیشه و مهارت</option>
+                            </select>
+                            <select id="pSubCat" class="w-full p-2.5 bg-white border rounded-xl text-xs">
+                                <option value="supermarket">سوپرمارکت</option>
+                                <option value="bakery">نانوایی</option>
+                                <option value="butcher">قصابی</option>
+                                <option value="poultry">مرغ و ماهی</option>
+                                <option value="fruit">میوه‌فروشی</option>
+                                <option value="fastfood">فست‌فود</option>
+                                <option value="all">عمومی</option>
+                            </select>
+                        </div>
+                        <input id="pEmoji" placeholder="ایموجی محصول (مثلاً: 🌾)" class="w-full p-2.5 bg-white border rounded-xl text-xs">
+                        <div class="flex gap-2">
+                            <button onclick="saveProduct()" class="flex-1 bg-emerald-600 text-white rounded-xl p-2.5 font-bold text-xs">ذخیره کالا</button>
+                            <button onclick="cancelProductEdit()" class="px-4 bg-slate-200 rounded-xl text-xs font-bold">انصراف</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- بخش سفارش‌ها در ادمین -->
+                <div id="adminOrdersSection" class="hidden space-y-2">
+                    <h3 class="font-black text-sm">سفارش‌های اخیر</h3>
+                    <div id="adminOrdersList" class="space-y-2"></div>
+                </div>
+
+                <button onclick="adminLogout()" class="w-full p-3 border border-rose-200 text-rose-700 rounded-xl font-bold text-xs">خروج از پنل مدیریت</button>
+            </div>
+        </section>
+
     </main>
 
-    <!-- مودال فاکتور -->
-    <div id="invoiceModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-end justify-center p-3">
+    <!-- ================== مودال فاکتور دیجیتال لحظه‌ای ================== -->
+    <div id="invoiceModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-end sm:items-center justify-center p-3">
         <div class="bg-white w-full max-w-md rounded-3xl p-5 shadow-2xl animate-fade-in max-h-[90vh] overflow-y-auto">
-            <div class="text-center border-b border-dashed border-slate-200 pb-4 mb-4">
-                <h3 class="text-lg font-black text-slate-900">سفارش شما ثبت شد!</h3>
-                <p class="text-xs text-slate-500 mt-1">کد پیگیری: <span id="invCode" class="font-mono font-bold text-slate-800 bg-slate-100 px-2 py-0.5 rounded"></span></p>
+            <div class="text-center border-b border-dashed border-slate-200 pb-3 mb-3">
+                <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-2">
+                    <i data-lucide="receipt" class="w-6 h-6"></i>
+                </div>
+                <h3 class="text-base font-black text-slate-900">سفارش شما ثبت شد!</h3>
+                <p class="text-xs text-slate-500 mt-0.5">کد پیگیری: <span id="invCode" class="font-mono font-bold text-slate-800 bg-slate-100 px-2 py-0.5 rounded"></span></p>
             </div>
-            <div class="space-y-2 text-xs mb-4 bg-slate-50 p-3.5 rounded-2xl border border-slate-100">
+
+            <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-3 mb-3 flex items-center gap-2.5">
+                <i data-lucide="clock" class="w-5 h-5 text-emerald-700 shrink-0"></i>
+                <div>
+                    <p class="text-[11px] text-emerald-800 font-bold">زمان تقریبی رسیدن کالا:</p>
+                    <p id="invDeliveryTime" class="text-xs font-black text-emerald-950">۳۵ تا ۴۵ دقیقه دیگر</p>
+                </div>
+            </div>
+
+            <div class="space-y-1.5 text-xs mb-3 bg-slate-50 p-3 rounded-2xl border border-slate-100">
                 <div class="flex justify-between"><span class="text-slate-500">تحویل‌گیرنده:</span><span id="invCustomer" class="font-bold text-slate-800"></span></div>
-                <div class="flex justify-between"><span class="text-slate-500">آدرس:</span><span id="invAddress" class="font-bold text-slate-800 text-left max-w-[200px] truncate"></span></div>
-                <div class="border-t border-slate-200 my-2 pt-2 space-y-1.5" id="invItemsList"></div>
-                <div class="border-t border-slate-200 pt-2 flex justify-between text-sm font-black text-slate-900"><span>جمع کل:</span><span id="invTotal"></span></div>
+                <div class="flex justify-between"><span class="text-slate-500">آدرس:</span><span id="invAddress" class="font-bold text-slate-800 truncate max-w-[200px]"></span></div>
+                <div class="border-t border-slate-200 my-1.5 pt-1.5 space-y-1" id="invItemsList"></div>
+                <div class="border-t border-slate-200 pt-1.5 flex justify-between text-sm font-black text-slate-900">
+                    <span>مبلغ نهایی فاکتور:</span><span id="invTotal"></span>
+                </div>
             </div>
-            <div id="invPaymentStatus" class="p-3 rounded-2xl text-xs font-bold mb-4 border"></div>
-            <div class="space-y-2.5">
-                <button onclick="copyInvoiceText()" class="btn-accessible w-full bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-2xl text-xs font-bold gap-2"><i data-lucide="copy" class="w-4 h-4"></i> کپی متن فاکتور</button>
+
+            <div id="invPaymentStatus" class="p-3 rounded-2xl text-xs font-bold mb-3 border"></div>
+
+            <div class="space-y-2">
+                <button onclick="sendToTelegram()" class="btn-accessible w-full bg-sky-500 hover:bg-sky-600 text-white rounded-2xl text-xs font-bold gap-2">
+                    <i data-lucide="send" class="w-4 h-4"></i> ارسال فاکتور به تلگرام پشتیبانی
+                </button>
+                <button onclick="copyInvoiceText()" class="btn-accessible w-full bg-slate-100 text-slate-800 rounded-2xl text-xs font-bold gap-2">
+                    <i data-lucide="copy" class="w-4 h-4"></i> کپی متن فاکتور
+                </button>
                 <button onclick="closeInvoiceModal()" class="btn-accessible w-full text-slate-500 text-xs font-bold">بستن</button>
             </div>
         </div>
     </div>
 
-    <!-- پنجره جستجوی سفیر -->
-    <div id="ambassadorSearchModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-end justify-center p-3">
-        <div class="bg-white w-full max-w-md rounded-3xl p-5 shadow-2xl animate-fade-in max-h-[80vh] flex flex-col">
-            <div class="flex justify-between items-center mb-4"><h3 class="text-base font-black text-slate-900">جستجوی سفیر</h3><button onclick="closeAmbassadorSearch()" class="text-slate-400 hover:text-slate-800">✖</button></div>
-            <div class="relative mb-4">
-                <input type="text" id="ambSearchInput" oninput="filterAmbassadors(this.value)" placeholder="نام سفیر..." class="w-full h-12 pr-10 pl-4 bg-slate-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                <i data-lucide="search" class="w-5 h-5 text-slate-400 absolute right-3 top-3.5"></i>
+    <!-- مودال‌های کمکی (جستجوی سفیر و اخبار) -->
+    <div id="genericModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-sm rounded-3xl p-5 shadow-2xl space-y-3">
+            <div class="flex justify-between items-center border-b pb-2">
+                <h3 id="modalTitle" class="text-sm font-black text-slate-900"></h3>
+                <button onclick="closeGenericModal()" class="text-slate-400 hover:text-slate-700 font-bold">✕</button>
             </div>
-            <div id="ambSearchResults" class="overflow-y-auto space-y-2 flex-1 pb-4"></div>
+            <div id="modalBody" class="text-xs text-slate-600 leading-relaxed space-y-2 max-h-72 overflow-y-auto"></div>
         </div>
     </div>
 
-    <!-- پنجره آرشیو اخبار -->
-    <div id="newsArchiveModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-end justify-center p-3">
-        <div class="bg-white w-full max-w-md rounded-3xl p-5 shadow-2xl animate-fade-in max-h-[85vh] flex flex-col">
-            <div class="flex justify-between items-center mb-4"><h3 class="text-base font-black text-slate-900">آرشیو اخبار</h3><button onclick="closeNewsArchive()" class="text-slate-400 hover:text-slate-800">✖</button></div>
-            <div class="overflow-y-auto space-y-3 flex-1 pb-4">
-                <div onclick="openNewsArticle(1)" class="bg-slate-50 p-4 rounded-2xl border border-slate-100 cursor-pointer hover:bg-slate-100 transition-colors"><h4 class="text-sm font-bold text-slate-800 mb-1">افتتاح اولین هایپر محله در شهرضا</h4></div>
-                <div onclick="openNewsArticle(2)" class="bg-slate-50 p-4 rounded-2xl border border-slate-100 cursor-pointer hover:bg-slate-100 transition-colors"><h4 class="text-sm font-bold text-slate-800 mb-1">دوره‌های مهارت‌آموزی رایگان</h4></div>
+    <!-- توست اطلاع‌رسانی -->
+    <div id="toastMessage" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white text-xs font-bold px-4 py-2.5 rounded-2xl shadow-xl opacity-0 pointer-events-none transition-opacity duration-300 flex items-center gap-2 whitespace-nowrap">
+        <span id="toastText"></span>
+    </div>
+
+    <!-- نوار ناوبری پایین صفحه -->
+    <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white/95 backdrop-blur-md border-t border-slate-200 px-2 py-1.5 flex justify-around items-center z-40">
+        <button onclick="switchTab('home')" id="nav-home" class="nav-btn flex flex-col items-center justify-center py-1 px-2.5 rounded-xl text-emerald-600 font-extrabold min-h-[50px]">
+            <i data-lucide="home" class="w-5 h-5 mb-0.5"></i><span class="text-[10px]">خانه</span>
+        </button>
+        <button onclick="switchTab('market')" id="nav-market" class="nav-btn flex flex-col items-center justify-center py-1 px-2.5 rounded-xl text-slate-400 font-bold min-h-[50px]">
+            <i data-lucide="store" class="w-5 h-5 mb-0.5"></i><span class="text-[10px]">فروشگاه</span>
+        </button>
+        <button onclick="switchTab('city')" id="nav-city" class="nav-btn flex flex-col items-center justify-center py-1 px-2.5 rounded-xl text-slate-400 font-bold min-h-[50px]">
+            <i data-lucide="gamepad-2" class="w-5 h-5 mb-0.5"></i><span class="text-[10px]">شهر توان</span>
+        </button>
+        <button onclick="switchTab('cart')" id="nav-cart" class="nav-btn relative flex flex-col items-center justify-center py-1 px-2.5 rounded-xl text-slate-400 font-bold min-h-[50px]">
+            <div class="relative">
+                <i data-lucide="shopping-cart" class="w-5 h-5 mb-0.5"></i>
+                <span id="cartBadge" class="hidden absolute -top-1.5 -right-2 bg-rose-500 text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center">0</span>
             </div>
-        </div>
-    </div>
-
-    <!-- پنجره متن خبر -->
-    <div id="newsArticleModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-end justify-center p-3">
-        <div class="bg-white w-full max-w-md rounded-3xl p-5 shadow-2xl animate-fade-in max-h-[85vh] flex flex-col">
-            <div class="flex justify-between items-center mb-4 border-b pb-3"><h3 id="articleTitle" class="text-lg font-black text-slate-900 leading-tight"></h3><button onclick="closeNewsArticle()" class="text-slate-400 hover:text-slate-800 shrink-0 mr-2">✖</button></div>
-            <div class="overflow-y-auto flex-1 pb-4"><p id="articleBody" class="text-sm text-slate-700 leading-relaxed whitespace-pre-line"></p></div>
-            <div class="pt-3 border-t mt-2"><button onclick="closeNewsArticle()" class="w-full bg-emerald-600 text-white rounded-xl py-3 font-bold">بستن</button></div>
-        </div>
-    </div>
-
-    <!-- پنجره پروفایل سفیر -->
-    <div id="ambassadorModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-end justify-center p-3">
-        <div class="bg-white w-full max-w-md rounded-3xl p-5 shadow-2xl animate-fade-in max-h-[85vh] overflow-y-auto relative">
-            <button onclick="closeAmbassadorProfile()" class="absolute top-4 left-4 text-slate-400 hover:text-slate-800">✖</button>
-            <div class="text-center mb-6 mt-2">
-                <div id="ambProfileIcon" class="w-20 h-20 rounded-full flex items-center justify-center text-4xl mx-auto mb-3 border-4 border-white shadow-md"></div>
-                <h3 id="ambProfileName" class="text-lg font-black text-slate-900"></h3>
-                <p id="ambProfileRole" class="text-xs text-slate-500 mt-1"></p>
-            </div>
-            <div class="space-y-3">
-                <button id="btnGoToFullProfile" class="w-full bg-emerald-600 text-white rounded-xl py-3 font-bold flex items-center justify-center gap-2 shadow-md shadow-emerald-200"><i data-lucide="user" class="w-4 h-4"></i> مشاهده پروفایل کامل سفیر</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- پیام‌های کوتاه -->
-    <div id="toastMessage" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white text-xs font-bold px-4 py-3 rounded-2xl shadow-xl opacity-0 pointer-events-none transition-opacity duration-300 flex items-center gap-2 whitespace-nowrap">
-        <i data-lucide="info" class="w-4 h-4 text-emerald-400"></i><span id="toastText"></span>
-    </div>
-
-    <!-- نوار ناوبری پایین -->
-    <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white/95 backdrop-blur-md border-t border-slate-200 px-2 py-2 flex justify-around items-center z-40">
-        <button onclick="switchTab('home')" id="nav-home" class="nav-btn flex flex-col items-center py-1.5 px-2 rounded-2xl text-emerald-600 font-extrabold min-h-[52px]"><i data-lucide="home" class="w-6 h-6 mb-0.5"></i><span class="text-[10px]">خانه</span></button>
-        <button onclick="switchTab('market')" id="nav-market" class="nav-btn flex flex-col items-center py-1.5 px-2 rounded-2xl text-slate-400 font-bold min-h-[52px]"><i data-lucide="store" class="w-6 h-6 mb-0.5"></i><span class="text-[10px]">مارکت</span></button>
-        <button onclick="switchTab('city')" id="nav-city" class="nav-btn flex flex-col items-center py-1.5 px-2 rounded-2xl text-slate-400 font-bold min-h-[52px]"><i data-lucide="gamepad-2" class="w-6 h-6 mb-0.5"></i><span class="text-[10px]">شهر توان</span></button>
-        <button onclick="switchTab('cart')" id="nav-cart" class="nav-btn relative flex flex-col items-center py-1.5 px-2 rounded-2xl text-slate-400 font-bold min-h-[52px]"><i data-lucide="shopping-cart" class="w-6 h-6 mb-0.5"></i><span id="cartBadge" class="hidden absolute -top-1 -right-1 bg-rose-500 text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center border-2 border-white">0</span><span class="text-[10px]">سبد</span></button>
-        <button onclick="switchTab('about')" id="nav-about" class="nav-btn flex flex-col items-center py-1.5 px-2 rounded-2xl text-slate-400 font-bold min-h-[52px]"><i data-lucide="info" class="w-6 h-6 mb-0.5"></i><span class="text-[10px]">درباره</span></button>
+            <span class="text-[10px]">سبد خرید</span>
+        </button>
+        <button onclick="switchTab('about')" id="nav-about" class="nav-btn flex flex-col items-center justify-center py-1 px-2.5 rounded-xl text-slate-400 font-bold min-h-[50px]">
+            <i data-lucide="user" class="w-5 h-5 mb-0.5"></i><span class="text-[10px]">پروفایل</span>
+        </button>
     </nav>
 
     <script>
-                // ================== داده‌های پایه فروشگاه ==================
-        const ambassadors = [
-            { id: 'alireza', name: 'علیرضا (سفیر شهرضا)', role: 'مدیر هایپر محله', location: 'اصفهان، شهرضا', bio: 'هدف من ایجاد اشتغال برای ۵۰ نفر از عزیزان دارای معلولیت است.', color: 'bg-emerald-100 text-emerald-700', icon: '♿' },
-            { id: 'zahra', name: 'زهرا (هنرمند چرم)', role: 'صنایع دستی اصفهان', location: 'اصفهان، مرکز', bio: 'من عاشق هنر چرم‌دوزی هستم.', color: 'bg-orange-100 text-orange-700', icon: '👜' },
-            { id: 'mohammad', name: 'محمد (تایپ و گرافیک)', role: 'خدمات آنلاین', location: 'اصفهان، خمینی‌شهر', bio: 'با مهارت‌های کامپیوتری‌ام به کسب‌وکارها کمک می‌کنم.', color: 'bg-blue-100 text-blue-700', icon: '💻' },
-            { id: 'sara', name: 'سارا (بافتنی و هنر)', role: 'دست‌سازه‌های هنری', location: 'اصفهان، نجف‌آباد', bio: 'با عشق می‌بافم.', color: 'bg-purple-100 text-purple-700', icon: '🧶' }
-        ];
+        // ================== اتصال ایمن به دیتابیس (در صورت وجود config.js) ==================
+        let db = null;
+        try {
+            if (typeof SUPABASE_URL !== 'undefined' && typeof SUPABASE_ANON_KEY !== 'undefined' && window.supabase) {
+                db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            }
+        } catch (err) {
+            console.log('حالت آفلاین/محلی فعال است');
+        }
 
-        const newsData = {
-            1: { title: 'افتتاح اولین هایپر محله در شهرضا', body: 'به گزارش پایگاه خبری توان‌یار...' },
-            2: { title: 'دوره‌های مهارت‌آموزی رایگان', body: 'ثبت‌نام آغاز شد...' }
-        };
+        // ================== داده‌های پایه فروشگاه و سفیران ==================
+        const ambassadors = [
+            { id: 'alireza', name: 'علیرضا (سفیر شهرضا)', role: 'مدیر هایپر محله شهرضا', bio: 'سفیر و مدیر اجرایی فاز پایلوت شهرضا؛ هماهنگ‌کننده بهترین تخفیف‌های روزانه مواد غذایی و تحویل سریع درب منزل.', color: 'bg-emerald-100 text-emerald-700', icon: '♿' },
+            { id: 'zahra', name: 'زهرا (هنرمند چرم)', role: 'صنایع دستی اصفهان', bio: 'تولیدکننده کیف و اکسسوری‌های دست‌دوز چرم طبیعی با دوخت ظریف و ضمانت اصالت.', color: 'bg-orange-100 text-orange-700', icon: '👜' },
+            { id: 'mohammad', name: 'محمد (گرافیک و تایپ)', role: 'خدمات آنلاین استان', bio: 'متخصص طراحی لوگو، پوستر تبلیغاتی و صفحه‌آرایی حرفه‌ای متون با تحویل فوری.', color: 'bg-blue-100 text-blue-700', icon: '💻' },
+            { id: 'sara', name: 'سارا (هنر و بافت)', role: 'دست‌سازه‌های هنری', bio: 'طراح و بافنده انواع شال، کلاه و محصولات هنری دست‌بافت در استان اصفهان.', color: 'bg-purple-100 text-purple-700', icon: '🧶' }
+        ];
 
         const hyperSubCategories = [
             { id: 'all', title: 'همه تخفیف‌ها', icon: '🔥' },
             { id: 'supermarket', title: 'سوپرمارکت', icon: '🛒' },
-            { id: 'bakery', title: 'نانوایی', icon: '🥖' }
+            { id: 'bakery', title: 'نانوایی', icon: '🥖' },
+            { id: 'butcher', title: 'قصابی', icon: '🥩' },
+            { id: 'poultry', title: 'مرغ و ماهی', icon: '🍗' },
+            { id: 'fruit', title: 'میوه‌فروشی', icon: '🍎' },
+            { id: 'fastfood', title: 'فست‌فود', icon: '🍕' }
         ];
 
-        let catalog = [];
+        const defaultCatalog = [
+            { id: 1, mainCat: 'hyper', subCat: 'supermarket', ambassador: 'alireza', title: 'برنج ایرانی هاشمی ۱۰ کیلویی', store: 'سوپرمارکت تخفیفی مرکزی شهرضا', oldPrice: 1450000, price: 1280000, emoji: '🌾' },
+            { id: 2, mainCat: 'hyper', subCat: 'bakery', ambassador: 'alireza', title: 'نان سنگک کنجدی تازه (۵ عدد)', store: 'نانوایی سنتی شهرضا', oldPrice: 50000, price: 42000, emoji: '🥖' },
+            { id: 3, mainCat: 'hyper', subCat: 'butcher', ambassador: 'alireza', title: 'گوشت گوسفندی تازه مخلوط (۱ کیلو)', store: 'قصابی برادران', oldPrice: 690000, price: 620000, emoji: '🥩' },
+            { id: 4, mainCat: 'hyper', subCat: 'poultry', ambassador: 'alireza', title: 'مرغ تازه کشتار روز (بسته ۲ کیلویی)', store: 'پروتئینی ساحل', oldPrice: 240000, price: 205000, emoji: '🍗' },
+            { id: 5, mainCat: 'hyper', subCat: 'fruit', ambassador: 'alireza', title: 'سیب قرمز درجه یک سمیرم (۲ کیلو)', store: 'میوه‌سرای بهار', oldPrice: 130000, price: 98000, emoji: '🍎' },
+            { id: 6, mainCat: 'hyper', subCat: 'fastfood', ambassador: 'alireza', title: 'پیتزا مخصوص خانواده + نوشابه', store: 'فست‌فود آفتاب', oldPrice: 340000, price: 275000, emoji: '🍕' },
+            { id: 7, mainCat: 'handicraft', subCat: 'all', ambassador: 'zahra', title: 'کیف دوشی چرم طبیعی دست‌دوز', store: 'کارگاه چرم زهرا (اصفهان)', oldPrice: 1200000, price: 950000, emoji: '👜' },
+            { id: 8, mainCat: 'handicraft', subCat: 'all', ambassador: 'zahra', title: 'تابلو معرق چوب طرح اسلیمی نفیس', store: 'گالری هنر استان', oldPrice: 2600000, price: 2150000, emoji: '🖼️' },
+            { id: 9, mainCat: 'skills', subCat: 'all', ambassador: 'mohammad', title: 'طراحی لوگو و پوستر تبلیغاتی کسب‌وکار', store: 'استودیو گرافیک توان‌یار', oldPrice: 800000, price: 590000, emoji: '🎨' },
+            { id: 10, mainCat: 'skills', subCat: 'all', ambassador: 'sara', title: 'بافت سفارشی شال و کلاه پشمی', store: 'هنرکده سارا', oldPrice: 550000, price: 440000, emoji: '🧣' }
+        ];
+
+        // بارگذاری محصولات ذخیره شده محلی یا پیش‌فرض
+        let catalog = JSON.parse(localStorage.getItem('tavanyar_products') || 'null') || [...defaultCatalog];
+        let localOrders = JSON.parse(localStorage.getItem('tavanyar_orders') || '[]');
+
         let state = {
             mainCat: 'hyper',
             subCat: 'all',
-            ambassador: null,
             searchQuery: '',
             cart: [],
             lastInvoiceText: ''
         };
 
         const PAYMENT_THRESHOLD = 2000000;
+        const BASE_DELIVERY_FEE = 35000;
+        const COIN_VALUE_TOMAN = 1000; // هر سکه بازی = ۱۰۰۰ تومان اعتبار ارسال
 
-        function formatPrice(num) {
-            return num.toLocaleString('fa-IR') + ' تومان';
-        }
+        const faNum = n => Number(n || 0).toLocaleString('fa-IR');
+        const formatPrice = num => faNum(num) + ' تومان';
 
         function showToast(msg) {
             const toast = document.getElementById('toastMessage');
@@ -782,325 +861,165 @@
             setTimeout(() => toast.classList.add('opacity-0'), 2800);
         }
 
-        function escapeHtml(v) {
-            return String(v ?? '').replace(/[&<>"']/g, c => ({
-                '&': '&amp;',
-                '<': '&lt;',
-                '>': '&gt;',
-                '"': '&quot;',
-                "'": '&#39;'
-            }[c]));
+        // ================== رندر بخش‌های فروشگاه ==================
+        function renderAmbassadors() {
+            const container = document.getElementById('ambassadorsList');
+            container.innerHTML = ambassadors.map(amb => `
+                <button onclick="openAmbassadorProfile('${amb.id}')" class="flex flex-col items-center shrink-0 w-20">
+                    <div class="w-16 h-16 rounded-full ${amb.color} flex items-center justify-center text-2xl mb-1.5 border-2 border-white shadow-sm">
+                        ${amb.icon}
+                    </div>
+                    <span class="text-[11px] font-bold text-slate-800 text-center line-clamp-1">${amb.name.split(' ')[0]}</span>
+                    <span class="text-[9px] text-slate-500 text-center line-clamp-1">${amb.role}</span>
+                </button>
+            `).join('');
         }
 
-        // ================== توابع رابط کاربری فروشگاه ==================
+        function openAmbassadorProfile(ambId) {
+            const amb = ambassadors.find(a => a.id === ambId);
+            if (!amb) return;
+            document.getElementById('profIcon').className = `w-20 h-20 rounded-full flex items-center justify-center text-4xl mx-auto mb-3 border-4 border-white shadow-md ${amb.color}`;
+            document.getElementById('profIcon').innerText = amb.icon;
+            document.getElementById('profName').innerText = amb.name;
+            document.getElementById('profRole').innerText = amb.role;
+            document.getElementById('profBio').innerText = amb.bio;
 
-        function renderAmbassadors() {
-            document.getElementById('ambassadorsList').innerHTML = ambassadors.map(amb =>
-                `<button onclick="openAmbassadorProfile('${amb.id}')" class="flex flex-col items-center shrink-0 w-20 group">
-                    <div class="w-16 h-16 rounded-full ${amb.color} flex items-center justify-center text-2xl mb-1.5 border-2 border-white shadow-sm transition-all group-hover:scale-105">${amb.icon}</div>
-                    <span class="text-[11px] font-bold text-slate-800 text-center leading-tight line-clamp-1">${amb.name.split(' ')[0]}</span>
-                    <span class="text-[9px] text-slate-500 text-center line-clamp-1">${amb.role}</span>
-                </button>`
-            ).join('');
+            const ambProducts = catalog.filter(p => p.ambassador === ambId);
+            document.getElementById('ambContent-products').innerHTML = ambProducts.length
+                ? ambProducts.map(p => `
+                    <div class="bg-white p-3 rounded-2xl border border-slate-100 flex items-center justify-between">
+                        <div class="flex items-center gap-2.5">
+                            <span class="text-2xl">${p.emoji}</span>
+                            <div>
+                                <h4 class="text-xs font-bold text-slate-900">${p.title}</h4>
+                                <span class="text-[11px] font-black text-emerald-600">${formatPrice(p.price)}</span>
+                            </div>
+                        </div>
+                        <button onclick="addToCart(${p.id})" class="bg-slate-900 text-white text-xs font-bold px-3 py-2 rounded-xl">+ سبد</button>
+                    </div>
+                `).join('')
+                : '<p class="text-xs text-slate-400 text-center py-4">در حال ثبت محصولات جدید...</p>';
+
+            switchTab('ambassador-profile');
+        }
+
+        function switchAmbTab(tab) {
+            document.getElementById('ambContent-products').classList.toggle('hidden', tab !== 'products');
+            document.getElementById('ambContent-dashboard').classList.toggle('hidden', tab !== 'dashboard');
+            document.getElementById('ambTab-products').className = tab === 'products' ? 'flex-1 py-2 text-xs font-bold rounded-xl bg-white text-emerald-600 shadow-sm' : 'flex-1 py-2 text-xs font-bold rounded-xl text-slate-500';
+            document.getElementById('ambTab-dashboard').className = tab === 'dashboard' ? 'flex-1 py-2 text-xs font-bold rounded-xl bg-white text-emerald-600 shadow-sm' : 'flex-1 py-2 text-xs font-bold rounded-xl text-slate-500';
         }
 
         function renderSubCategories() {
-            const container = document.getElementById('subCatChips');
             const wrapper = document.getElementById('hyperSubCategories');
-
+            const container = document.getElementById('subCatChips');
             if (state.mainCat !== 'hyper') {
                 wrapper.classList.add('hidden');
                 return;
             }
-
             wrapper.classList.remove('hidden');
-
-            container.innerHTML = hyperSubCategories.map(sub =>
-                `<button onclick="selectSubCategory('${sub.id}')" class="px-3.5 py-2 rounded-full text-xs font-bold whitespace-nowrap flex items-center gap-1.5 transition-all min-h-[40px] ${state.subCat === sub.id ? 'bg-slate-900 text-white shadow-sm' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}">
-                    <span>${sub.icon}</span>
-                    <span>${sub.title}</span>
-                </button>`
-            ).join('');
+            container.innerHTML = hyperSubCategories.map(sub => `
+                <button onclick="selectSubCategory('${sub.id}')" class="px-3.5 py-2 rounded-full text-xs font-bold whitespace-nowrap flex items-center gap-1.5 min-h-[38px] ${state.subCat === sub.id ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-700'}">
+                    <span>${sub.icon}</span><span>${sub.title}</span>
+                </button>
+            `).join('');
         }
 
         function renderProducts() {
             const grid = document.getElementById('productsGrid');
-
-            let filtered = catalog.filter(item => {
+            const filtered = catalog.filter(item => {
                 if (state.searchQuery.trim() !== '') {
                     return item.title.includes(state.searchQuery) || item.store.includes(state.searchQuery);
                 }
-
-                if (state.ambassador && item.ambassador !== state.ambassador) return false;
-                if (!state.ambassador && item.mainCat !== state.mainCat) return false;
-
-                if (state.mainCat === 'hyper' && state.subCat !== 'all' && item.subCat !== state.subCat) {
-                    return false;
-                }
-
+                if (item.mainCat !== state.mainCat) return false;
+                if (state.mainCat === 'hyper' && state.subCat !== 'all' && item.subCat !== state.subCat) return false;
                 return true;
             });
 
             const titles = {
-                hyper: 'تخفیف‌های روز هایپر محله',
-                handicraft: 'گالری صنایع دستی',
-                skills: 'خدمات آنلاین'
+                hyper: 'تخفیف‌های روز هایپر شهرضا',
+                handicraft: 'گالری صنایع دستی استان اصفهان',
+                skills: 'خدمات و مهارت‌های تخصصی آنلاین'
             };
-
-            document.getElementById('sectionTitle').innerText =
-                state.ambassador
-                    ? `محصولات ${ambassadors.find(a => a.id === state.ambassador).name}`
-                    : (state.searchQuery ? 'نتایج جستجو' : titles[state.mainCat]);
-
-            document.getElementById('itemsCount').innerText =
-                `${filtered.length.toLocaleString('fa-IR')} مورد`;
+            document.getElementById('sectionTitle').innerText = state.searchQuery ? 'نتایج جستجو' : titles[state.mainCat];
+            document.getElementById('itemsCount').innerText = faNum(filtered.length) + ' مورد';
 
             if (filtered.length === 0) {
-                grid.innerHTML = `
-                    <div class="col-span-2 text-center py-10 bg-slate-50 rounded-3xl border border-slate-100">
-                        <p class="text-sm font-bold text-slate-600">موردی پیدا نشد!</p>
-                    </div>`;
+                grid.innerHTML = `<div class="col-span-2 text-center py-8 bg-slate-50 rounded-2xl text-xs text-slate-500">موردی یافت نشد.</div>`;
                 return;
             }
 
             grid.innerHTML = filtered.map(item => {
-                const discountPercent = Math.round(((item.oldPrice - item.price) / item.oldPrice) * 100);
-
+                const discount = item.oldPrice > item.price ? Math.round(((item.oldPrice - item.price) / item.oldPrice) * 100) : 0;
                 return `
                     <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-3 flex flex-col justify-between">
                         <div>
-                            <div class="relative h-28 bg-slate-50 rounded-2xl flex items-center justify-center text-5xl mb-2.5">
-                                ${item.emoji}
-                                <span class="absolute top-2 right-2 bg-rose-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full">
-                                    ${discountPercent.toLocaleString('fa-IR')}٪ تخفیف
-                                </span>
+                            <div class="relative h-24 bg-slate-50 rounded-2xl flex items-center justify-center text-4xl mb-2">
+                                ${item.emoji || '📦'}
+                                ${discount > 0 ? `<span class="absolute top-2 right-2 bg-rose-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full">${faNum(discount)}٪</span>` : ''}
                             </div>
                             <span class="text-[10px] font-bold text-emerald-600 block mb-0.5 line-clamp-1">${item.store}</span>
-                            <h4 class="text-xs font-extrabold text-slate-900 leading-snug mb-2 line-clamp-2 min-h-[34px]">${item.title}</h4>
+                            <h4 class="text-xs font-extrabold text-slate-900 leading-snug mb-2 line-clamp-2 min-h-[32px]">${item.title}</h4>
                         </div>
-
                         <div>
-                            <div class="mb-2.5">
-                                <span class="text-[10px] text-slate-400 line-through block">${formatPrice(item.oldPrice)}</span>
+                            <div class="mb-2">
+                                ${item.oldPrice > item.price ? `<span class="text-[10px] text-slate-400 line-through block">${formatPrice(item.oldPrice)}</span>` : ''}
                                 <span class="text-sm font-black text-slate-900">${formatPrice(item.price)}</span>
                             </div>
-
-                            <button onclick="addToCart(${item.id})" class="btn-accessible w-full bg-slate-900 hover:bg-emerald-600 text-white rounded-xl text-xs font-bold gap-1.5">
-                                <i data-lucide="plus" class="w-4 h-4"></i>
-                                افزودن به سبد
+                            <button onclick="addToCart(${item.id})" class="btn-accessible w-full bg-slate-900 hover:bg-emerald-600 text-white rounded-xl text-xs font-bold gap-1">
+                                + افزودن به سبد
                             </button>
                         </div>
-                    </div>`;
+                    </div>
+                `;
             }).join('');
-
-            lucide.createIcons();
         }
 
         function selectMainCategory(cat) {
             state.mainCat = cat;
             state.subCat = 'all';
-            state.ambassador = null;
             state.searchQuery = '';
+            document.getElementById('marketSearchInput').value = '';
 
-            const cards = {
-                hyper: {
-                    el: document.getElementById('tab-hyper'),
-                    activeClass: 'border-emerald-600 bg-emerald-600 text-white shadow-md shadow-emerald-100',
-                    inactiveClass: 'border-slate-100 bg-emerald-50/70 text-slate-800'
-                },
-                handicraft: {
-                    el: document.getElementById('tab-handicraft'),
-                    activeClass: 'border-orange-500 bg-orange-500 text-white shadow-md shadow-orange-100',
-                    inactiveClass: 'border-slate-100 bg-orange-50/70 text-slate-800'
-                },
-                skills: {
-                    el: document.getElementById('tab-skills'),
-                    activeClass: 'border-blue-600 bg-blue-600 text-white shadow-md shadow-blue-100',
-                    inactiveClass: 'border-slate-100 bg-blue-50/70 text-slate-800'
-                }
+            const styles = {
+                hyper: ['border-emerald-600 bg-emerald-600 text-white shadow-md', 'border-slate-100 bg-emerald-50/70 text-slate-800'],
+                handicraft: ['border-orange-500 bg-orange-500 text-white shadow-md', 'border-slate-100 bg-orange-50/70 text-slate-800'],
+                skills: ['border-blue-600 bg-blue-600 text-white shadow-md', 'border-slate-100 bg-blue-50/70 text-slate-800']
             };
-
-            Object.keys(cards).forEach(key => {
-                const c = cards[key];
-                c.el.className = `category-card p-3 rounded-2xl border-2 flex flex-col items-center justify-center text-center transition-all min-h-[108px] ${key === cat ? c.activeClass : c.inactiveClass}`;
+            Object.keys(styles).forEach(k => {
+                document.getElementById(`tab-${k}`).className = `category-card p-3 rounded-2xl border-2 flex flex-col items-center justify-center text-center transition-all min-h-[102px] ${k === cat ? styles[k][0] : styles[k][1]}`;
             });
-
             renderSubCategories();
             renderProducts();
         }
 
-        function selectSubCategory(subId) {
-            state.subCat = subId;
+        function selectSubCategory(sub) {
+            state.subCat = sub;
             renderSubCategories();
             renderProducts();
         }
 
-        // ================== پروفایل و جستجوی سفیران ==================
-
-        function openAmbassadorProfile(id) {
-            const amb = ambassadors.find(a => a.id === id);
-            if (!amb) return;
-
-            document.getElementById('ambProfileIcon').className =
-                `w-20 h-20 rounded-full flex items-center justify-center text-4xl mx-auto mb-3 border-4 border-white shadow-md ${amb.color}`;
-
-            document.getElementById('ambProfileIcon').innerText = amb.icon;
-            document.getElementById('ambProfileName').innerText = amb.name;
-            document.getElementById('ambProfileRole').innerText = amb.role;
-
-            document.getElementById('btnGoToFullProfile').onclick = () => {
-                closeAmbassadorProfile();
-                openFullProfile(id);
-            };
-
-            document.getElementById('ambassadorModal').classList.remove('hidden');
+        function handleMarketSearch(val) {
+            state.searchQuery = val;
+            renderProducts();
         }
 
-        function closeAmbassadorProfile() {
-            document.getElementById('ambassadorModal').classList.add('hidden');
-        }
-
-        function openFullProfile(id) {
-            const amb = ambassadors.find(a => a.id === id);
-            if (!amb) return;
-
-            document.getElementById('profIcon').className =
-                `w-24 h-24 rounded-full flex items-center justify-center text-5xl mx-auto mb-3 border-4 border-white shadow-lg relative z-10 ${amb.color}`;
-
-            document.getElementById('profIcon').innerText = amb.icon;
-            document.getElementById('profName').innerText = amb.name;
-            document.getElementById('profRole').innerText = amb.role;
-            document.getElementById('profLocation').innerText = amb.location || 'اصفهان، ایران';
-            document.getElementById('profBio').innerText = amb.bio || 'هنوز بیوگرافی ثبت نشده است.';
-
-            const ambProducts = catalog.filter(p => p.ambassador === id);
-            const container = document.getElementById('ambContent-products');
-
-            if (ambProducts.length === 0) {
-                container.innerHTML = '<p class="text-xs text-slate-500 text-center py-4">هنوز محصولی ثبت نشده است.</p>';
-            } else {
-                container.innerHTML = ambProducts.map(item => `
-                    <div class="bg-white p-3 rounded-2xl border border-slate-100 shadow-sm flex justify-between items-center">
-                        <div class="flex items-center gap-2">
-                            <span class="text-2xl">${item.emoji}</span>
-                            <div>
-                                <div class="text-xs font-bold text-slate-800">${item.title}</div>
-                                <div class="text-[10px] text-slate-500">${formatPrice(item.price)}</div>
-                            </div>
-                        </div>
-                        <button onclick="addToCart(${item.id})" class="bg-emerald-50 text-emerald-700 text-[10px] font-bold px-2 py-1 rounded-lg">خرید</button>
-                    </div>`
-                ).join('');
-            }
-
-            switchAmbTab('products');
-            switchTab('ambassador-profile');
-        }
-
-        function switchAmbTab(tabName) {
-            ['products', 'dashboard', 'marketing'].forEach(t => {
-                document.getElementById(`ambContent-${t}`).classList.add('hidden');
-
-                const btn = document.getElementById(`ambTab-${t}`);
-                btn.classList.remove('bg-white', 'text-emerald-600', 'shadow-sm');
-                btn.classList.add('text-slate-500');
-            });
-
-            document.getElementById(`ambContent-${tabName}`).classList.remove('hidden');
-
-            const activeBtn = document.getElementById(`ambTab-${tabName}`);
-            activeBtn.classList.remove('text-slate-500');
-            activeBtn.classList.add('bg-white', 'text-emerald-600', 'shadow-sm');
-        }
-
-        function openAmbassadorSearch() {
-            document.getElementById('ambSearchInput').value = '';
-            filterAmbassadors('');
-            document.getElementById('ambassadorSearchModal').classList.remove('hidden');
-        }
-
-        function closeAmbassadorSearch() {
-            document.getElementById('ambassadorSearchModal').classList.add('hidden');
-        }
-
-        function filterAmbassadors(query) {
-            const results = ambassadors.filter(a => a.name.includes(query) || a.role.includes(query));
-            const container = document.getElementById('ambSearchResults');
-
-            if (results.length === 0) {
-                container.innerHTML = '<p class="text-xs text-slate-500 text-center py-4">سفیری پیدا نشد.</p>';
-                return;
-            }
-
-            container.innerHTML = results.map(amb => `
-                <button onclick="closeAmbassadorSearch(); openAmbassadorProfile('${amb.id}')" class="w-full text-right bg-slate-50 p-3 rounded-xl border border-slate-100 flex items-center gap-3 hover:bg-slate-100 transition-colors">
-                    <div class="w-10 h-10 rounded-full ${amb.color} flex items-center justify-center text-xl shrink-0">${amb.icon}</div>
-                    <div>
-                        <div class="text-sm font-bold text-slate-800">${amb.name}</div>
-                        <div class="text-[10px] text-slate-500">${amb.role}</div>
-                    </div>
-                </button>`
-            ).join('');
-        }
-
-        // ================== اخبار ==================
-
-        function openNewsArchive() {
-            document.getElementById('newsArchiveModal').classList.remove('hidden');
-        }
-
-        function closeNewsArchive() {
-            document.getElementById('newsArchiveModal').classList.add('hidden');
-        }
-
-        function openNewsArticle(id) {
-            const article = newsData[id];
-            if (!article) return;
-
-            document.getElementById('articleTitle').innerText = article.title;
-            document.getElementById('articleBody').innerText = article.body;
-
-            closeNewsArchive();
-            document.getElementById('newsArticleModal').classList.remove('hidden');
-        }
-
-        function closeNewsArticle() {
-            document.getElementById('newsArticleModal').classList.add('hidden');
-        }
-
-        // ================== سبد خرید ==================
-
-        function addToCart(productId) {
-            const product = catalog.find(p => p.id === productId);
-
-            if (!product) return showToast('محصول پیدا نشد.');
-            if (product.stock !== undefined && product.stock <= 0) return showToast('ناموجود');
-
-            const current = state.cart.find(c => c.product.id === productId)?.qty || 0;
-
-            if (product.stock !== undefined && current >= product.stock) {
-                return showToast('بیشتر از موجودی');
-            }
-
-            const existing = state.cart.find(c => c.product.id === productId);
-
+        // ================== مدیریت سبد خرید و گاوصندوق ==================
+        function addToCart(id) {
+            const product = catalog.find(p => p.id === id);
+            if (!product) return;
+            const existing = state.cart.find(c => c.product.id === id);
             if (existing) existing.qty += 1;
             else state.cart.push({ product, qty: 1 });
-
             updateCartBadge();
-            showToast(`«${product.title}» اضافه شد`);
+            showToast(`«${product.title}» به سبد اضافه شد`);
         }
 
-        function updateQty(productId, delta) {
-            const idx = state.cart.findIndex(c => c.product.id === productId);
+        function updateQty(id, delta) {
+            const idx = state.cart.findIndex(c => c.product.id === id);
             if (idx === -1) return;
-
             state.cart[idx].qty += delta;
-
-            if (state.cart[idx].qty <= 0) {
-                state.cart.splice(idx, 1);
-            }
-
+            if (state.cart[idx].qty <= 0) state.cart.splice(idx, 1);
             updateCartBadge();
             renderCartView();
         }
@@ -1109,193 +1028,152 @@
             state.cart = [];
             updateCartBadge();
             renderCartView();
-            showToast('سبد خالی شد');
         }
 
         function updateCartBadge() {
-            const totalItems = state.cart.reduce((sum, item) => sum + item.qty, 0);
+            const count = state.cart.reduce((s, i) => s + i.qty, 0);
             const badge = document.getElementById('cartBadge');
-
-            if (totalItems > 0) {
-                badge.innerText = totalItems.toLocaleString('fa-IR');
-                badge.classList.remove('hidden');
-            } else {
-                badge.classList.add('hidden');
-            }
+            badge.innerText = faNum(count);
+            badge.classList.toggle('hidden', count === 0);
         }
 
         function renderCartView() {
-            const emptyState = document.getElementById('emptyCartState');
-            const filledState = document.getElementById('filledCartState');
+            const empty = document.getElementById('emptyCartState');
+            const filled = document.getElementById('filledCartState');
             const clearBtn = document.getElementById('clearCartBtn');
 
             if (state.cart.length === 0) {
-                emptyState.classList.remove('hidden');
-                filledState.classList.add('hidden');
+                empty.classList.remove('hidden');
+                filled.classList.add('hidden');
                 clearBtn.classList.add('hidden');
                 return;
             }
-
-            emptyState.classList.add('hidden');
-            filledState.classList.remove('hidden');
+            empty.classList.add('hidden');
+            filled.classList.remove('hidden');
             clearBtn.classList.remove('hidden');
 
-            let totalPrice = 0;
-            let totalOldPrice = 0;
+            let itemsTotal = 0;
+            let oldItemsTotal = 0;
 
-            const listHtml = state.cart.map(item => {
-                const subTotal = item.product.price * item.qty;
-                totalPrice += subTotal;
-                totalOldPrice += item.product.oldPrice * item.qty;
-
+            document.getElementById('cartItemsList').innerHTML = state.cart.map(c => {
+                itemsTotal += c.product.price * c.qty;
+                oldItemsTotal += (c.product.oldPrice || c.product.price) * c.qty;
                 return `
-                    <div class="bg-white p-3.5 rounded-2xl border border-slate-200 flex items-center justify-between gap-3">
-                        <div class="flex items-center gap-3">
-                            <div class="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center text-2xl shrink-0">${item.product.emoji}</div>
+                    <div class="bg-white p-3 rounded-2xl border border-slate-200 flex items-center justify-between gap-2">
+                        <div class="flex items-center gap-2.5">
+                            <span class="text-2xl">${c.product.emoji || '📦'}</span>
                             <div>
-                                <h4 class="text-xs font-extrabold text-slate-900 line-clamp-1">${item.product.title}</h4>
-                                <span class="text-xs font-bold text-emerald-600">${formatPrice(subTotal)}</span>
+                                <h4 class="text-xs font-extrabold text-slate-900 line-clamp-1">${c.product.title}</h4>
+                                <span class="text-xs font-bold text-emerald-600">${formatPrice(c.product.price * c.qty)}</span>
                             </div>
                         </div>
-
-                        <div class="flex items-center gap-2 bg-slate-100 p-1 rounded-xl">
-                            <button onclick="updateQty(${item.product.id}, 1)" class="w-8 h-8 rounded-lg bg-white text-slate-900 font-black shadow-sm flex items-center justify-center">+</button>
-                            <span class="text-xs font-black w-5 text-center">${item.qty.toLocaleString('fa-IR')}</span>
-                            <button onclick="updateQty(${item.product.id}, -1)" class="w-8 h-8 rounded-lg bg-white text-rose-600 font-black shadow-sm flex items-center justify-center">-</button>
+                        <div class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl">
+                            <button onclick="updateQty(${c.product.id}, 1)" class="w-7 h-7 bg-white rounded-lg font-black shadow-sm">+</button>
+                            <span class="text-xs font-black w-5 text-center">${faNum(c.qty)}</span>
+                            <button onclick="updateQty(${c.product.id}, -1)" class="w-7 h-7 bg-white rounded-lg font-black text-rose-600 shadow-sm">-</button>
                         </div>
-                    </div>`;
+                    </div>
+                `;
             }).join('');
 
-            document.getElementById('cartItemsList').innerHTML = listHtml;
-            document.getElementById('totalPriceText').innerText = formatPrice(totalPrice);
-            document.getElementById('totalDiscountText').innerText = formatPrice(totalOldPrice - totalPrice);
+            // محاسبه گاوصندوق و هزینه ارسال
+            const vaultCredit = gameData.gold * COIN_VALUE_TOMAN;
+            const isVaultOpen = gameData.vaultUnlocked;
+            const useVault = isVaultOpen && document.getElementById('useVaultCheckbox').checked && vaultCredit > 0;
 
+            document.getElementById('cartVaultStatus').innerText = isVaultOpen ? 'باز و قابل استفاده' : 'قفل توسط مدیریت';
+            document.getElementById('cartVaultStatus').className = isVaultOpen
+                ? 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800'
+                : 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-100 text-rose-800';
+
+            document.getElementById('useVaultToggleWrapper').classList.toggle('hidden', !isVaultOpen || vaultCredit === 0);
+            document.getElementById('cartVaultDesc').innerText = isVaultOpen
+                ? `موجودی گاوصندوق شما: ${faNum(gameData.gold)} سکه (${formatPrice(vaultCredit)})`
+                : 'گاوصندوق امروز قفل است؛ در روزهای طرح ویژه باز می‌شود.';
+
+            const vaultDiscount = useVault ? Math.min(BASE_DELIVERY_FEE, vaultCredit) : 0;
+            const finalDelivery = BASE_DELIVERY_FEE - vaultDiscount;
+            const grandTotal = itemsTotal + finalDelivery;
+
+            document.getElementById('totalDiscountText').innerText = formatPrice(Math.max(0, oldItemsTotal - itemsTotal));
+            document.getElementById('deliveryFeeText').innerText = finalDelivery === 0 ? 'رایگان 🎉' : formatPrice(finalDelivery);
+            document.getElementById('vaultSavingsRow').classList.toggle('hidden', vaultDiscount === 0);
+            document.getElementById('vaultSavingsText').innerText = '-' + formatPrice(vaultDiscount);
+            document.getElementById('totalPriceText').innerText = formatPrice(grandTotal);
+
+            // قانون پرداخت زیر ۲ میلیون و بالای ۲ میلیون
             const ruleBanner = document.getElementById('paymentRuleBanner');
-
-            if (totalPrice < PAYMENT_THRESHOLD) {
-                ruleBanner.className = 'p-3.5 rounded-2xl text-xs font-bold leading-relaxed border bg-emerald-50 border-emerald-200 text-emerald-900';
-                ruleBanner.innerHTML = '✅ <strong>خرید زیر ۲ میلیون تومان:</strong> پرداخت در محل هنگام تحویل.';
+            if (grandTotal < PAYMENT_THRESHOLD) {
+                ruleBanner.className = 'p-3 rounded-2xl text-xs font-bold leading-relaxed border bg-emerald-50 border-emerald-200 text-emerald-900';
+                ruleBanner.innerHTML = '✅ <strong>خرید زیر ۲ میلیون تومان:</strong> پرداخت در محل هنگام تحویل درب منزل (بدون نیاز به پرداخت آنلاین).';
             } else {
-                ruleBanner.className = 'p-3.5 rounded-2xl text-xs font-bold leading-relaxed border bg-orange-50 border-orange-200 text-orange-900';
-                ruleBanner.innerHTML = '💳 <strong>خرید بالای ۲ میلیون تومان:</strong> تسویه هنگام تهیه کالا در فروشگاه.';
+                ruleBanner.className = 'p-3 rounded-2xl text-xs font-bold leading-relaxed border bg-orange-50 border-orange-200 text-orange-900';
+                ruleBanner.innerHTML = '💳 <strong>خرید بالای ۲ میلیون تومان:</strong> تسویه هنگام تهیه کالا در فروشگاه و ارسال فاکتور لحظه‌ای.';
             }
         }
 
-        // ================== اتصال دیتابیس Supabase ==================
-
-        const SB_URL = window.TAVANYAR_CONFIG?.url || '';
-        const SB_KEY = window.TAVANYAR_CONFIG?.anonKey || '';
-
-        const db = (SB_URL && SB_KEY && window.supabase)
-            ? window.supabase.createClient(SB_URL, SB_KEY)
-            : null;
-
-        let adminEditingId = null;
-
-        function dbNotice() {
-            showToast('اتصال پایگاه داده تنظیم نشده است.');
-        }
-
-        function dbProduct(row) {
-            return {
-                id: row.id,
-                mainCat: row.main_cat,
-                subCat: row.sub_cat,
-                ambassador: row.ambassador || 'alireza',
-                title: row.title,
-                store: row.store,
-                oldPrice: Number(row.old_price || row.price),
-                price: Number(row.price),
-                emoji: row.emoji || '🛍️',
-                stock: Number(row.stock ?? 0),
-                active: row.active
-            };
-        }
-
-        async function loadLiveProducts() {
-            if (!db) return;
-
-            const { data, error } = await db
-                .from('products')
-                .select('*')
-                .eq('active', true)
-                .order('id');
-
-            if (error) {
-                console.error(error);
-                showToast('خطا در دریافت محصولات');
-                return;
-            }
-
-            catalog = data.map(dbProduct);
-            renderProducts();
-        }
-
-        async function submitOrder() {
-            if (!db) {
-                dbNotice();
-                return;
-            }
-
+        function submitOrder() {
             const name = document.getElementById('customerName').value.trim();
             const phone = document.getElementById('customerPhone').value.trim();
             const address = document.getElementById('customerAddress').value.trim();
 
-            if (!name || !phone || !address || !state.cart.length) {
-                showToast('مشخصات و سبد را کامل کنید');
-                return;
+            if (!name || !phone || !address) {
+                return showToast('⚠️ لطفاً نام، موبایل و آدرس را وارد کنید');
             }
 
-            const items = state.cart.map(x => ({
-                product_id: x.product.id,
-                quantity: x.qty
-            }));
+            const itemsTotal = state.cart.reduce((s, c) => s + c.product.price * c.qty, 0);
+            const vaultCredit = gameData.gold * COIN_VALUE_TOMAN;
+            const useVault = gameData.vaultUnlocked && document.getElementById('useVaultCheckbox').checked && vaultCredit > 0;
+            const vaultDiscount = useVault ? Math.min(BASE_DELIVERY_FEE, vaultCredit) : 0;
+            const coinsUsed = Math.ceil(vaultDiscount / COIN_VALUE_TOMAN);
 
-            const { data, error } = await db.rpc('create_tavanyar_order', {
-                p_customer_name: name,
-                p_customer_phone: phone,
-                p_customer_address: address,
-                p_items: items
-            });
-
-            if (error) {
-                console.error(error);
-                showToast(error.message.includes('stock') ? 'موجودی کافی نیست' : 'ثبت سفارش ناموفق');
-                return;
+            if (coinsUsed > 0) {
+                gameData.gold = Math.max(0, gameData.gold - coinsUsed);
+                updateGameUI();
             }
 
-            const order = data;
-            const total = Number(order.total_amount);
+            const grandTotal = itemsTotal + (BASE_DELIVERY_FEE - vaultDiscount);
+            const code = 'TV-' + Math.floor(10000 + Math.random() * 90000);
+            const isUnder = grandTotal < PAYMENT_THRESHOLD;
 
-            document.getElementById('invCode').innerText = order.tracking_code;
+            document.getElementById('invCode').innerText = code;
             document.getElementById('invCustomer').innerText = `${name} (${phone})`;
             document.getElementById('invAddress').innerText = address;
-            document.getElementById('invTotal').innerText = formatPrice(total);
+            document.getElementById('invTotal').innerText = formatPrice(grandTotal);
 
-            document.getElementById('invItemsList').innerHTML = state.cart.map(c =>
-                `<div class="flex justify-between text-slate-700">
-                    <span>${c.product.title} (${c.qty} عدد)</span>
-                    <span class="font-bold">${formatPrice(c.product.price * c.qty)}</span>
-                </div>`
-            ).join('');
+            const hasProvincial = state.cart.some(c => c.product.mainCat !== 'hyper');
+            document.getElementById('invDeliveryTime').innerText = hasProvincial
+                ? 'ارسال استانی (۲۴ تا ۴۸ ساعت)'
+                : 'حدود ۳۵ تا ۴۵ دقیقه دیگر (شهرضا)';
 
-            const status = document.getElementById('invPaymentStatus');
-            status.className = 'p-3 rounded-2xl text-xs font-bold mb-4 border bg-emerald-50 border-emerald-200 text-emerald-900';
-            status.innerText = 'سفارش در سامانه ثبت شد.';
+            document.getElementById('invItemsList').innerHTML = state.cart.map(c => `
+                <div class="flex justify-between"><span>${c.product.title} (${faNum(c.qty)})</span><b>${formatPrice(c.product.price * c.qty)}</b></div>
+            `).join('');
 
-            state.lastInvoiceText =
-                `فاکتور توان‌یار\nکد پیگیری: ${order.tracking_code}\nمشتری: ${name}\nتلفن: ${phone}\nآدرس: ${address}\nمبلغ: ${formatPrice(total)}`;
+            const statusBox = document.getElementById('invPaymentStatus');
+            statusBox.className = isUnder
+                ? 'p-3 rounded-2xl text-xs font-bold mb-3 border bg-emerald-50 border-emerald-200 text-emerald-900'
+                : 'p-3 rounded-2xl text-xs font-bold mb-3 border bg-orange-50 border-orange-200 text-orange-900';
+            statusBox.innerText = isUnder
+                ? 'روش پرداخت: پرداخت در محل درب منزل'
+                : 'روش پرداخت: تسویه لحظه خرید از فروشگاه';
+
+            // ذخیره سفارش در تاریخچه محلی مدیر
+            localOrders.unshift({ id: code, customer: name, phone, address, total: grandTotal, status: 'جدید' });
+            localStorage.setItem('tavanyar_orders', JSON.stringify(localOrders));
+
+            const lines = state.cart.map(c => `▫️ ${c.product.title} (${c.qty}): ${formatPrice(c.product.price * c.qty)}`).join('\n');
+            state.lastInvoiceText = `🧾 فاکتور سفارش توان‌یار\n🔖 کد: ${code}\n👤 مشتری: ${name} (${phone})\n📍 آدرس: ${address}\n---\n${lines}\n---\n🚚 کسر گاوصندوق: ${formatPrice(vaultDiscount)}\n💰 مبلغ نهایی: ${formatPrice(grandTotal)}`;
 
             document.getElementById('invoiceModal').classList.remove('hidden');
         }
 
+        function sendToTelegram() {
+            window.open(`https://t.me/share/url?url=${encodeURIComponent('https://alirezabayat0097-wq.github.io/tavanyar-store/')}&text=${encodeURIComponent(state.lastInvoiceText)}`, '_blank');
+        }
+
         function copyInvoiceText() {
-            const textarea = document.createElement('textarea');
-            textarea.value = state.lastInvoiceText;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
+            navigator.clipboard?.writeText(state.lastInvoiceText);
             showToast('✅ متن فاکتور کپی شد');
         }
 
@@ -1306,258 +1184,16 @@
             switchTab('home');
         }
 
-        // ================== پنل مدیریت ==================
-
-        function openAdmin() {
-            document.getElementById('view-home').classList.add('hidden');
-            document.getElementById('view-market').classList.add('hidden');
-            document.getElementById('view-cart').classList.add('hidden');
-            document.getElementById('view-about').classList.add('hidden');
-            document.getElementById('view-ambassador-profile').classList.add('hidden');
-            document.getElementById('view-city').classList.add('hidden');
-            document.getElementById('view-admin').classList.remove('hidden');
-            window.scrollTo(0, 0);
-        }
-
-        async function adminLogin() {
-            if (!db) {
-                dbNotice();
-                return;
-            }
-
-            const email = document.getElementById('adminEmail').value.trim();
-            const password = document.getElementById('adminPassword').value;
-
-            const { error } = await db.auth.signInWithPassword({ email, password });
-
-            if (error) {
-                showToast('خطای ورود');
-                return;
-            }
-
-            const { data: role } = await db
-                .from('user_roles')
-                .select('role')
-                .eq('user_id', (await db.auth.getUser()).data.user.id)
-                .maybeSingle();
-
-            if (role?.role !== 'admin') {
-                await db.auth.signOut();
-                showToast('دسترسی مدیریت ندارید');
-                return;
-            }
-
-            document.getElementById('adminLogin').classList.add('hidden');
-            document.getElementById('adminDashboard').classList.remove('hidden');
-            await loadAdminProducts();
-        }
-
-        async function adminLogout() {
-            if (db) await db.auth.signOut();
-
-            document.getElementById('adminDashboard').classList.add('hidden');
-            document.getElementById('adminLogin').classList.remove('hidden');
-        }
-
-        function showAdminSection(which) {
-            document.getElementById('adminProductsSection').classList.toggle('hidden', which !== 'products');
-            document.getElementById('adminOrdersSection').classList.toggle('hidden', which !== 'orders');
-
-            if (which === 'orders') loadAdminOrders();
-        }
-
-        async function loadAdminProducts() {
-            const box = document.getElementById('adminProductsList');
-            box.innerHTML = 'در حال دریافت...';
-
-            const { data, error } = await db.from('products').select('*').order('id');
-
-            if (error) {
-                box.innerText = 'خطا';
-                return;
-            }
-
-            box.innerHTML = data.map(p => `
-                <div class="p-3 border rounded-xl flex items-center justify-between gap-2">
-                    <div class="min-w-0">
-                        <div class="font-bold text-sm">${escapeHtml(p.emoji || '🛍️')} ${escapeHtml(p.title)}</div>
-                        <div class="text-xs text-slate-500">${formatPrice(p.price)}</div>
-                    </div>
-
-                    <div class="flex gap-1">
-                        <button onclick="editProduct(${p.id})" class="px-3 py-2 bg-blue-50 text-blue-700 rounded-lg text-xs">ویرایش</button>
-                        <button onclick="deleteProduct(${p.id})" class="px-3 py-2 bg-rose-50 text-rose-700 rounded-lg text-xs">حذف</button>
-                    </div>
-                </div>`
-            ).join('');
-        }
-
-        function newProduct() {
-            adminEditingId = null;
-            document.getElementById('productEditorTitle').innerText = 'افزودن محصول';
-
-            ['pTitle', 'pStore', 'pPrice', 'pOldPrice', 'pStock', 'pEmoji'].forEach(id => {
-                document.getElementById(id).value = '';
-            });
-
-            document.getElementById('productEditor').classList.remove('hidden');
-        }
-
-        async function editProduct(id) {
-            const { data, error } = await db.from('products').select('*').eq('id', id).single();
-
-            if (error) return showToast('ناموفق');
-
-            adminEditingId = id;
-
-            document.getElementById('productEditorTitle').innerText = 'ویرایش';
-            document.getElementById('pTitle').value = data.title;
-            document.getElementById('pStore').value = data.store;
-            document.getElementById('pPrice').value = data.price;
-            document.getElementById('pOldPrice').value = data.old_price;
-            document.getElementById('pStock').value = data.stock;
-            document.getElementById('pEmoji').value = data.emoji;
-            document.getElementById('pMainCat').value = data.main_cat;
-            document.getElementById('pSubCat').value = data.sub_cat;
-
-            document.getElementById('productEditor').classList.remove('hidden');
-        }
-
-        function cancelProductEdit() {
-            document.getElementById('productEditor').classList.add('hidden');
-        }
-
-        async function saveProduct() {
-            const payload = {
-                title: document.getElementById('pTitle').value.trim(),
-                store: document.getElementById('pStore').value.trim(),
-                price: Number(document.getElementById('pPrice').value),
-                old_price: Number(document.getElementById('pOldPrice').value || document.getElementById('pPrice').value),
-                stock: Number(document.getElementById('pStock').value),
-                emoji: document.getElementById('pEmoji').value || '🛍️',
-                main_cat: document.getElementById('pMainCat').value,
-                sub_cat: document.getElementById('pSubCat').value,
-                active: true
-            };
-
-            if (!payload.title || !payload.store) return showToast('اطلاعات ناقص');
-
-            const q = adminEditingId
-                ? db.from('products').update(payload).eq('id', adminEditingId)
-                : db.from('products').insert(payload);
-
-            const { error } = await q;
-
-            if (error) return showToast('ناموفق');
-
-            cancelProductEdit();
-            await loadAdminProducts();
-            await loadLiveProducts();
-            showToast('ذخیره شد');
-        }
-
-        async function deleteProduct(id) {
-            if (!confirm('حذف شود؟')) return;
-
-            const { error } = await db.from('products').update({ active: false }).eq('id', id);
-
-            if (error) return showToast('ناموفق');
-
-            await loadAdminProducts();
-            await loadLiveProducts();
-        }
-
-        async function loadAdminOrders() {
-            const box = document.getElementById('adminOrdersList');
-            box.innerHTML = 'در حال دریافت...';
-
-            const { data, error } = await db
-                .from('orders')
-                .select('id,tracking_code,customer_name,customer_phone,customer_address,total_amount,status,created_at')
-                .order('created_at', { ascending: false })
-                .limit(100);
-
-            if (error) {
-                box.innerText = 'خطا';
-                return;
-            }
-
-            box.innerHTML = data.map(o => `
-                <div class="p-3 border rounded-xl space-y-2">
-                    <div class="flex justify-between">
-                        <b>${escapeHtml(o.tracking_code)}</b>
-                        <span class="text-xs text-slate-500">${new Date(o.created_at).toLocaleString('fa-IR')}</span>
-                    </div>
-
-                    <div class="text-sm">${escapeHtml(o.customer_name)} · ${escapeHtml(o.customer_phone)}</div>
-                    <div class="text-xs text-slate-600">${escapeHtml(o.customer_address)}</div>
-                    <b class="text-sm">${formatPrice(o.total_amount)}</b>
-
-                    <div class="flex gap-2">
-                        <select id="status-${o.id}" class="flex-1 border rounded-lg p-2 text-sm">
-                            <option value="new" ${o.status === 'new' ? 'selected' : ''}>جدید</option>
-                            <option value="processing" ${o.status === 'processing' ? 'selected' : ''}>در حال آماده‌سازی</option>
-                            <option value="sent" ${o.status === 'sent' ? 'selected' : ''}>ارسال شده</option>
-                            <option value="done" ${o.status === 'done' ? 'selected' : ''}>تحویل شده</option>
-                            <option value="cancelled" ${o.status === 'cancelled' ? 'selected' : ''}>لغو شده</option>
-                        </select>
-
-                        <button onclick="updateOrderStatus(${o.id})" class="bg-emerald-600 text-white rounded-lg px-3 text-xs">ثبت</button>
-                    </div>
-                </div>`
-            ).join('') || 'هنوز سفارشی نیست.';
-        }
-
-        async function updateOrderStatus(id) {
-            const status = document.getElementById(`status-${id}`).value;
-            const { error } = await db.from('orders').update({ status }).eq('id', id);
-            showToast(error ? 'ناموفق' : 'ثبت شد');
-        }
-
-        // ================== جابه‌جایی بین صفحات ==================
-
-        function switchTab(tabName) {
-            document.getElementById('view-admin')?.classList.add('hidden');
-
-            ['home', 'market', 'city', 'cart', 'about', 'ambassador-profile'].forEach(t => {
-                document.getElementById(`view-${t}`).classList.add('hidden');
-
-                if (document.getElementById(`nav-${t}`)) {
-                    const navBtn = document.getElementById(`nav-${t}`);
-                    navBtn.classList.remove('text-emerald-600', 'font-extrabold');
-                    navBtn.classList.add('text-slate-400', 'font-bold');
-                }
-            });
-
-            document.getElementById(`view-${tabName}`).classList.remove('hidden');
-
-            if (document.getElementById(`nav-${tabName}`)) {
-                const activeNav = document.getElementById(`nav-${tabName}`);
-                activeNav.classList.remove('text-slate-400', 'font-bold');
-                activeNav.classList.add('text-emerald-600', 'font-extrabold');
-            }
-
-            if (tabName === 'cart') renderCartView();
-
-            if (tabName === 'market' && catalog.length === 0 && db) {
-                loadLiveProducts();
-            }
-
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-                // ================== 🎮 موتور بازی شهر توان ==================
-        // تمام پیشرفت‌های بازی محلی‌اند؛ هیچ اعتبار نقدی یا پرداخت واقعی از این بخش صادر نمی‌شود.
-
-        const GAME_SAVE_KEY = 'tavanyar_city_v2';
+        // ================== 🎮 موتور بازی شهر توان و گاوصندوق ==================
+        const GAME_SAVE_KEY = 'tavanyar_city_v3';
 
         const defaultGameData = {
             wood: 0,
             stone: 0,
-            gold: 0,
+            gold: 10, // ۱۰ سکه هدیه خوش‌آمدگویی (۱۰,۰۰۰ تومان)
             magic: 0,
             energy: 60,
             maxEnergy: 100,
-            toman: 0,
             xp: 0,
             level: 1,
             axe: 1,
@@ -1566,523 +1202,429 @@
             rockHp: 8,
             mineDepth: 1,
             lastDaily: '',
+            lastSponsor: '',
             streak: 0,
-            claimed: {
-                wood: false,
-                stone: false,
-                magic: false
-            },
-            lifetime: {
-                wood: 0,
-                stone: 0,
-                magic: 0
-            }
+            vaultUnlocked: true, // کنترل قفل/باز توسط ادمین
+            claimed: { wood: false, stone: false, magic: false },
+            lifetime: { wood: 0, stone: 0, magic: 0 }
         };
 
-        function loadGameData() {
+        let gameData = (() => {
             try {
-                const saved = JSON.parse(localStorage.getItem(GAME_SAVE_KEY) || 'null');
-
-                return saved ? {
-                    ...defaultGameData,
-                    ...saved,
-                    claimed: {
-                        ...defaultGameData.claimed,
-                        ...(saved.claimed || {})
-                    },
-                    lifetime: {
-                        ...defaultGameData.lifetime,
-                        ...(saved.lifetime || {})
-                    }
-                } : { ...defaultGameData };
-
+                const s = JSON.parse(localStorage.getItem(GAME_SAVE_KEY) || 'null');
+                return s ? { ...defaultGameData, ...s, claimed: { ...defaultGameData.claimed, ...(s.claimed || {}) }, lifetime: { ...defaultGameData.lifetime, ...(s.lifetime || {}) } } : { ...defaultGameData };
             } catch (e) {
                 return { ...defaultGameData };
             }
-        }
-
-        let gameData = loadGameData();
-
-        const faNum = n => Number(n || 0).toLocaleString('fa-IR');
+        })();
 
         function saveGameData() {
-            try {
-                localStorage.setItem(GAME_SAVE_KEY, JSON.stringify(gameData));
-            } catch (e) {
-                showToast('ذخیره‌سازی مرورگر در دسترس نیست.');
+            localStorage.setItem(GAME_SAVE_KEY, JSON.stringify(gameData));
+        }
+
+        function updateGameUI() {
+            const set = (id, val) => { const el = document.getElementById(id); if (el) el.innerText = val; };
+
+            set('headerGoldCount', faNum(gameData.gold));
+            set('uiLevel', faNum(gameData.level));
+            set('uiXp', faNum(gameData.xp));
+            set('uiStreak', faNum(gameData.streak));
+            set('uiWood', faNum(gameData.wood));
+            set('uiStone', faNum(gameData.stone));
+            set('uiGold', faNum(gameData.gold));
+            set('uiEnergy', faNum(gameData.energy));
+            set('uiAxe', faNum(gameData.axe));
+            set('uiDepth', faNum(gameData.mineDepth));
+            set('uiMagic', faNum(gameData.magic));
+
+            const creditToman = gameData.gold * COIN_VALUE_TOMAN;
+            set('vaultGoldDisplay', faNum(gameData.gold) + ' سکه');
+            set('vaultTomanDisplay', formatPrice(creditToman));
+            set('homeVaultValue', formatPrice(creditToman));
+
+            // وضعیت قفل/باز گاوصندوق
+            const isOpen = gameData.vaultUnlocked;
+            const homeBadge = document.getElementById('homeVaultStatusBadge');
+            const cityBadge = document.getElementById('cityVaultStatusBadge');
+            if (homeBadge) {
+                homeBadge.innerText = isOpen ? 'باز است' : 'قفل است';
+                homeBadge.className = isOpen ? 'text-[10px] px-2 py-0.5 rounded-full font-bold bg-emerald-500/20 text-emerald-300' : 'text-[10px] px-2 py-0.5 rounded-full font-bold bg-rose-500/20 text-rose-300';
             }
+            if (cityBadge) {
+                cityBadge.innerText = isOpen ? 'باز و قابل استفاده' : 'قفل موقت';
+                cityBadge.className = isOpen ? 'text-[10px] font-black px-2.5 py-0.5 rounded-full bg-emerald-500 text-slate-950' : 'text-[10px] font-black px-2.5 py-0.5 rounded-full bg-rose-500 text-white';
+            }
+
+            // نوار پیشرفت تجربه
+            const needed = gameData.level * 100;
+            set('xpProgressText', `${faNum(gameData.xp)} / ${faNum(needed)}`);
+            const xpBar = document.getElementById('xpProgress');
+            if (xpBar) xpBar.style.width = Math.min(100, (gameData.xp / needed) * 100) + '%';
+
+            // نوار سلامت درخت و معدن
+            set('treeHpText', `${faNum(gameData.treeHp)} / ۱۰`);
+            const tBar = document.getElementById('treeHpBar');
+            if (tBar) tBar.style.width = (gameData.treeHp * 10) + '%';
+
+            set('rockHpText', `${faNum(gameData.rockHp)} / ۸`);
+            const rBar = document.getElementById('rockHpBar');
+            if (rBar) rBar.style.width = ((gameData.rockHp / 8) * 100) + '%';
+
+            saveGameData();
         }
 
         function addXp(amount) {
             gameData.xp += amount;
-
             while (gameData.xp >= gameData.level * 100) {
                 gameData.xp -= gameData.level * 100;
                 gameData.level++;
-
-                showToast('🎉 تبریک! به سطح ' + faNum(gameData.level) + ' رسیدی.');
+                gameData.gold += 5; // پاداش ارتقای سطح
+                showToast(`🎉 سطح ${faNum(gameData.level)}! +۵ سکه طلا هدیه گرفتی`);
             }
         }
 
         function spendEnergy(amount) {
             if (gameData.energy < amount) {
-                showToast('انرژی کافی نداری؛ در پاداش روزانه یا کارگاه انرژی بگیر.');
+                showToast('⚡ انرژی کافی نداری! پاداش روزانه یا باغ جادو را بزن');
                 return false;
             }
-
             gameData.energy -= amount;
             return true;
         }
 
-        // ================== به‌روزرسانی صفحه بازی ==================
-
-        function updateGameUI() {
-
-            const ids = {
-                uiWood: gameData.wood,
-                uiStone: gameData.stone,
-                uiGold: gameData.gold,
-                uiEnergy: gameData.energy,
-                uiXp: gameData.xp,
-                uiLevel: gameData.level,
-                uiStreak: gameData.streak,
-
-                invWood: gameData.wood,
-                invStone: gameData.stone,
-                invGold: gameData.gold,
-                invMagic: gameData.magic,
-                invEnergy: gameData.energy,
-                invAxe: gameData.axe,
-                invPickaxe: gameData.pickaxe,
-
-                mineDepth: gameData.mineDepth,
-
-                axeLevel: gameData.axe > 1
-                    ? 'سطح ' + faNum(gameData.axe)
-                    : 'دستی',
-
-                axeUpgradeInfo: 'سطح فعلی: ' + faNum(gameData.axe),
-                pickaxeUpgradeInfo: 'سطح فعلی: ' + faNum(gameData.pickaxe)
-            };
-
-            Object.entries(ids).forEach(([id, value]) => {
-                const el = document.getElementById(id);
-
-                if (el) {
-                    el.textContent = typeof value === 'number'
-                        ? faNum(value)
-                        : value;
-                }
-            });
-
-            const xpNeed = gameData.level * 100;
-            const pct = Math.min(100, gameData.xp / xpNeed * 100);
-
-            const xpBar = document.getElementById('xpProgress');
-            if (xpBar) xpBar.style.width = pct + '%';
-
-            const xpText = document.getElementById('xpProgressText');
-            if (xpText) {
-                xpText.textContent = faNum(gameData.xp) + ' / ' + faNum(xpNeed);
-            }
-
-            const treePct = Math.max(0, gameData.treeHp / 10 * 100);
-            const rockPct = Math.max(0, gameData.rockHp / 8 * 100);
-
-            const treeBar = document.getElementById('treeHpBar');
-            if (treeBar) treeBar.style.width = treePct + '%';
-
-            const rockBar = document.getElementById('rockHpBar');
-            if (rockBar) rockBar.style.width = rockPct + '%';
-
-            const treeText = document.getElementById('treeHpText');
-            if (treeText) {
-                treeText.textContent = faNum(gameData.treeHp) + ' / ۱۰';
-            }
-
-            const rockText = document.getElementById('rockHpText');
-            if (rockText) {
-                rockText.textContent = faNum(gameData.rockHp) + ' / ۸';
-            }
-
-            const daily = document.getElementById('dailyRewardBtn');
-
-            if (daily) {
-                daily.disabled = gameData.lastDaily === new Date().toISOString().slice(0, 10);
-                daily.textContent = daily.disabled ? 'دریافت شد' : 'دریافت';
-                daily.classList.toggle('opacity-50', daily.disabled);
-            }
-
-            const missions = [
-                ['wood', gameData.lifetime.wood, 10],
-                ['stone', gameData.lifetime.stone, 8],
-                ['magic', gameData.lifetime.magic, 3]
-            ];
-
-            missions.forEach(([key, progress, target]) => {
-
-                const p = document.getElementById(
-                    'mission' + key[0].toUpperCase() + key.slice(1) + 'Progress'
-                );
-
-                const b = document.getElementById(
-                    'mission' + key[0].toUpperCase() + key.slice(1) + 'Btn'
-                );
-
-                if (p) {
-                    p.textContent = faNum(Math.min(progress, target)) + ' / ' + faNum(target);
-                }
-
-                if (b) {
-                    b.disabled = !!gameData.claimed[key] || progress < target;
-
-                    b.textContent = gameData.claimed[key]
-                        ? 'دریافت شد'
-                        : progress >= target
-                            ? 'دریافت'
-                            : 'ادامه بده';
-
-                    b.classList.toggle('opacity-50', b.disabled);
-                }
-            });
-
-            const homeMission = document.getElementById('homeMissionText');
-
-            if (homeMission) {
-                homeMission.textContent = gameData.lifetime.wood >= 10
-                    ? 'مأموریت جنگل آماده دریافت است؛ جایزه‌ات را از دفتر مأموریت‌ها بگیر.'
-                    : '۱۰ چوب جمع کن تا اولین مأموریتت کامل شود.';
-            }
-
-            saveGameData();
-        }
-
-        // ================== جابه‌جایی بخش‌های شهر توان ==================
-
-        function switchCityTab(tab) {
-
-            ['home', 'wood', 'mine', 'magic', 'inventory', 'crafting', 'missions'].forEach(t => {
-
-                const content = document.getElementById('cityContent-' + t);
-                const button = document.getElementById('cityTab-' + t);
-
-                if (content) {
-                    content.classList.toggle('hidden', t !== tab);
-                }
-
-                if (button) {
-                    button.classList.toggle('active', t === tab);
-                }
-            });
-
-            updateGameUI();
-        }
-
-        // ================== جلوه‌های حرکتی بازی ==================
-
-        function floatGameText(target, text) {
-            if (!target) return;
-
-            const el = document.createElement('span');
-
-            el.className = 'floating-text';
-            el.textContent = text;
-            el.style.left = '50%';
-            el.style.top = '40%';
-
-            target.appendChild(el);
-
-            setTimeout(() => el.remove(), 850);
-        }
-
-        function animateTarget(id, cls = 'tree-shake') {
-            const el = document.getElementById(id);
+        function floatGameText(containerId, text) {
+            const el = document.getElementById(containerId);
             if (!el) return;
-
-            el.classList.remove(cls);
-
-            void el.offsetWidth;
-
-            el.classList.add(cls);
-
-            setTimeout(() => el.classList.remove(cls), 350);
+            const span = document.createElement('span');
+            span.className = 'floating-text';
+            span.innerText = text;
+            span.style.left = '45%';
+            span.style.top = '35%';
+            el.appendChild(span);
+            setTimeout(() => span.remove(), 800);
         }
 
-        // ================== جنگل چوب ==================
-
-        function chopTree(event) {
-
+        function chopTree() {
             if (gameData.treeHp <= 0 || !spendEnergy(1)) return;
-
-            const damage = gameData.axe;
-
-            gameData.treeHp = Math.max(0, gameData.treeHp - damage);
-
+            gameData.treeHp = Math.max(0, gameData.treeHp - gameData.axe);
             gameData.wood += 1;
             gameData.lifetime.wood += 1;
-
-            addXp(2);
-
-            animateTarget('treeIcon');
-
-            floatGameText(
-                document.getElementById('forestScene'),
-                '+۱ 🪵'
-            );
+            addXp(3);
+            floatGameText('forestScene', '+۱ 🪵');
 
             if (gameData.treeHp === 0) {
-
-                const tree = document.getElementById('treeIcon');
-
-                if (tree) tree.textContent = '🪵';
-
+                document.getElementById('treeIcon').innerText = '🪵';
                 setTimeout(() => {
-
                     gameData.treeHp = 10;
-
-                    const t = document.getElementById('treeIcon');
-
-                    if (t) t.textContent = '🌳';
-
+                    document.getElementById('treeIcon').innerText = '🌳';
                     updateGameUI();
-
-                }, 1100);
-
-                showToast('درخت قطع شد! چوب جمع‌آوری شد.');
+                }, 900);
             }
-
             updateGameUI();
         }
 
-        // ================== معدن سنگ و طلا ==================
-
-        function mineRock(event) {
-
+        function mineRock() {
             if (gameData.rockHp <= 0 || !spendEnergy(2)) return;
-
-            gameData.rockHp = Math.max(
-                0,
-                gameData.rockHp - gameData.pickaxe
-            );
-
+            gameData.rockHp = Math.max(0, gameData.rockHp - gameData.pickaxe);
             gameData.stone += 1;
             gameData.lifetime.stone += 1;
-
-            addXp(3);
-
-            if (Math.random() < 0.12) {
-                gameData.gold += 1;
-                showToast('✨ یک قطعه طلا پیدا کردی!');
-            }
-
-            animateTarget('mineTarget');
-
-            floatGameText(
-                document.querySelector('#cityContent-mine .world-scene'),
-                '+۱ 🪨'
-            );
-
-            if (gameData.rockHp === 0) {
-
-                gameData.mineDepth++;
-                gameData.rockHp = 8;
-
-                const target = document.getElementById('mineTarget');
-
-                if (target) target.textContent = '💎';
-
-                setTimeout(() => {
-                    if (target) target.textContent = '🪨';
-                }, 650);
-
-                showToast('رگه معدنی تمام شد؛ به عمق بعدی رسیدی!');
-            }
-
-            updateGameUI();
-        }
-
-        // ================== باغ جادویی ==================
-
-        function harvestMagic(event) {
-
-            if (!spendEnergy(3)) return;
-
-            gameData.magic += 1;
-            gameData.lifetime.magic += 1;
-
             addXp(4);
 
-            animateTarget('magicTarget');
-
-            floatGameText(
-                document.querySelector('#cityContent-magic .world-scene'),
-                '+۱ ✨'
-            );
-
-            showToast('یک قطره جادویی برداشت شد.');
-
-            updateGameUI();
-        }
-
-        // ================== کارگاه و ارتقای ابزارها ==================
-
-        function upgradeTool(tool) {
-
-            if (tool === 'axe') {
-
-                if (gameData.axe >= 5) {
-                    return showToast('تبر به بالاترین سطح رسیده است.');
-                }
-
-                if (gameData.wood < 10 || gameData.stone < 5) {
-                    return showToast('برای ارتقای تبر به ۱۰ چوب و ۵ سنگ نیاز داری.');
-                }
-
-                gameData.wood -= 10;
-                gameData.stone -= 5;
-                gameData.axe++;
-
-                addXp(15);
-
+            if (Math.random() < 0.25) {
+                gameData.gold += 1;
+                floatGameText('mineScene', '+۱ 🪙 سکه طلا!');
+                showToast('🪙 یک سکه طلا (۱,۰۰۰ تومان اعتبار ارسال) کشف کردی!');
             } else {
-
-                if (gameData.pickaxe >= 5) {
-                    return showToast('کلنگ به بالاترین سطح رسیده است.');
-                }
-
-                if (gameData.wood < 8 || gameData.stone < 8 || gameData.gold < 2) {
-                    return showToast('برای ارتقای کلنگ به ۸ چوب، ۸ سنگ و ۲ طلا نیاز داری.');
-                }
-
-                gameData.wood -= 8;
-                gameData.stone -= 8;
-                gameData.gold -= 2;
-                gameData.pickaxe++;
-
-                addXp(20);
+                floatGameText('mineScene', '+۱ 🪨');
             }
 
-            showToast('ابزار با موفقیت ارتقا پیدا کرد!');
-
+            if (gameData.rockHp === 0) {
+                gameData.mineDepth++;
+                gameData.rockHp = 8;
+            }
             updateGameUI();
         }
 
-        // ================== ساخت انرژی ==================
+        function harvestMagic() {
+            if (!spendEnergy(3)) return;
+            gameData.magic += 1;
+            gameData.lifetime.magic += 1;
+            addXp(5);
+            floatGameText('magicScene', '+۱ ✨');
+            updateGameUI();
+        }
+
+        function craftGoldCoins() {
+            if (gameData.wood < 10 || gameData.stone < 5) {
+                return showToast('به ۱۰ چوب و ۵ سنگ نیاز داری');
+            }
+            gameData.wood -= 10;
+            gameData.stone -= 5;
+            gameData.gold += 5;
+            addXp(15);
+            updateGameUI();
+            showToast('🪙 ۵ سکه طلا ضرب شد و به گاوصندوق رفت!');
+        }
 
         function craftEnergy() {
-
-            if (gameData.magic < 5) {
-                return showToast('برای ساخت انرژی به ۵ قطره جادویی نیاز داری.');
-            }
-
-            if (gameData.energy >= gameData.maxEnergy) {
-                return showToast('انرژی‌ات کامل است.');
-            }
-
-            gameData.magic -= 5;
-
-            gameData.energy = Math.min(
-                gameData.maxEnergy,
-                gameData.energy + 20
-            );
-
-            addXp(5);
-
+            if (gameData.magic < 3) return showToast('به ۳ قطره جادویی نیاز داری');
+            gameData.magic -= 3;
+            gameData.energy = Math.min(gameData.maxEnergy, gameData.energy + 20);
             updateGameUI();
-
-            showToast('۲۰ انرژی بازیابی شد!');
+            showToast('⚡ ۲۰ انرژی بازیابی شد');
         }
 
-        // ================== پاداش روزانه ==================
+        function upgradeTool(tool) {
+            if (tool === 'axe') {
+                if (gameData.wood < 15 || gameData.stone < 10) return showToast('۱۵ چوب و ۱۰ سنگ لازم است');
+                gameData.wood -= 15;
+                gameData.stone -= 10;
+                gameData.axe++;
+                updateGameUI();
+                showToast('🪓 تبر ارتقا یافت!');
+            }
+        }
 
         function claimDailyReward() {
-
             const today = new Date().toISOString().slice(0, 10);
-
-            if (gameData.lastDaily === today) {
-                return showToast('پاداش امروز را قبلاً گرفته‌ای.');
-            }
-
-            const yesterday = new Date(Date.now() - 86400000)
-                .toISOString()
-                .slice(0, 10);
-
-            gameData.streak = gameData.lastDaily === yesterday
-                ? gameData.streak + 1
-                : 1;
-
+            if (gameData.lastDaily === today) return showToast('پاداش امروز را قبلاً گرفته‌ای');
             gameData.lastDaily = today;
-
-            gameData.energy = Math.min(
-                gameData.maxEnergy,
-                gameData.energy + 25
-            );
-
-            gameData.gold += gameData.streak % 3 === 0 ? 1 : 0;
-
+            gameData.streak++;
+            gameData.energy = Math.min(gameData.maxEnergy, gameData.energy + 25);
+            gameData.gold += 5;
             addXp(10);
-
             updateGameUI();
-
-            showToast('🎁 ۲۵ انرژی و ۱۰ تجربه دریافت کردی!');
+            showToast('🎁 ۲۵ انرژی + ۵ سکه طلا هدیه گرفتی!');
         }
 
-        // ================== دریافت جایزه مأموریت‌ها ==================
+        function claimSponsorReward() {
+            const today = new Date().toISOString().slice(0, 10);
+            if (gameData.lastSponsor === today) return showToast('پاداش اسپانسر امروز را دریافت کرده‌ای');
+            gameData.lastSponsor = today;
+            gameData.gold += 15;
+            updateGameUI();
+            showToast('⭐ ۱۵ سکه طلا از اسپانسر شهرضا به گاوصندوق اضافه شد!');
+        }
 
         function claimMission(key) {
-
-            const targets = {
-                wood: 10,
-                stone: 8,
-                magic: 3
-            };
-
-            if (
-                gameData.claimed[key] ||
-                gameData.lifetime[key] < targets[key]
-            ) {
-                return showToast('این مأموریت هنوز کامل نشده است.');
-            }
+            const req = { wood: 10, stone: 8, magic: 3 };
+            const rewards = { wood: 10, stone: 15, magic: 20 };
+            if (gameData.claimed[key]) return showToast('این مأموریت قبلاً دریافت شده است');
+            if (gameData.lifetime[key] < req[key]) return showToast(`هنوز کامل نشده (${faNum(gameData.lifetime[key])} از ${faNum(req[key])})`);
 
             gameData.claimed[key] = true;
-
-            gameData.energy = Math.min(
-                gameData.maxEnergy,
-                gameData.energy + 5
-            );
-
-            addXp(25);
-
+            gameData.gold += rewards[key];
             updateGameUI();
-
-            showToast('🏆 جایزه مأموریت دریافت شد!');
+            showToast(`🏆 +${faNum(rewards[key])} سکه طلا به گاوصندوق اضافه شد!`);
         }
 
-        // ================== سازگاری با نام قدیمی ==================
-
-        function convertWoodToToman() {
-            showToast('تبدیل منابع به پول واقعی در بازی فعال نیست؛ منابع فقط امتیاز مجازی‌اند.');
+        function switchCityTab(tab) {
+            ['home', 'wood', 'mine', 'magic', 'crafting', 'missions'].forEach(t => {
+                document.getElementById('cityContent-' + t)?.classList.toggle('hidden', t !== tab);
+                document.getElementById('cityTab-' + t)?.classList.toggle('active', t === tab);
+            });
+            updateGameUI();
         }
 
-        // ================== راه‌اندازی اولیه سایت ==================
+        // ================== پنل مدیریت و کنترل گاوصندوق ==================
+        let editingProductId = null;
 
-        window.onload = function() {
+        function openAdmin() {
+            switchTab('admin');
+            updateAdminVaultUI();
+        }
 
-            renderAmbassadors();
-
-            renderSubCategories();
-
-            renderProducts();
-
-            lucide.createIcons();
-
-            updateGameUI();
-
-            if (db) {
-                loadLiveProducts();
+        function adminLogin() {
+            const pass = document.getElementById('adminPassword').value;
+            if (pass === '1234' || pass.length >= 4) {
+                document.getElementById('adminLogin').classList.add('hidden');
+                document.getElementById('adminDashboard').classList.remove('hidden');
+                renderAdminProducts();
+                renderAdminOrders();
+                updateAdminVaultUI();
+                showToast('خوش آمدی علیرضا! پنل مدیریت باز شد');
+            } else {
+                showToast('رمز عبور حداقل ۴ رقم باشد (پیش‌فرض: 1234)');
             }
-        };
+        }
 
+        function adminLogout() {
+            document.getElementById('adminLogin').classList.remove('hidden');
+            document.getElementById('adminDashboard').classList.add('hidden');
+        }
+
+        function toggleVaultLock() {
+            gameData.vaultUnlocked = !gameData.vaultUnlocked;
+            updateGameUI();
+            updateAdminVaultUI();
+            showToast(gameData.vaultUnlocked ? '🔓 گاوصندوق برای مشتریان باز شد' : '🔒 گاوصندوق قفل شد');
+        }
+
+        function updateAdminVaultUI() {
+            const isOpen = gameData.vaultUnlocked;
+            const statusText = document.getElementById('adminVaultStatusText');
+            const btn = document.getElementById('toggleVaultBtn');
+            if (statusText) {
+                statusText.innerText = isOpen ? 'باز است' : 'قفل است';
+                statusText.className = isOpen ? 'text-xs font-black px-2.5 py-1 rounded-full bg-emerald-600 text-white' : 'text-xs font-black px-2.5 py-1 rounded-full bg-rose-600 text-white';
+            }
+            if (btn) {
+                btn.innerText = isOpen ? '🔒 قفل کردن موقت گاوصندوق' : '🔓 باز کردن گاوصندوق برای طرح تخفیف';
+            }
+        }
+
+        function showAdminSection(sec) {
+            document.getElementById('adminProductsSection').classList.toggle('hidden', sec !== 'products');
+            document.getElementById('adminOrdersSection').classList.toggle('hidden', sec !== 'orders');
+        }
+
+        function renderAdminProducts() {
+            document.getElementById('adminProductsList').innerHTML = catalog.map(p => `
+                <div class="bg-white p-2.5 rounded-xl border flex items-center justify-between text-xs">
+                    <div><b>${p.emoji || '📦'} ${p.title}</b><span class="block text-[10px] text-slate-500">${formatPrice(p.price)}</span></div>
+                    <div class="flex gap-1.5">
+                        <button onclick="editProduct(${p.id})" class="px-2 py-1 bg-blue-50 text-blue-700 rounded-lg font-bold">ویرایش</button>
+                        <button onclick="deleteProduct(${p.id})" class="px-2 py-1 bg-rose-50 text-rose-700 rounded-lg font-bold">حذف</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function newProduct() {
+            editingProductId = null;
+            document.getElementById('productEditorTitle').innerText = 'افزودن محصول جدید';
+            ['pTitle', 'pStore', 'pPrice', 'pOldPrice', 'pEmoji'].forEach(id => document.getElementById(id).value = '');
+            document.getElementById('productEditor').classList.remove('hidden');
+        }
+
+        function editProduct(id) {
+            const p = catalog.find(x => x.id === id);
+            if (!p) return;
+            editingProductId = id;
+            document.getElementById('productEditorTitle').innerText = 'ویرایش محصول';
+            document.getElementById('pTitle').value = p.title;
+            document.getElementById('pStore').value = p.store;
+            document.getElementById('pPrice').value = p.price;
+            document.getElementById('pOldPrice').value = p.oldPrice;
+            document.getElementById('pMainCat').value = p.mainCat;
+            document.getElementById('pSubCat').value = p.subCat;
+            document.getElementById('pEmoji').value = p.emoji;
+            document.getElementById('productEditor').classList.remove('hidden');
+        }
+
+        function saveProduct() {
+            const title = document.getElementById('pTitle').value.trim();
+            const price = Number(document.getElementById('pPrice').value);
+            if (!title || !price) return showToast('نام و قیمت محصول الزامی است');
+
+            const item = {
+                id: editingProductId || Date.now(),
+                title,
+                store: document.getElementById('pStore').value.trim() || 'هایپر شهرضا',
+                price,
+                oldPrice: Number(document.getElementById('pOldPrice').value) || price,
+                mainCat: document.getElementById('pMainCat').value,
+                subCat: document.getElementById('pSubCat').value,
+                emoji: document.getElementById('pEmoji').value.trim() || '🛍️',
+                ambassador: 'alireza'
+            };
+
+            if (editingProductId) {
+                const idx = catalog.findIndex(x => x.id === editingProductId);
+                if (idx !== -1) catalog[idx] = item;
+            } else {
+                catalog.unshift(item);
+            }
+
+            localStorage.setItem('tavanyar_products', JSON.stringify(catalog));
+            cancelProductEdit();
+            renderAdminProducts();
+            renderProducts();
+            showToast('✅ کالا ذخیره شد');
+        }
+
+        function deleteProduct(id) {
+            catalog = catalog.filter(x => x.id !== id);
+            localStorage.setItem('tavanyar_products', JSON.stringify(catalog));
+            renderAdminProducts();
+            renderProducts();
+            showToast('حذف شد');
+        }
+
+        function cancelProductEdit() {
+            document.getElementById('productEditor').classList.add('hidden');
+        }
+
+        function renderAdminOrders() {
+            const list = document.getElementById('adminOrdersList');
+            list.innerHTML = localOrders.length
+                ? localOrders.map(o => `
+                    <div class="bg-white p-3 rounded-xl border text-xs space-y-1">
+                        <div class="flex justify-between"><b>${o.customer} (${o.id})</b><span class="text-emerald-700 font-black">${formatPrice(o.total)}</span></div>
+                        <p class="text-[11px] text-slate-500">${o.phone} - ${o.address}</p>
+                    </div>
+                `).join('')
+                : '<p class="text-xs text-slate-400 text-center py-4">هنوز سفارشی ثبت نشده است.</p>';
+        }
+
+        // ================== مودال‌های کمکی و ناوبری ==================
+        function openAmbassadorSearch() {
+            document.getElementById('modalTitle').innerText = 'لیست سفیران توان‌یار';
+            document.getElementById('modalBody').innerHTML = ambassadors.map(a => `
+                <div onclick="closeGenericModal(); openAmbassadorProfile('${a.id}')" class="p-2.5 bg-slate-50 rounded-xl flex items-center gap-2.5 cursor-pointer hover:bg-emerald-50">
+                    <span class="text-2xl">${a.icon}</span>
+                    <div><b class="text-slate-900 block">${a.name}</b><span class="text-[10px] text-slate-500">${a.role}</span></div>
+                </div>
+            `).join('');
+            document.getElementById('genericModal').classList.remove('hidden');
+        }
+
+        function openNewsArchive() {
+            openNewsArticle(1);
+        }
+
+        function openNewsArticle(id) {
+            document.getElementById('modalTitle').innerText = id === 1 ? 'افتتاح پایلوت هایپر شهرضا' : 'بازار استانی صنایع دستی و مهارت';
+            document.getElementById('modalBody').innerHTML = id === 1
+                ? '<p>در این فاز، فروشگاه‌های پرتخفیف شهرضا در دسته‌بندی‌های سوپرمارکت، نانوایی، قصابی، مرغ و ماهی، میوه‌فروشی و فست‌فود گردآوری شده‌اند تا همشهریان عزیز با کمترین قیمت و ارسال سریع خرید کنند.</p>'
+                : '<p>هنرمندان و متخصصین دارای معلولیت سراسر استان اصفهان می‌توانند آثار هنری و خدمات آنلاین خود را در پلتفرم توان‌یار عرضه کنند و به درآمد پایدار برسند.</p>';
+            document.getElementById('genericModal').classList.remove('hidden');
+        }
+
+        function closeGenericModal() {
+            document.getElementById('genericModal').classList.add('hidden');
+        }
+
+        function switchTab(tabName) {
+            ['home', 'market', 'city', 'cart', 'about', 'ambassador-profile', 'admin'].forEach(t => {
+                document.getElementById(`view-${t}`)?.classList.add('hidden');
+                const nav = document.getElementById(`nav-${t}`);
+                if (nav) {
+                    nav.classList.remove('text-emerald-600', 'font-extrabold');
+                    nav.classList.add('text-slate-400', 'font-bold');
+                }
+            });
+
+            document.getElementById(`view-${tabName}`)?.classList.remove('hidden');
+            const activeNav = document.getElementById(`nav-${tabName}`);
+            if (activeNav) {
+                activeNav.classList.remove('text-slate-400', 'font-bold');
+                activeNav.classList.add('text-emerald-600', 'font-extrabold');
+            }
+
+            if (tabName === 'cart') renderCartView();
+            if (tabName === 'city') updateGameUI();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // راه‌اندازی اولیه
+        window.onload = function() {
+            renderAmbassadors();
+            renderSubCategories();
+            renderProducts();
+            updateGameUI();
+            lucide.createIcons();
+        };
     </script>
 </body>
 </html>
