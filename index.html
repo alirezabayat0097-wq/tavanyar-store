@@ -3,60 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>توان‌یار | هایپر محله شهرضا و بازار توانمندی‌های استان</title>
-    <!-- بارگذاری Tailwind CSS برای استایل‌دهی سریع و واکنش‌گرا -->
+    <title>توان‌یار | اشتغال و درآمد پایدار برای معلولین</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- بارگذاری فونت وزیرمتن برای خوانایی بالا -->
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
-    <!-- بارگذاری آیکون‌های Lucide -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="./config.js"></script>
     
     <style>
-        /* تنظیمات پایه فونت و اسکرول نرم */
-        body {
-            font-family: 'Vazirmatn', sans-serif;
-            background-color: #F8FAFC;
-            color: #0F172A;
-            -webkit-tap-highlight-color: transparent;
-            padding-bottom: 90px; /* فضا برای نوار ناوبری پایین */
-        }
-
-        /* مخفی کردن نوار اسکرول افقی برای زیبایی بیشتر */
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
-        /* استاندارد دسترس‌پذیری: حداقل ارتفاع دکمه‌ها ۴۸ پیکسل */
-        .btn-accessible {
-            min-height: 48px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.1s ease, background-color 0.2s ease;
-        }
-        .btn-accessible:active {
-            transform: scale(0.97);
-        }
-
-        /* انیمیشن ملایم برای باز شدن صفحات و مودال‌ها */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade-in {
-            animation: fadeIn 0.25s ease-out forwards;
-        }
+        body { font-family: 'Vazirmatn', sans-serif; background-color: #F8FAFC; color: #0F172A; -webkit-tap-highlight-color: transparent; padding-bottom: 90px; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .btn-accessible { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; transition: transform 0.1s ease, background-color 0.2s ease; }
+        .btn-accessible:active { transform: scale(0.97); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in { animation: fadeIn 0.25s ease-out forwards; }
     </style>
 </head>
 <body class="max-w-md mx-auto bg-white min-h-screen shadow-xl relative border-x border-slate-100">
 
-    <!-- ۱. هدر خلوت و جستجوی یکپارچه (الهام از شاپینو) -->
+    <!-- هدر جدید -->
     <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-md px-4 pt-4 pb-3 border-b border-slate-100">
         <div class="flex items-center justify-between mb-3">
             <div class="flex items-center gap-2.5">
@@ -65,54 +31,35 @@
                 </div>
                 <div>
                     <h1 class="text-xl font-black text-slate-900 tracking-tight">توان‌یار</h1>
-                    <p class="text-xs text-slate-500 font-medium">هایپر شهرضا و بازار توانمندی‌های استان</p>
+                    <p class="text-xs text-slate-500 font-medium">اشتغال و درآمد پایدار برای معلولین</p>
                 </div>
             </div>
             <span class="text-xs font-bold bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-full border border-emerald-200">
-                📍 شهرضا
+                📍 اصفهان
             </span>
         </div>
 
-        <!-- نوار جستجوی درشت و دسترس‌پذیر با دکمه جستجوی صوتی -->
-        <div class="relative flex items-center gap-2">
-            <div class="relative flex-1">
-                <input 
-                    type="text" 
-                    id="searchInput"
-                    oninput="handleSearch(this.value)"
-                    placeholder="جستجو در هایپر، صنایع دستی، مهارت..." 
-                    class="w-full h-12 pr-11 pl-4 bg-slate-100 text-slate-900 placeholder-slate-500 rounded-2xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all"
-                >
-                <i data-lucide="search" class="w-5 h-5 text-slate-400 absolute right-3.5 top-3.5"></i>
-            </div>
-            <button 
-                onclick="simulateVoiceSearch()" 
-                aria-label="جستجوی صوتی"
-                class="w-12 h-12 rounded-2xl bg-slate-100 hover:bg-emerald-50 text-slate-700 hover:text-emerald-600 flex items-center justify-center shrink-0 transition-colors border border-slate-200"
-            >
-                <i data-lucide="mic" class="w-5 h-5"></i>
-            </button>
+        <!-- بنر تبلیغاتی به جای جستجو -->
+        <div class="w-full h-20 rounded-2xl overflow-hidden relative shadow-sm border border-slate-200 bg-gradient-to-r from-emerald-100 to-teal-50 flex items-center justify-center text-slate-600">
+            <span class="text-sm font-bold text-emerald-800">فضای تبلیغات اسپانسرها</span>
         </div>
     </header>
 
-    <!-- کانتینر اصلی صفحات -->
+    <!-- کانتینر اصلی -->
     <main id="mainContent" class="px-4 pt-4">
         
-        <!-- ================= صفحه خانه ================= -->
         <section id="view-home" class="animate-fade-in">
             
-            <!-- ۲. سه کارت اصلی انتخاب مسیر (قلب صفحه) -->
+            <!-- کارت‌های اصلی -->
             <div class="grid grid-cols-3 gap-2.5 mb-5">
-                <!-- کارت ۱: هایپر شهرضا -->
                 <button onclick="selectMainCategory('hyper')" id="tab-hyper" class="category-card p-3 rounded-2xl border-2 border-emerald-600 bg-emerald-600 text-white flex flex-col items-center justify-center text-center shadow-md shadow-emerald-100 transition-all min-h-[108px]">
                     <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center mb-2">
                         <i data-lucide="shopping-basket" class="w-6 h-6"></i>
                     </div>
-                    <span class="text-xs font-extrabold leading-tight">هایپر شهرضا</span>
+                    <span class="text-xs font-extrabold leading-tight">هایپر محله</span>
                     <span class="text-[10px] opacity-90 mt-0.5">خرید پرتخفیف</span>
                 </button>
 
-                <!-- کارت ۲: صنایع دستی -->
                 <button onclick="selectMainCategory('handicraft')" id="tab-handicraft" class="category-card p-3 rounded-2xl border-2 border-slate-100 bg-orange-50/70 text-slate-800 flex flex-col items-center justify-center text-center transition-all min-h-[108px]">
                     <div class="w-10 h-10 rounded-xl bg-orange-500 text-white flex items-center justify-center mb-2">
                         <i data-lucide="palette" class="w-6 h-6"></i>
@@ -121,7 +68,6 @@
                     <span class="text-[10px] text-slate-500 mt-0.5">هنر استان</span>
                 </button>
 
-                <!-- کارت ۳: پیشه و مهارت -->
                 <button onclick="selectMainCategory('skills')" id="tab-skills" class="category-card p-3 rounded-2xl border-2 border-slate-100 bg-blue-50/70 text-slate-800 flex flex-col items-center justify-center text-center transition-all min-h-[108px]">
                     <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center mb-2">
                         <i data-lucide="briefcase" class="w-6 h-6"></i>
@@ -131,36 +77,35 @@
                 </button>
             </div>
 
-            <!-- ۳. نوار دایره‌ای سفیران و فروشندگان (الهام از شاپینو) -->
+            <!-- سفیران -->
             <div class="mb-5">
                 <div class="flex items-center justify-between mb-2.5">
                     <h2 class="text-sm font-extrabold text-slate-800">سفیران و متخصصین توان‌یار</h2>
-                    <button onclick="filterByAmbassador(null)" id="resetAmbassadorBtn" class="hidden text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg">
-                        نمایش همه
-                    </button>
+                    <button onclick="filterByAmbassador(null)" id="resetAmbassadorBtn" class="hidden text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg">نمایش همه</button>
                 </div>
                 <div id="ambassadorsList" class="flex gap-3.5 overflow-x-auto no-scrollbar pb-1">
                     <!-- با جاوااسکریپت پر می‌شود -->
                 </div>
             </div>
-
-            <!-- زیرشاخه‌های هایپر شهرضا (فقط وقتی هایپر انتخاب شده نمایش داده می‌شود) -->
-            <div id="hyperSubCategories" class="mb-4">
-                <div id="subCatChips" class="flex gap-2 overflow-x-auto no-scrollbar pb-1">
-                    <!-- تگ‌های سوپرمارکت، نانوایی، قصابی و... -->
-                </div>
+            
+            <!-- بخش خبری (فعلا خالی) -->
+            <div class="mb-5 p-4 bg-slate-50 rounded-2xl border border-slate-200">
+                <h2 class="text-sm font-extrabold text-slate-800 mb-2">پایگاه خبری توان‌یار</h2>
+                <p class="text-xs text-slate-500">اخبار و رویدادهای مرتبط با جامعه معلولین...</p>
             </div>
 
-            <!-- عنوان بخش ویترین -->
+            <!-- زیرشاخه‌های هایپر -->
+            <div id="hyperSubCategories" class="mb-4">
+                <div id="subCatChips" class="flex gap-2 overflow-x-auto no-scrollbar pb-1"></div>
+            </div>
+
+            <!-- ویترین -->
             <div class="flex items-center justify-between mb-3">
-                <h3 id="sectionTitle" class="text-base font-black text-slate-900">تخفیف‌های روز هایپر شهرضا</h3>
+                <h3 id="sectionTitle" class="text-base font-black text-slate-900">تخفیف‌های روز هایپر محله</h3>
                 <span id="itemsCount" class="text-xs font-semibold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full"></span>
             </div>
 
-            <!-- ۴. ویترین محصولات و خدمات (۲ ستونه، تمیز و خوانا) -->
-            <div id="productsGrid" class="grid grid-cols-2 gap-3 pb-4">
-                <!-- کارت‌های محصول با جاوااسکریپت رندر می‌شوند -->
-            </div>
+            <div id="productsGrid" class="grid grid-cols-2 gap-3 pb-4"></div>
 
         </section>
 
