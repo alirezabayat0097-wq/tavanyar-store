@@ -50,32 +50,52 @@
     <!-- کانتینر اصلی -->
     <main id="mainContent" class="px-4 pt-4">
         
-        <!-- صفحه خانه (فقط سفیران و خبر) -->
-        <section id="view-home" class="animate-fade-in">
-            <div class="mb-5">
-                <div class="flex items-center justify-between mb-2.5">
+        <!-- صفحه خانه -->
+        <section id="view-home" class="animate-fade-in space-y-5">
+            <!-- بخش سفیران -->
+            <div>
+                <div class="flex items-center justify-between mb-3">
                     <h2 class="text-sm font-extrabold text-slate-800">سفیران و متخصصین توان‌یار</h2>
-                    <button onclick="filterByAmbassador(null)" id="resetAmbassadorBtn" class="hidden text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg">نمایش همه</button>
+                    <button onclick="openAmbassadorSearch()" class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg flex items-center gap-1">
+                        <i data-lucide="search" class="w-3 h-3"></i> جستجو
+                    </button>
                 </div>
                 <div id="ambassadorsList" class="flex gap-3.5 overflow-x-auto no-scrollbar pb-1"></div>
             </div>
             
-            <div class="mb-5 bg-slate-50 rounded-2xl border border-slate-200 p-4 flex flex-col gap-3">
-                <h2 class="text-sm font-extrabold text-slate-800">پایگاه خبری توان‌یار</h2>
-                <div class="bg-white p-3 rounded-xl shadow-sm border border-slate-100">
-                    <h3 class="text-sm font-bold text-slate-800">افتتاح اولین هایپر محله در شهرضا</h3>
-                    <p class="text-xs text-slate-500 mt-1">این هایپر با هدف ایجاد اشتغال برای معلولین راه‌اندازی شد...</p>
+            <!-- بخش پایگاه خبری -->
+            <div>
+                <div class="flex items-center justify-between mb-3">
+                    <h2 class="text-sm font-extrabold text-slate-800">پایگاه خبری توان‌یار</h2>
+                    <button onclick="openNewsArchive()" class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg">مشاهده همه</button>
                 </div>
-                <div class="bg-white p-3 rounded-xl shadow-sm border border-slate-100">
-                    <h3 class="text-sm font-bold text-slate-800">دوره‌های مهارت‌آموزی رایگان</h3>
-                    <p class="text-xs text-slate-500 mt-1">ثبت‌نام دوره‌های جدید برای معلولین عزیز آغاز شد...</p>
+                <div class="space-y-3">
+                    <div onclick="openNewsArticle(1)" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex gap-3 cursor-pointer hover:shadow-md transition-shadow">
+                        <div class="w-16 h-16 bg-emerald-50 rounded-xl flex items-center justify-center shrink-0 text-emerald-600">
+                            <i data-lucide="store" class="w-8 h-8"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-bold text-slate-800 line-clamp-2">افتتاح اولین هایپر محله در شهرضا</h3>
+                            <p class="text-[10px] text-slate-500 mt-1 line-clamp-2">این هایپر با هدف ایجاد اشتغال برای معلولین راه‌اندازی شد...</p>
+                            <span class="text-[9px] text-emerald-600 font-bold mt-1 block">۲ ساعت پیش</span>
+                        </div>
+                    </div>
+                    <div onclick="openNewsArticle(2)" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex gap-3 cursor-pointer hover:shadow-md transition-shadow">
+                        <div class="w-16 h-16 bg-blue-50 rounded-xl flex items-center justify-center shrink-0 text-blue-600">
+                            <i data-lucide="book-open" class="w-8 h-8"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-bold text-slate-800 line-clamp-2">دوره‌های مهارت‌آموزی رایگان</h3>
+                            <p class="text-[10px] text-slate-500 mt-1 line-clamp-2">ثبت‌نام دوره‌های جدید برای معلولین عزیز آغاز شد...</p>
+                            <span class="text-[9px] text-emerald-600 font-bold mt-1 block">دیروز</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- صفحه مارکت (محصولات) -->
+        <!-- صفحه مارکت -->
         <section id="view-market" class="hidden animate-fade-in">
-            <!-- کارت‌های اصلی -->
             <div class="grid grid-cols-3 gap-2.5 mb-5">
                 <button onclick="selectMainCategory('hyper')" id="tab-hyper" class="category-card p-3 rounded-2xl border-2 border-emerald-600 bg-emerald-600 text-white flex flex-col items-center justify-center text-center shadow-md shadow-emerald-100 transition-all min-h-[108px]">
                     <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center mb-2">
@@ -102,12 +122,10 @@
                 </button>
             </div>
 
-            <!-- زیرشاخه‌ها -->
             <div id="hyperSubCategories" class="mb-4">
                 <div id="subCatChips" class="flex gap-2 overflow-x-auto no-scrollbar pb-1"></div>
             </div>
 
-            <!-- ویترین -->
             <div class="flex items-center justify-between mb-3">
                 <h3 id="sectionTitle" class="text-base font-black text-slate-900">تخفیف‌های روز هایپر محله</h3>
                 <span id="itemsCount" class="text-xs font-semibold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full"></span>
@@ -260,6 +278,77 @@
         </div>
     </div>
 
+    <!-- مودال جستجوی سفیران -->
+    <div id="ambassadorSearchModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-end sm:items-center justify-center p-3">
+        <div class="bg-white w-full max-w-md rounded-3xl p-5 shadow-2xl animate-fade-in max-h-[80vh] flex flex-col">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-base font-black text-slate-900">جستجوی سفیر</h3>
+                <button onclick="closeAmbassadorSearch()" class="text-slate-400 hover:text-slate-800">✖</button>
+            </div>
+            <div class="relative mb-4">
+                <input type="text" id="ambSearchInput" oninput="filterAmbassadors(this.value)" placeholder="نام سفیر را وارد کنید..." class="w-full h-12 pr-10 pl-4 bg-slate-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                <i data-lucide="search" class="w-5 h-5 text-slate-400 absolute right-3 top-3.5"></i>
+            </div>
+            <div id="ambSearchResults" class="overflow-y-auto space-y-2 flex-1 pb-4"></div>
+        </div>
+    </div>
+
+    <!-- مودال آرشیو اخبار -->
+    <div id="newsArchiveModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-end sm:items-center justify-center p-3">
+        <div class="bg-white w-full max-w-md rounded-3xl p-5 shadow-2xl animate-fade-in max-h-[85vh] flex flex-col">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-base font-black text-slate-900">آرشیو اخبار توان‌یار</h3>
+                <button onclick="closeNewsArchive()" class="text-slate-400 hover:text-slate-800">✖</button>
+            </div>
+            <div class="overflow-y-auto space-y-3 flex-1 pb-4">
+                <div onclick="openNewsArticle(1)" class="bg-slate-50 p-4 rounded-2xl border border-slate-100 cursor-pointer hover:bg-slate-100 transition-colors">
+                    <h4 class="text-sm font-bold text-slate-800 mb-1">افتتاح اولین هایپر محله در شهرضا</h4>
+                    <p class="text-[10px] text-slate-500 line-clamp-2">این هایپر با هدف ایجاد اشتغال برای معلولین راه‌اندازی شد...</p>
+                </div>
+                <div onclick="openNewsArticle(2)" class="bg-slate-50 p-4 rounded-2xl border border-slate-100 cursor-pointer hover:bg-slate-100 transition-colors">
+                    <h4 class="text-sm font-bold text-slate-800 mb-1">دوره‌های مهارت‌آموزی رایگان</h4>
+                    <p class="text-[10px] text-slate-500 line-clamp-2">ثبت‌نام دوره‌های جدید برای معلولین عزیز آغاز شد...</p>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 opacity-60">
+                    <h4 class="text-sm font-bold text-slate-800 mb-1">خبر سوم (به‌زودی)</h4>
+                    <p class="text-[10px] text-slate-500">...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- مودال خواندن خبر -->
+    <div id="newsArticleModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-end sm:items-center justify-center p-3">
+        <div class="bg-white w-full max-w-md rounded-3xl p-5 shadow-2xl animate-fade-in max-h-[85vh] flex flex-col">
+            <div class="flex justify-between items-center mb-4 border-b pb-3">
+                <h3 id="articleTitle" class="text-lg font-black text-slate-900 leading-tight"></h3>
+                <button onclick="closeNewsArticle()" class="text-slate-400 hover:text-slate-800 shrink-0 mr-2">✖</button>
+            </div>
+            <div class="overflow-y-auto flex-1 pb-4">
+                <p id="articleBody" class="text-sm text-slate-700 leading-relaxed whitespace-pre-line"></p>
+            </div>
+            <div class="pt-3 border-t mt-2">
+                <button onclick="closeNewsArticle()" class="w-full bg-emerald-600 text-white rounded-xl py-3 font-bold">بستن</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- مودال پروفایل سفیر -->
+    <div id="ambassadorModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-end sm:items-center justify-center p-3">
+        <div class="bg-white w-full max-w-md rounded-3xl p-5 shadow-2xl animate-fade-in max-h-[85vh] overflow-y-auto relative">
+            <button onclick="closeAmbassadorProfile()" class="absolute top-4 left-4 text-slate-400 hover:text-slate-800">✖</button>
+            <div class="text-center mb-6 mt-2">
+                <div id="ambProfileIcon" class="w-20 h-20 rounded-full flex items-center justify-center text-4xl mx-auto mb-3 border-4 border-white shadow-md"></div>
+                <h3 id="ambProfileName" class="text-lg font-black text-slate-900"></h3>
+                <p id="ambProfileRole" class="text-xs text-slate-500 mt-1"></p>
+            </div>
+            <div class="space-y-3">
+                <h4 class="text-sm font-bold text-slate-800 border-b pb-2">محصولات و خدمات این سفیر</h4>
+                <div id="ambProfileProducts" class="space-y-2"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- پیام توست -->
     <div id="toastMessage" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white text-xs font-bold px-4 py-3 rounded-2xl shadow-xl opacity-0 pointer-events-none transition-opacity duration-300 flex items-center gap-2 whitespace-nowrap">
         <i data-lucide="info" class="w-4 h-4 text-emerald-400"></i><span id="toastText"></span>
@@ -294,6 +383,11 @@
             { id: 'sara', name: 'سارا (بافتنی و هنر)', role: 'دست‌سازه‌های هنری', color: 'bg-purple-100 text-purple-700', icon: '🧶' }
         ];
 
+        const newsData = {
+            1: { title: 'افتتاح اولین هایپر محله در شهرضا', body: 'به گزارش پایگاه خبری توان‌یار، اولین هایپر محله با هدف ایجاد اشتغال پایدار برای افراد دارای معلولیت در شهرضا افتتاح شد. این مجموعه با همکاری سفیران توان‌یار و فروشگاه‌های محلی، محصولات روزمره را با تخفیف ویژه به دست شهروندان می‌رساند.\n\nدر این مراسم، مسئولین شهرستان بر اهمیت حمایت از کسب‌وکارهای معلولین تاکید کردند.' },
+            2: { title: 'دوره‌های مهارت‌آموزی رایگان', body: 'ثبت‌نام دوره‌های جدید مهارت‌آموزی برای معلولین عزیز آغاز شد. این دوره‌ها شامل مهارت‌های دیجیتال، صنایع دستی و خدمات مشتریان است.\n\nعلاقه‌مندان می‌توانند از طریق پنل کاربری خود در سامانه توان‌یار ثبت‌نام کنند.' }
+        };
+
         const hyperSubCategories = [
             { id: 'all', title: 'همه تخفیف‌ها', icon: '🔥' },
             { id: 'supermarket', title: 'سوپرمارکت', icon: '🛒' },
@@ -304,28 +398,25 @@
             { id: 'fastfood', title: 'فست فود', icon: '🍕' }
         ];
 
-        let catalog = []; // از دیتابیس پر می‌شود
+        let catalog = [];
 
         let state = { mainCat: 'hyper', subCat: 'all', ambassador: null, searchQuery: '', cart: [], lastInvoiceText: '' };
         const PAYMENT_THRESHOLD = 2000000;
 
-        // ================= توابع کمکی =================
         function formatPrice(num) { return num.toLocaleString('fa-IR') + ' تومان'; }
         function showToast(msg) { const toast = document.getElementById('toastMessage'); document.getElementById('toastText').innerText = msg; toast.classList.remove('opacity-0'); setTimeout(() => toast.classList.add('opacity-0'), 2800); }
         function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 
-        // ================= رندر =================
+        // ================= رندرها =================
         function renderAmbassadors() {
             const container = document.getElementById('ambassadorsList');
             container.innerHTML = ambassadors.map(amb => {
-                const isSelected = state.ambassador === amb.id;
-                return `<button onclick="filterByAmbassador('${amb.id}')" class="flex flex-col items-center shrink-0 w-20 group">
-                    <div class="w-16 h-16 rounded-full ${amb.color} flex items-center justify-center text-2xl mb-1.5 border-2 ${isSelected ? 'border-slate-900 scale-105 shadow-md' : 'border-white shadow-sm'} transition-all">${amb.icon}</div>
+                return `<button onclick="openAmbassadorProfile('${amb.id}')" class="flex flex-col items-center shrink-0 w-20 group">
+                    <div class="w-16 h-16 rounded-full ${amb.color} flex items-center justify-center text-2xl mb-1.5 border-2 border-white shadow-sm transition-all group-hover:scale-105">${amb.icon}</div>
                     <span class="text-[11px] font-bold text-slate-800 text-center leading-tight line-clamp-1">${amb.name.split(' ')[0]}</span>
                     <span class="text-[9px] text-slate-500 text-center line-clamp-1">${amb.role}</span>
                 </button>`;
             }).join('');
-            document.getElementById('resetAmbassadorBtn').classList.toggle('hidden', !state.ambassador);
         }
 
         function renderSubCategories() {
@@ -377,7 +468,72 @@
             lucide.createIcons();
         }
 
-        // ================= کنترلرها =================
+        // ================= مودال سفیران =================
+        function openAmbassadorProfile(id) {
+            const amb = ambassadors.find(a => a.id === id);
+            if (!amb) return;
+            document.getElementById('ambProfileIcon').className = `w-20 h-20 rounded-full flex items-center justify-center text-4xl mx-auto mb-3 border-4 border-white shadow-md ${amb.color}`;
+            document.getElementById('ambProfileIcon').innerText = amb.icon;
+            document.getElementById('ambProfileName').innerText = amb.name;
+            document.getElementById('ambProfileRole').innerText = amb.role;
+            
+            const ambProducts = catalog.filter(p => p.ambassador === id);
+            const container = document.getElementById('ambProfileProducts');
+            if (ambProducts.length === 0) {
+                container.innerHTML = '<p class="text-xs text-slate-500 text-center py-4">هنوز محصولی برای این سفیر ثبت نشده است.</p>';
+            } else {
+                container.innerHTML = ambProducts.map(item => `
+                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 flex justify-between items-center">
+                        <div class="flex items-center gap-2">
+                            <span class="text-2xl">${item.emoji}</span>
+                            <div>
+                                <div class="text-xs font-bold text-slate-800">${item.title}</div>
+                                <div class="text-[10px] text-slate-500">${formatPrice(item.price)}</div>
+                            </div>
+                        </div>
+                        <button onclick="addToCart(${item.id})" class="bg-emerald-50 text-emerald-700 text-[10px] font-bold px-2 py-1 rounded-lg">خرید</button>
+                    </div>
+                `).join('');
+            }
+            document.getElementById('ambassadorModal').classList.remove('hidden');
+        }
+        function closeAmbassadorProfile() { document.getElementById('ambassadorModal').classList.add('hidden'); }
+
+        function openAmbassadorSearch() {
+            document.getElementById('ambSearchInput').value = '';
+            filterAmbassadors('');
+            document.getElementById('ambassadorSearchModal').classList.remove('hidden');
+        }
+        function closeAmbassadorSearch() { document.getElementById('ambassadorSearchModal').classList.add('hidden'); }
+        function filterAmbassadors(query) {
+            const results = ambassadors.filter(a => a.name.includes(query) || a.role.includes(query));
+            const container = document.getElementById('ambSearchResults');
+            if (results.length === 0) { container.innerHTML = '<p class="text-xs text-slate-500 text-center py-4">سفیری پیدا نشد.</p>'; return; }
+            container.innerHTML = results.map(amb => `
+                <button onclick="closeAmbassadorSearch(); openAmbassadorProfile('${amb.id}')" class="w-full text-right bg-slate-50 p-3 rounded-xl border border-slate-100 flex items-center gap-3 hover:bg-slate-100 transition-colors">
+                    <div class="w-10 h-10 rounded-full ${amb.color} flex items-center justify-center text-xl shrink-0">${amb.icon}</div>
+                    <div>
+                        <div class="text-sm font-bold text-slate-800">${amb.name}</div>
+                        <div class="text-[10px] text-slate-500">${amb.role}</div>
+                    </div>
+                </button>
+            `).join('');
+        }
+
+        // ================= مودال اخبار =================
+        function openNewsArchive() { document.getElementById('newsArchiveModal').classList.remove('hidden'); }
+        function closeNewsArchive() { document.getElementById('newsArchiveModal').classList.add('hidden'); }
+        function openNewsArticle(id) {
+            const article = newsData[id];
+            if (!article) return;
+            document.getElementById('articleTitle').innerText = article.title;
+            document.getElementById('articleBody').innerText = article.body;
+            closeNewsArchive();
+            document.getElementById('newsArticleModal').classList.remove('hidden');
+        }
+        function closeNewsArticle() { document.getElementById('newsArticleModal').classList.add('hidden'); }
+
+        // ================= بقیه توابع =================
         function selectMainCategory(cat) {
             state.mainCat = cat; state.subCat = 'all'; state.ambassador = null; state.searchQuery = '';
             const cards = {
@@ -386,13 +542,10 @@
                 skills: { el: document.getElementById('tab-skills'), activeClass: 'border-blue-600 bg-blue-600 text-white shadow-md shadow-blue-100', inactiveClass: 'border-slate-100 bg-blue-50/70 text-slate-800' }
             };
             Object.keys(cards).forEach(key => { const c = cards[key]; c.el.className = `category-card p-3 rounded-2xl border-2 flex flex-col items-center justify-center text-center transition-all min-h-[108px] ${key === cat ? c.activeClass : c.inactiveClass}`; });
-            renderAmbassadors(); renderSubCategories(); renderProducts();
+            renderSubCategories(); renderProducts();
         }
-
         function selectSubCategory(subId) { state.subCat = subId; renderSubCategories(); renderProducts(); }
-        function filterByAmbassador(ambId) { state.ambassador = (state.ambassador === ambId) ? null : ambId; renderAmbassadors(); renderProducts(); }
 
-        // ================= سبد خرید =================
         function addToCart(productId) {
             const product = catalog.find(p => p.id === productId);
             if (product.stock !== undefined && product.stock <= 0) return showToast('این کالا ناموجود است');
@@ -402,7 +555,6 @@
             if (existing) existing.qty += 1; else state.cart.push({ product, qty: 1 });
             updateCartBadge(); showToast(`«${product.title}» به سبد اضافه شد`);
         }
-
         function updateQty(productId, delta) {
             const idx = state.cart.findIndex(c => c.product.id === productId);
             if (idx === -1) return;
@@ -410,23 +562,19 @@
             if (state.cart[idx].qty <= 0) state.cart.splice(idx, 1);
             updateCartBadge(); renderCartView();
         }
-
         function clearCart() { state.cart = []; updateCartBadge(); renderCartView(); showToast('سبد خرید خالی شد'); }
-
         function updateCartBadge() {
             const totalItems = state.cart.reduce((sum, item) => sum + item.qty, 0);
             const badge = document.getElementById('cartBadge');
             if (totalItems > 0) { badge.innerText = totalItems.toLocaleString('fa-IR'); badge.classList.remove('hidden'); }
             else badge.classList.add('hidden');
         }
-
         function renderCartView() {
             const emptyState = document.getElementById('emptyCartState');
             const filledState = document.getElementById('filledCartState');
             const clearBtn = document.getElementById('clearCartBtn');
             if (state.cart.length === 0) { emptyState.classList.remove('hidden'); filledState.classList.add('hidden'); clearBtn.classList.add('hidden'); return; }
             emptyState.classList.add('hidden'); filledState.classList.remove('hidden'); clearBtn.classList.remove('hidden');
-
             let totalPrice = 0, totalOldPrice = 0;
             const listHtml = state.cart.map(item => {
                 const subTotal = item.product.price * item.qty;
@@ -443,25 +591,21 @@
                     </div>
                 </div>`;
             }).join('');
-
             document.getElementById('cartItemsList').innerHTML = listHtml;
             document.getElementById('totalPriceText').innerText = formatPrice(totalPrice);
             document.getElementById('totalDiscountText').innerText = formatPrice(totalOldPrice - totalPrice);
-
             const ruleBanner = document.getElementById('paymentRuleBanner');
             if (totalPrice < PAYMENT_THRESHOLD) { ruleBanner.className = 'p-3.5 rounded-2xl text-xs font-bold leading-relaxed border bg-emerald-50 border-emerald-200 text-emerald-900'; ruleBanner.innerHTML = '✅ <strong>خرید زیر ۲ میلیون تومان:</strong> بدون نیاز به پرداخت آنلاین؛ مبلغ فاکتور هنگام تحویل درب منزل (کارت‌خوان پیک) تسویه می‌شود.'; }
             else { ruleBanner.className = 'p-3.5 rounded-2xl text-xs font-bold leading-relaxed border bg-orange-50 border-orange-200 text-orange-900'; ruleBanner.innerHTML = '💳 <strong>خرید بالای ۲ میلیون تومان:</strong> به محض رسیدن سفیر به فروشگاه و تایید کالا، فاکتور ارسال شده و تسویه لحظه‌ای انجام می‌شود.'; }
         }
 
-        // ================= ثبت سفارش =================
         const SB_URL = window.TAVANYAR_CONFIG?.url || '';
         const SB_KEY = window.TAVANYAR_CONFIG?.anonKey || '';
         const db = (SB_URL && SB_KEY && window.supabase) ? window.supabase.createClient(SB_URL, SB_KEY) : null;
         let adminEditingId = null;
-        const dbReady = () => !!db;
         function dbNotice(){ showToast('اتصال پایگاه داده هنوز تنظیم نشده؛ فایل راهنمای نصب را اجرا کنید.'); }
         function dbProduct(row){ return {id:row.id, mainCat:row.main_cat, subCat:row.sub_cat, ambassador:row.ambassador || 'alireza', title:row.title, store:row.store, oldPrice:Number(row.old_price||row.price), price:Number(row.price), emoji:row.emoji||'🛍️', stock:Number(row.stock ?? 0), active:row.active}; }
-
+        
         async function loadLiveProducts(){
             if(!db) return;
             const {data,error}=await db.from('products').select('*').eq('active',true).order('id');
@@ -500,7 +644,6 @@
         }
         function closeInvoiceModal() { document.getElementById('invoiceModal').classList.add('hidden'); state.cart = []; updateCartBadge(); switchTab('home'); }
 
-        // ================= مدیریت تب‌ها =================
         function switchTab(tabName) {
             document.getElementById('view-admin')?.classList.add('hidden');
             ['home', 'market', 'cart', 'about'].forEach(t => {
@@ -518,7 +661,6 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // ================= پنل مدیریت =================
         function openAdmin(){ document.getElementById('view-home').classList.add('hidden'); document.getElementById('view-market').classList.add('hidden'); document.getElementById('view-cart').classList.add('hidden'); document.getElementById('view-about').classList.add('hidden'); document.getElementById('view-admin').classList.remove('hidden'); window.scrollTo(0,0); }
         async function adminLogin(){
             if(!db){dbNotice();return;}
@@ -540,7 +682,6 @@
         async function loadAdminOrders(){const box=document.getElementById('adminOrdersList');box.innerHTML='در حال دریافت...';const {data,error}=await db.from('orders').select('id,tracking_code,customer_name,customer_phone,customer_address,total_amount,status,created_at').order('created_at',{ascending:false}).limit(100);if(error){box.innerText='خطا در دریافت سفارش‌ها';return;}box.innerHTML=data.map(o=>`<div class="p-3 border rounded-xl space-y-2"><div class="flex justify-between"><b>${escapeHtml(o.tracking_code)}</b><span class="text-xs text-slate-500">${new Date(o.created_at).toLocaleString('fa-IR')}</span></div><div class="text-sm">${escapeHtml(o.customer_name)} · ${escapeHtml(o.customer_phone)}</div><div class="text-xs text-slate-600">${escapeHtml(o.customer_address)}</div><b class="text-sm">${formatPrice(o.total_amount)}</b><div class="flex gap-2"><select id="status-${o.id}" class="flex-1 border rounded-lg p-2 text-sm"><option value="new" ${o.status==='new'?'selected':''}>جدید</option><option value="processing" ${o.status==='processing'?'selected':''}>در حال آماده‌سازی</option><option value="sent" ${o.status==='sent'?'selected':''}>ارسال شده</option><option value="done" ${o.status==='done'?'selected':''}>تحویل شده</option><option value="cancelled" ${o.status==='cancelled'?'selected':''}>لغو شده</option></select><button onclick="updateOrderStatus(${o.id})" class="bg-emerald-600 text-white rounded-lg px-3 text-xs">ثبت وضعیت</button></div></div>`).join('')||'هنوز سفارشی ثبت نشده است.';}
         async function updateOrderStatus(id){const status=document.getElementById(`status-${id}`).value;const {error}=await db.from('orders').update({status}).eq('id',id);showToast(error?'به‌روزرسانی وضعیت ناموفق بود':'وضعیت سفارش به‌روز شد');}
 
-        // ================= راه‌اندازی اولیه =================
         window.onload = function() {
             renderAmbassadors();
             renderSubCategories();
@@ -550,4 +691,4 @@
         };
     </script>
 </body>
-</html> 
+</html>
