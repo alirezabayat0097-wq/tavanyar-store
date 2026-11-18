@@ -65,12 +65,6 @@
                 📍 اصفهان
             </span>
         </div>
-
-        <div class="w-full h-36 rounded-2xl overflow-hidden relative shadow-sm border border-slate-200 bg-gradient-to-br from-emerald-500 via-teal-600 to-emerald-700 flex flex-col justify-center items-center text-white text-center p-4">
-            <h2 class="text-xl font-black mb-1">توان‌یار</h2>
-            <p class="text-sm font-medium opacity-90">اشتغال و درآمد پایدار برای معلولین</p>
-            <span class="text-xs mt-2 bg-white/20 px-3 py-1 rounded-full">هایپر محله اصفهان</span>
-        </div>
     </header>
 
     <!-- کانتینر اصلی -->
@@ -78,6 +72,14 @@
         
         <!-- صفحه خانه -->
         <section id="view-home" class="animate-fade-in space-y-5">
+            
+            <!-- بنر (فقط در صفحه خانه) -->
+            <div class="w-full h-36 rounded-2xl overflow-hidden relative shadow-sm border border-slate-200 bg-gradient-to-br from-emerald-500 via-teal-600 to-emerald-700 flex flex-col justify-center items-center text-white text-center p-4">
+                <h2 class="text-xl font-black mb-1">توان‌یار</h2>
+                <p class="text-sm font-medium opacity-90">اشتغال و درآمد پایدار برای معلولین</p>
+                <span class="text-xs mt-2 bg-white/20 px-3 py-1 rounded-full">هایپر محله اصفهان</span>
+            </div>
+
             <div>
                 <div class="flex items-center justify-between mb-3">
                     <h2 class="text-sm font-extrabold text-slate-800">سفیران و متخصصین توان‌یار</h2>
@@ -112,7 +114,6 @@
                 <i data-lucide="arrow-right" class="w-4 h-4"></i> بازگشت به خانه
             </button>
 
-            <!-- هدر پروفایل -->
             <div class="bg-white rounded-3xl p-5 shadow-sm border border-slate-100 text-center relative overflow-hidden mb-5">
                 <div class="absolute top-0 right-0 w-24 h-24 bg-emerald-50 rounded-bl-full -z-10"></div>
                 <div id="profIcon" class="w-24 h-24 rounded-full flex items-center justify-center text-5xl mx-auto mb-3 border-4 border-white shadow-lg relative z-10"></div>
@@ -128,14 +129,12 @@
                 </div>
             </div>
 
-            <!-- نوار ابزار سه‌بخشی -->
             <div class="flex gap-2 mb-4 bg-slate-100 p-1 rounded-2xl">
                 <button onclick="switchAmbTab('products')" id="ambTab-products" class="flex-1 py-2 text-xs font-bold rounded-xl bg-white text-emerald-600 shadow-sm transition-all">محصولات</button>
                 <button onclick="switchAmbTab('dashboard')" id="ambTab-dashboard" class="flex-1 py-2 text-xs font-bold rounded-xl text-slate-500 hover:text-slate-800 transition-all">داشبورد</button>
                 <button onclick="switchAmbTab('marketing')" id="ambTab-marketing" class="flex-1 py-2 text-xs font-bold rounded-xl text-slate-500 hover:text-slate-800 transition-all">بازاریابی</button>
             </div>
 
-            <!-- محتوای تب‌ها -->
             <div id="ambContent-products" class="space-y-2"></div>
 
             <div id="ambContent-dashboard" class="hidden space-y-4">
@@ -316,7 +315,7 @@
         </div>
     </div>
 
-    <!-- مودال پروفایل سفیر (با دکمه ورود به صفحه کامل) -->
+    <!-- مودال پروفایل سفیر -->
     <div id="ambassadorModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-end sm:items-center justify-center p-3">
         <div class="bg-white w-full max-w-md rounded-3xl p-5 shadow-2xl animate-fade-in max-h-[85vh] overflow-y-auto relative">
             <button onclick="closeAmbassadorProfile()" class="absolute top-4 left-4 text-slate-400 hover:text-slate-800">✖</button>
@@ -434,7 +433,6 @@
             const amb = ambassadors.find(a => a.id === id);
             if (!amb) return;
             
-            // پر کردن اطلاعات صفحه کامل
             document.getElementById('profIcon').className = `w-24 h-24 rounded-full flex items-center justify-center text-5xl mx-auto mb-3 border-4 border-white shadow-lg relative z-10 ${amb.color}`;
             document.getElementById('profIcon').innerText = amb.icon;
             document.getElementById('profName').innerText = amb.name;
@@ -442,7 +440,6 @@
             document.getElementById('profLocation').innerText = amb.location || 'اصفهان، ایران';
             document.getElementById('profBio').innerText = amb.bio || 'هنوز بیوگرافی ثبت نشده است.';
 
-            // محصولات این سفیر
             const ambProducts = catalog.filter(p => p.ambassador === id);
             const container = document.getElementById('ambContent-products');
             if (ambProducts.length === 0) {
@@ -456,7 +453,6 @@
                 `).join('');
             }
 
-            // پیش‌فرض روی تب محصولات
             switchAmbTab('products');
             switchTab('ambassador-profile');
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -493,7 +489,6 @@
             `).join('');
         }
 
-        // ================== اخبار ==================
         function openNewsArchive() { document.getElementById('newsArchiveModal').classList.remove('hidden'); }
         function closeNewsArchive() { document.getElementById('newsArchiveModal').classList.add('hidden'); }
         function openNewsArticle(id) {
@@ -506,7 +501,6 @@
         }
         function closeNewsArticle() { document.getElementById('newsArticleModal').classList.add('hidden'); }
 
-        // ================== بقیه ==================
         function selectMainCategory(cat) {
             state.mainCat = cat; state.subCat = 'all'; state.ambassador = null; state.searchQuery = '';
             const cards = {
