@@ -1,2 +1,4 @@
-SUPABASE_URL=https://rresoitrkxeaetcloovj.supabase.co
-SUPABASE_PUBLISHABLE_KEY=sb_publishable_EEB01YB72Xtqmd6tA-0jEw_IyO0gCTM
+window.TAVANYAR_CONFIG = {
+  url: 'https://rresoitrkxeaetcloovj.supabase.co',
+  anonKey: 'sb_publishable_EEB01YB72Xtqmd6tA-0jEw_IyO0gCTM'
+};
