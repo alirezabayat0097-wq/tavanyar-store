@@ -186,7 +186,7 @@
 
 <body class="max-w-md mx-auto bg-white min-h-screen shadow-xl relative border-x border-slate-100">
 
-    <!-- هدر هوشمند (فقط در صفحه خانه و فروشگاه نمایش داده می‌شود) -->
+    <!-- هدر هوشمند (فقط در صفحه خانه، فروشگاه و زیرصفحه فروشگاه نمایش داده می‌شود) -->
     <header id="mainHeader" class="sticky top-0 z-30 bg-white/95 backdrop-blur-md px-4 pt-3.5 pb-3 border-b border-slate-100 transition-colors duration-200">
         <div class="flex items-center justify-between gap-2">
             <div class="flex items-center gap-2.5 min-w-0">
@@ -244,7 +244,7 @@
                 <i data-lucide="chevron-left" class="w-5 h-5 text-slate-400"></i>
             </div>
 
-            <!-- سفیران و متخصصین -->
+            <!-- سفیران و متخصصین (همراه با عکس پروفایل و نام) -->
             <div>
                 <div class="flex items-center justify-between mb-3">
                     <h2 class="text-sm font-extrabold text-slate-800">سفیران و متخصصین توان‌یار</h2>
@@ -288,13 +288,11 @@
 
         <!-- ================== ۲. صفحه فروشگاه (چهارراه مارکت‌پلیس) ================== -->
         <section id="view-market" class="hidden animate-fade-in space-y-5">
-            <!-- فیلد جستجو -->
             <div class="relative">
                 <input type="text" id="marketSearchInput" oninput="handleMarketSearch(this.value)" placeholder="جستجوی کالا، هنر یا مهارت..." class="w-full h-11 pr-10 pl-4 bg-slate-100 rounded-2xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white">
                 <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute right-3.5 top-3.5"></i>
             </div>
 
-            <!-- نتایج جستجوی سریع اگر کاربر چیزی تایپ کند -->
             <div id="marketSearchResultsWrapper" class="hidden space-y-2.5">
                 <div class="flex items-center justify-between">
                     <h3 class="text-xs font-black text-slate-800">نتایج جستجو</h3>
@@ -330,7 +328,7 @@
                 </button>
             </div>
 
-            <!-- فرم ثبت‌نام معلولین سطح استان (بهره‌مندی از طرح پایلوت) -->
+            <!-- فرم ثبت‌نام معلولین سطح استان -->
             <div class="bg-white border border-emerald-200 rounded-3xl p-4 shadow-sm space-y-3">
                 <div class="flex items-start gap-2.5">
                     <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
@@ -396,16 +394,13 @@
                 </button>
             </div>
 
-            <!-- بنر اختصاصی هم‌سبک کارت انتخاب‌شده -->
             <div id="submarketBanner" class="p-4 rounded-3xl text-white shadow-sm">
                 <h2 id="submarketTitle" class="text-base font-black"></h2>
                 <p id="submarketDesc" class="text-[11px] opacity-90 mt-1 leading-relaxed"></p>
             </div>
 
-            <!-- فیلتر زیرشاخه‌ها -->
             <div id="subCatChips" class="flex gap-2 overflow-x-auto no-scrollbar pb-1"></div>
 
-            <!-- لیست محصولات/خدمات بخش اختصاصی -->
             <div id="submarketProductsGrid" class="grid grid-cols-2 gap-3 pb-4"></div>
         </section>
 
@@ -415,7 +410,7 @@
                 <i data-lucide="arrow-right" class="w-4 h-4"></i> بازگشت به خانه
             </button>
             <div class="bg-white rounded-3xl p-5 shadow-sm border border-slate-100 text-center">
-                <div id="profIcon" class="w-20 h-20 rounded-full flex items-center justify-center text-4xl mx-auto mb-3 border-4 border-white shadow-md"></div>
+                <div id="profAvatarContainer" class="w-20 h-20 rounded-full flex items-center justify-center text-4xl mx-auto mb-3 border-4 border-white shadow-md overflow-hidden"></div>
                 <h2 id="profName" class="text-lg font-black text-slate-900 mb-1"></h2>
                 <p id="profRole" class="text-xs font-bold text-emerald-600 mb-2"></p>
                 <p id="profBio" class="text-xs text-slate-600 leading-relaxed bg-slate-50 p-3 rounded-xl border border-slate-100 text-right"></p>
@@ -648,8 +643,43 @@
             </div>
         </section>
 
-        <!-- ================== ۷. صفحه پروفایل و قوانین ================== -->
+        <!-- ================== ۷. صفحه پروفایل، لاگین و قوانین ================== -->
         <section id="view-about" class="hidden animate-fade-in space-y-4">
+            <!-- کارت حساب کاربری / ورود (لاگین) یکپارچه با انتخاب نقش -->
+            <div id="authGuestCard" class="bg-white border border-slate-200 rounded-3xl p-4 shadow-sm space-y-3">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-sm font-black text-slate-900">ورود / ثبت‌نام حساب کاربری</h2>
+                    <span class="text-[10px] font-bold bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-full">نمایش در کل سایت</span>
+                </div>
+                <p class="text-[11px] text-slate-500 leading-relaxed">
+                    اطلاعات خود را وارد کنید و نقش خود را انتخاب نمایید تا در خرید، بازی و بخش‌های مرتبط فعال شود:
+                </p>
+                <input type="text" id="authNameInput" placeholder="نام و نام خانوادگی" class="w-full h-10 px-3 bg-slate-50 border border-slate-200 rounded-xl text-xs">
+                <input type="tel" id="authPhoneInput" placeholder="شماره موبایل (مثال: 09131234567)" class="w-full h-10 px-3 bg-slate-50 border border-slate-200 rounded-xl text-xs text-left" dir="ltr">
+                <select id="authRoleSelect" class="w-full h-10 px-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold">
+                    <option value="مشتری">نقش: مشتری عادی فروشگاه</option>
+                    <option value="هنرمند صنایع دستی">نقش: معلول هنرمند صنایع دستی</option>
+                    <option value="متخصص پیشه و مهارت">نقش: معلول متخصص پیشه و مهارت</option>
+                    <option value="همکار هایپر">نقش: معلول همکار هایپر / توزیع</option>
+                </select>
+                <button onclick="loginUser()" class="btn-accessible w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-black">
+                    ورود و ثبت حساب کاربری
+                </button>
+            </div>
+
+            <!-- کارت کاربر واردشده -->
+            <div id="authLoggedInCard" class="hidden bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-3xl p-4 shadow-md space-y-3">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <span id="userRoleBadge" class="text-[10px] font-black bg-amber-400 text-slate-950 px-2.5 py-0.5 rounded-full"></span>
+                        <h2 id="userDisplayName" class="text-base font-black mt-1.5"></h2>
+                        <p id="userDisplayPhone" class="text-xs text-slate-300" dir="ltr"></p>
+                    </div>
+                    <button onclick="logoutUser()" class="text-[11px] font-bold bg-white/10 hover:bg-white/20 text-rose-200 px-3 py-1.5 rounded-xl">خروج</button>
+                </div>
+                <div id="roleQuickActionBox" class="pt-2 border-t border-white/10 flex items-center justify-between gap-2"></div>
+            </div>
+
             <div class="bg-gradient-to-br from-emerald-600 to-teal-700 text-white p-5 rounded-3xl shadow-md">
                 <h2 class="text-lg font-black mb-2">پروفایل و قوانین توان‌یار</h2>
                 <p class="text-xs leading-relaxed opacity-95">
@@ -845,12 +875,44 @@
     </nav>
 
     <script>
-        // ================== داده‌های پایه ==================
+        // ================== داده‌های پایه (همراه با عکس پروفایل سفیران) ==================
         const ambassadors = [
-            { id: 'alireza', name: 'علیرضا (سفیر شهرضا)', role: 'مدیر پایلوت شهرضا', bio: 'سفیر و هماهنگ‌کننده تخفیف‌های روزانه هایپر محله شهرضا و تحویل سریع درب منزل.', color: 'bg-emerald-100 text-emerald-700', icon: '♿' },
-            { id: 'zahra', name: 'زهرا (هنرمند چرم)', role: 'صنایع دستی استان', bio: 'تولیدکننده کیف و محصولات دست‌دوز چرم طبیعی با کیفیت ممتاز.', color: 'bg-orange-100 text-orange-700', icon: '👜' },
-            { id: 'mohammad', name: 'محمد (گرافیک و تایپ)', role: 'خدمات آنلاین استان', bio: 'متخصص طراحی لوگو، پوستر تبلیغاتی و صفحه‌آرایی حرفه‌ای.', color: 'bg-blue-100 text-blue-700', icon: '💻' },
-            { id: 'sara', name: 'سارا (هنر و بافت)', role: 'دست‌سازه‌های هنری', bio: 'طراح و بافنده انواع شال، کلاه و محصولات هنری دست‌بافت.', color: 'bg-purple-100 text-purple-700', icon: '🧶' }
+            {
+                id: 'alireza',
+                name: 'علیرضا (سفیر شهرضا)',
+                role: 'مدیر پایلوت شهرضا',
+                bio: 'سفیر و هماهنگ‌کننده تخفیف‌های روزانه هایپر محله شهرضا و تحویل سریع درب منزل.',
+                color: 'bg-emerald-100 text-emerald-700',
+                icon: '♿',
+                photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80'
+            },
+            {
+                id: 'zahra',
+                name: 'زهرا (هنرمند چرم)',
+                role: 'صنایع دستی استان',
+                bio: 'تولیدکننده کیف و محصولات دست‌دوز چرم طبیعی با کیفیت ممتاز.',
+                color: 'bg-orange-100 text-orange-700',
+                icon: '👜',
+                photo: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80'
+            },
+            {
+                id: 'mohammad',
+                name: 'محمد (گرافیک و تایپ)',
+                role: 'خدمات آنلاین استان',
+                bio: 'متخصص طراحی لوگو، پوستر تبلیغاتی و صفحه‌آرایی حرفه‌ای.',
+                color: 'bg-blue-100 text-blue-700',
+                icon: '💻',
+                photo: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80'
+            },
+            {
+                id: 'sara',
+                name: 'سارا (هنر و بافت)',
+                role: 'دست‌سازه‌های هنری',
+                bio: 'طراح و بافنده انواع شال، کلاه و محصولات هنری دست‌بافت.',
+                color: 'bg-purple-100 text-purple-700',
+                icon: '🧶',
+                photo: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80'
+            }
         ];
 
         const subCategoriesMap = {
@@ -891,6 +953,7 @@
         let catalog = JSON.parse(localStorage.getItem('tavanyar_products') || 'null') || [...defaultCatalog];
         let localOrders = JSON.parse(localStorage.getItem('tavanyar_orders') || '[]');
         let submissions = JSON.parse(localStorage.getItem('tavanyar_submissions') || '[]');
+        let currentUser = JSON.parse(localStorage.getItem('tavanyar_user') || 'null');
 
         let currentTabName = 'home';
         let activeSubMarket = 'hyper';
@@ -916,6 +979,68 @@
             setTimeout(() => toast.classList.add('opacity-0'), 2800);
         }
 
+        // ================== سیستم لاگین و نقش کاربر در کل سایت ==================
+        function loginUser() {
+            const name = document.getElementById('authNameInput').value.trim();
+            const phone = document.getElementById('authPhoneInput').value.trim();
+            const role = document.getElementById('authRoleSelect').value;
+
+            if (!name || !phone) return showToast('لطفاً نام و شماره موبایل را وارد کنید');
+
+            currentUser = { name, phone, role };
+            localStorage.setItem('tavanyar_user', JSON.stringify(currentUser));
+            renderUserAuthUI();
+            applyUserToForms();
+            showToast(`خوش آمدی ${name} (${role})`);
+        }
+
+        function logoutUser() {
+            currentUser = null;
+            localStorage.removeItem('tavanyar_user');
+            renderUserAuthUI();
+            showToast('از حساب کاربری خارج شدید');
+        }
+
+        function applyUserToForms() {
+            if (!currentUser) return;
+            const nameInp = document.getElementById('customerName');
+            const phoneInp = document.getElementById('customerPhone');
+            if (nameInp && !nameInp.value) nameInp.value = currentUser.name;
+            if (phoneInp && !phoneInp.value) phoneInp.value = currentUser.phone;
+        }
+
+        function renderUserAuthUI() {
+            const guestCard = document.getElementById('authGuestCard');
+            const loggedCard = document.getElementById('authLoggedInCard');
+            const navAboutLabel = document.querySelector('#nav-about span');
+
+            if (!currentUser) {
+                guestCard?.classList.remove('hidden');
+                loggedCard?.classList.add('hidden');
+                if (navAboutLabel) navAboutLabel.innerText = 'پروفایل';
+                return;
+            }
+
+            guestCard?.classList.add('hidden');
+            loggedCard?.classList.remove('hidden');
+            if (navAboutLabel) navAboutLabel.innerText = currentUser.name.split(' ')[0];
+
+            document.getElementById('userRoleBadge').innerText = currentUser.role;
+            document.getElementById('userDisplayName').innerText = currentUser.name;
+            document.getElementById('userDisplayPhone').innerText = currentUser.phone;
+
+            const actionBox = document.getElementById('roleQuickActionBox');
+            if (currentUser.role === 'هنرمند صنایع دستی') {
+                actionBox.innerHTML = `<span class="text-[11px] text-slate-300">بخش اختصاصی شما:</span><button onclick="openSubMarketPage('handicraft')" class="bg-orange-500 text-white text-[11px] font-black px-3 py-1.5 rounded-xl">ورود به صنایع دستی</button>`;
+            } else if (currentUser.role === 'متخصص پیشه و مهارت') {
+                actionBox.innerHTML = `<span class="text-[11px] text-slate-300">بخش اختصاصی شما:</span><button onclick="openSubMarketPage('skills')" class="bg-blue-600 text-white text-[11px] font-black px-3 py-1.5 rounded-xl">ورود به پیشه و مهارت</button>`;
+            } else if (currentUser.role === 'همکار هایپر') {
+                actionBox.innerHTML = `<span class="text-[11px] text-slate-300">بخش اختصاصی شما:</span><button onclick="openSubMarketPage('hyper')" class="bg-emerald-600 text-white text-[11px] font-black px-3 py-1.5 rounded-xl">ورود به هایپر محله</button>`;
+            } else {
+                actionBox.innerHTML = `<span class="text-[11px] text-slate-300">دسترسی سریع:</span><button onclick="switchTab('market')" class="bg-emerald-600 text-white text-[11px] font-black px-3 py-1.5 rounded-xl">خرید از فروشگاه</button>`;
+            }
+        }
+
         // ================== هدر هوشمند و موقعیت مکانی ==================
         function updateSmartHeader() {
             const header = document.getElementById('mainHeader');
@@ -927,14 +1052,13 @@
 
             if (subLocText) subLocText.innerText = currentLocation;
 
-            // هدر فقط در صفحه خانه، فروشگاه و زیرصفحه فروشگاه نمایش داده شود
             const showHeader = (currentTabName === 'home' || currentTabName === 'market' || currentTabName === 'submarket');
             header.classList.toggle('hidden', !showHeader);
             if (!showHeader) return;
 
             if (currentTabName === 'home') {
-                titleEl.innerText = 'توان‌یار';
-                subEl.innerText = 'اشتغال و توانمندی معلولین استان';
+                titleEl.innerText = currentUser ? `توان‌یار | ${currentUser.name.split(' ')[0]}` : 'توان‌یار';
+                subEl.innerText = currentUser ? `${currentUser.role} • اشتغال معلولین استان` : 'اشتغال و توانمندی معلولین استان';
                 locLabel.innerText = '📍 استان';
                 iconBox.className = 'w-11 h-11 rounded-2xl bg-emerald-600 text-white flex items-center justify-center shadow-md shrink-0';
             } else if (currentTabName === 'market') {
@@ -960,12 +1084,8 @@
             }
         }
 
-        function openLocationPicker() {
-            document.getElementById('locationModal').classList.remove('hidden');
-        }
-        function closeLocationPicker() {
-            document.getElementById('locationModal').classList.add('hidden');
-        }
+        function openLocationPicker() { document.getElementById('locationModal').classList.remove('hidden'); }
+        function closeLocationPicker() { document.getElementById('locationModal').classList.add('hidden'); }
         function setUserLocation(loc) {
             currentLocation = loc;
             localStorage.setItem('tavanyar_location', loc);
@@ -981,12 +1101,13 @@
             document.getElementById('customLocationInput').value = '';
         }
 
-        // ================== خانه، سفیران و صفحات اختصاصی فروشگاه ==================
+        // ================== سفیران (همراه با عکس پروفایل و نام) ==================
         function renderAmbassadors() {
             document.getElementById('ambassadorsList').innerHTML = ambassadors.map(amb => `
                 <button onclick="openAmbassadorProfile('${amb.id}')" class="flex flex-col items-center shrink-0 w-20">
-                    <div class="w-16 h-16 rounded-full ${amb.color} flex items-center justify-center text-2xl mb-1.5 border-2 border-white shadow-sm">
-                        ${amb.icon}
+                    <div class="w-16 h-16 rounded-full ${amb.color} flex items-center justify-center text-2xl mb-1.5 border-2 border-white shadow-sm overflow-hidden relative">
+                        <img src="${amb.photo}" alt="${amb.name}" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <span class="hidden w-full h-full items-center justify-center">${amb.icon}</span>
                     </div>
                     <span class="text-[11px] font-bold text-slate-800 text-center line-clamp-1">${amb.name.split(' ')[0]}</span>
                     <span class="text-[9px] text-slate-500 text-center line-clamp-1">${amb.role}</span>
@@ -997,8 +1118,10 @@
         function openAmbassadorProfile(ambId) {
             const amb = ambassadors.find(a => a.id === ambId);
             if (!amb) return;
-            document.getElementById('profIcon').className = `w-20 h-20 rounded-full flex items-center justify-center text-4xl mx-auto mb-3 border-4 border-white shadow-md ${amb.color}`;
-            document.getElementById('profIcon').innerText = amb.icon;
+            const avatarBox = document.getElementById('profAvatarContainer');
+            avatarBox.className = `w-20 h-20 rounded-full flex items-center justify-center text-4xl mx-auto mb-3 border-4 border-white shadow-md overflow-hidden ${amb.color}`;
+            avatarBox.innerHTML = `<img src="${amb.photo}" alt="${amb.name}" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><span class="hidden w-full h-full items-center justify-center">${amb.icon}</span>`;
+
             document.getElementById('profName').innerText = amb.name;
             document.getElementById('profRole').innerText = amb.role;
             document.getElementById('profBio').innerText = amb.bio;
@@ -1019,6 +1142,7 @@
             switchTab('ambassador-profile');
         }
 
+        // ================== جستجو و زیرصفحات فروشگاه ==================
         function handleMarketSearch(q) {
             const wrap = document.getElementById('marketSearchResultsWrapper');
             const grid = document.getElementById('marketSearchGrid');
@@ -1190,6 +1314,7 @@
         }
 
         function renderCartView() {
+            applyUserToForms();
             const empty = document.getElementById('emptyCartState');
             const filled = document.getElementById('filledCartState');
             const clearBtn = document.getElementById('clearCartBtn');
@@ -1700,11 +1825,13 @@
             updateSmartHeader();
             if (tabName === 'cart') renderCartView();
             if (tabName === 'city') updateGameUI();
+            if (tabName === 'about') renderUserAuthUI();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         window.onload = function() {
             renderAmbassadors();
+            renderUserAuthUI();
             updateGameUI();
             updateSmartHeader();
             lucide.createIcons();
