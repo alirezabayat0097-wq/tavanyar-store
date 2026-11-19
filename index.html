@@ -38,33 +38,6 @@
         }
         .animate-fade-in { animation: fadeIn 0.25s ease-out forwards; }
 
-        .circle-chart {
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            background: conic-gradient(#10b981 75%, #e2e8f0 0);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-        .circle-chart::before {
-            content: "";
-            position: absolute;
-            width: 90px;
-            height: 90px;
-            background: white;
-            border-radius: 50%;
-        }
-        .circle-chart span {
-            position: relative;
-            z-index: 10;
-            font-weight: 900;
-            font-size: 18px;
-            color: #0f172a;
-        }
-
-        /* استایل بازی شهر توان */
         #city-hub {
             background: radial-gradient(circle at 85% 0%, #475569 0%, transparent 34%),
                         linear-gradient(145deg, #101b35, #172554 55%, #312e81);
@@ -186,7 +159,7 @@
 
 <body class="max-w-md mx-auto bg-white min-h-screen shadow-xl relative border-x border-slate-100">
 
-    <!-- هدر هوشمند (فقط در صفحه خانه، فروشگاه و زیرصفحه فروشگاه نمایش داده می‌شود) -->
+    <!-- هدر هوشمند -->
     <header id="mainHeader" class="sticky top-0 z-30 bg-white/95 backdrop-blur-md px-4 pt-3.5 pb-3 border-b border-slate-100 transition-colors duration-200">
         <div class="flex items-center justify-between gap-2">
             <div class="flex items-center gap-2.5 min-w-0">
@@ -211,7 +184,7 @@
 
     <main id="mainContent" class="px-4 pt-4">
 
-        <!-- ================== ۱. صفحه خانه (چهره استانی و کلی) ================== -->
+        <!-- ================== ۱. صفحه خانه ================== -->
         <section id="view-home" class="animate-fade-in space-y-5">
             <div class="w-full rounded-3xl overflow-hidden relative shadow-sm border border-emerald-200 bg-gradient-to-br from-emerald-600 via-teal-600 to-emerald-800 text-white p-5">
                 <span class="text-[10px] font-bold bg-white/20 px-2.5 py-1 rounded-full">پلتفرم اشتغال و توانمندسازی معلولین</span>
@@ -229,7 +202,6 @@
                 </div>
             </div>
 
-            <!-- کارت وضعیت گاوصندوق مشتری -->
             <div onclick="switchTab('city')" class="bg-slate-900 text-white p-4 rounded-2xl flex items-center justify-between cursor-pointer shadow-md">
                 <div class="flex items-center gap-3">
                     <div class="w-11 h-11 rounded-xl bg-amber-400/20 text-amber-300 flex items-center justify-center text-2xl">🏦</div>
@@ -244,7 +216,6 @@
                 <i data-lucide="chevron-left" class="w-5 h-5 text-slate-400"></i>
             </div>
 
-            <!-- سفیران و متخصصین (همراه با عکس پروفایل و نام) -->
             <div>
                 <div class="flex items-center justify-between mb-3">
                     <h2 class="text-sm font-extrabold text-slate-800">سفیران و متخصصین توان‌یار</h2>
@@ -255,7 +226,6 @@
                 <div id="ambassadorsList" class="flex gap-3.5 overflow-x-auto no-scrollbar pb-1"></div>
             </div>
 
-            <!-- پایگاه خبری -->
             <div>
                 <div class="flex items-center justify-between mb-3">
                     <h2 class="text-sm font-extrabold text-slate-800">پایگاه خبری و اطلاع‌رسانی</h2>
@@ -286,7 +256,7 @@
             </div>
         </section>
 
-        <!-- ================== ۲. صفحه فروشگاه (چهارراه مارکت‌پلیس) ================== -->
+        <!-- ================== ۲. صفحه فروشگاه ================== -->
         <section id="view-market" class="hidden animate-fade-in space-y-5">
             <div class="relative">
                 <input type="text" id="marketSearchInput" oninput="handleMarketSearch(this.value)" placeholder="جستجوی کالا، هنر یا مهارت..." class="w-full h-11 pr-10 pl-4 bg-slate-100 rounded-2xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white">
@@ -301,7 +271,6 @@
                 <div id="marketSearchGrid" class="grid grid-cols-2 gap-3"></div>
             </div>
 
-            <!-- سه کارت اصلی مارکت‌پلیس -->
             <div class="grid grid-cols-3 gap-2.5">
                 <button onclick="openSubMarketPage('hyper')" class="p-3 rounded-2xl border-2 border-emerald-200 bg-emerald-50/80 hover:bg-emerald-100/80 text-slate-900 flex flex-col items-center justify-center text-center transition-all min-h-[112px]">
                     <div class="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center mb-2 shadow-sm">
@@ -328,7 +297,6 @@
                 </button>
             </div>
 
-            <!-- فرم ثبت‌نام معلولین سطح استان -->
             <div class="bg-white border border-emerald-200 rounded-3xl p-4 shadow-sm space-y-3">
                 <div class="flex items-start gap-2.5">
                     <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
@@ -361,7 +329,6 @@
                 </button>
             </div>
 
-            <!-- کادر درخواست اسپانسر -->
             <div class="bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-3xl p-4 shadow-md space-y-3">
                 <div class="flex items-center justify-between">
                     <h3 class="text-xs font-black text-amber-300">🤝 درخواست اسپانسری کسب‌وکارها</h3>
@@ -643,25 +610,68 @@
             </div>
         </section>
 
-        <!-- ================== ۷. صفحه پروفایل، لاگین و قوانین ================== -->
+        <!-- ================== ۷. صفحه پروفایل، لاگین هوشمند و قوانین ================== -->
         <section id="view-about" class="hidden animate-fade-in space-y-4">
-            <!-- کارت حساب کاربری / ورود (لاگین) یکپارچه با انتخاب نقش -->
             <div id="authGuestCard" class="bg-white border border-slate-200 rounded-3xl p-4 shadow-sm space-y-3">
                 <div class="flex items-center justify-between">
                     <h2 class="text-sm font-black text-slate-900">ورود / ثبت‌نام حساب کاربری</h2>
                     <span class="text-[10px] font-bold bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-full">نمایش در کل سایت</span>
                 </div>
                 <p class="text-[11px] text-slate-500 leading-relaxed">
-                    اطلاعات خود را وارد کنید و نقش خود را انتخاب نمایید تا در خرید، بازی و بخش‌های مرتبط فعال شود:
+                    اطلاعات خود را وارد کنید و نقش خود را انتخاب نمایید تا فرم متناسب با بخش شما فعال شود:
                 </p>
+
                 <input type="text" id="authNameInput" placeholder="نام و نام خانوادگی" class="w-full h-10 px-3 bg-slate-50 border border-slate-200 rounded-xl text-xs">
                 <input type="tel" id="authPhoneInput" placeholder="شماره موبایل (مثال: 09131234567)" class="w-full h-10 px-3 bg-slate-50 border border-slate-200 rounded-xl text-xs text-left" dir="ltr">
-                <select id="authRoleSelect" class="w-full h-10 px-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold">
+
+                <select id="authRoleSelect" onchange="onAuthRoleChange()" class="w-full h-10 px-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold">
                     <option value="مشتری">نقش: مشتری عادی فروشگاه</option>
-                    <option value="هنرمند صنایع دستی">نقش: معلول هنرمند صنایع دستی</option>
-                    <option value="متخصص پیشه و مهارت">نقش: معلول متخصص پیشه و مهارت</option>
-                    <option value="همکار هایپر">نقش: معلول همکار هایپر / توزیع</option>
+                    <option value="همکار هایپر">نقش: معلول همکار هایپر / توزیع (درخواست دسترسی)</option>
+                    <option value="هنرمند صنایع دستی">نقش: معلول هنرمند صنایع دستی (درخواست دسترسی)</option>
+                    <option value="متخصص پیشه و مهارت">نقش: معلول متخصص پیشه و مهارت (درخواست دسترسی)</option>
                 </select>
+
+                <!-- فیلدهای تکمیلی اختصاصی معلولین (فقط وقتی نقش غیر از مشتری انتخاب شود نمایش داده می‌شود) -->
+                <div id="memberExtraFields" class="hidden space-y-2.5 pt-2 border-t border-slate-100">
+                    <div class="bg-amber-50 border border-amber-200 rounded-xl p-2.5 text-[10px] text-amber-900 leading-relaxed">
+                        برای فعال‌سازی دسترسی کاری و نمایش حرفه‌ای در بخش مربوطه، تکمیل اطلاعات زیر الزامی است:
+                    </div>
+
+                    <div class="flex items-center gap-3 bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                        <img id="authPhotoPreview" src="" alt="پیش‌نمایش عکس" class="hidden w-12 h-12 rounded-full object-cover border border-slate-300 shrink-0">
+                        <div class="flex-1 min-w-0">
+                            <label class="block text-[11px] font-bold text-slate-700 mb-1">عکس پروفایل یا لوگوی کاری</label>
+                            <input type="file" id="authPhotoInput" accept="image/*" onchange="handleAuthPhotoUpload(event)" class="w-full text-[10px] text-slate-600">
+                        </div>
+                    </div>
+
+                    <input type="text" id="authCityInput" placeholder="شهرستان / محله فعالیت (مثلاً: شهرضا)" class="w-full h-10 px-3 bg-slate-50 border border-slate-200 rounded-xl text-xs">
+
+                    <!-- فیلدهای ویژه همکار هایپر -->
+                    <div id="extraHyperFields" class="hidden space-y-2">
+                        <select id="hyperWorkType" class="w-full h-10 px-3 bg-emerald-50/60 border border-emerald-200 rounded-xl text-xs font-bold">
+                            <option value="هماهنگی سفارش و تماس">نوع همکاری: هماهنگی سفارش و تماس</option>
+                            <option value="بسته‌بندی و کنترل کیفیت">نوع همکاری: بسته‌بندی و کنترل کیفیت</option>
+                            <option value="توزیع و تحویل محدوده">نوع همکاری: توزیع و تحویل محدوده</option>
+                        </select>
+                        <input type="text" id="hyperHoursInput" placeholder="بازه زمانی در دسترس بودن (مثلاً: عصرها ۱۶ تا ۲۱)" class="w-full h-10 px-3 bg-slate-50 border border-slate-200 rounded-xl text-xs">
+                    </div>
+
+                    <!-- فیلدهای ویژه صنایع دستی -->
+                    <div id="extraHandicraftFields" class="hidden space-y-2">
+                        <input type="text" id="craftBranchInput" placeholder="شاخه هنری (چرم، بافت، معرق، رزین، سفال...)" class="w-full h-10 px-3 bg-orange-50/60 border border-orange-200 rounded-xl text-xs">
+                        <input type="text" id="craftCapacityInput" placeholder="ظرفیت تولید ماهانه و محدوده قیمت (مثلاً: ۲۰ عدد در ماه)" class="w-full h-10 px-3 bg-slate-50 border border-slate-200 rounded-xl text-xs">
+                    </div>
+
+                    <!-- فیلدهای ویژه پیشه و مهارت -->
+                    <div id="extraSkillsFields" class="hidden space-y-2">
+                        <input type="text" id="skillTitleInput" placeholder="مهارت اصلی (طراحی گرافیک، تایپ، ادیت ویدیو، پشتیبانی...)" class="w-full h-10 px-3 bg-blue-50/60 border border-blue-200 rounded-xl text-xs">
+                        <input type="text" id="skillPortfolioInput" placeholder="نمونه کار، سابقه یا نحوه تحویل (آنلاین / حضوری)" class="w-full h-10 px-3 bg-slate-50 border border-slate-200 rounded-xl text-xs">
+                    </div>
+
+                    <textarea id="authAccessNoteInput" rows="2" placeholder="توضیح کوتاه شرایط دسترسی یا نیازهای حرکتی/کاری برای هماهنگی..." class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs"></textarea>
+                </div>
+
                 <button onclick="loginUser()" class="btn-accessible w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-black">
                     ورود و ثبت حساب کاربری
                 </button>
@@ -669,14 +679,21 @@
 
             <!-- کارت کاربر واردشده -->
             <div id="authLoggedInCard" class="hidden bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-3xl p-4 shadow-md space-y-3">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <span id="userRoleBadge" class="text-[10px] font-black bg-amber-400 text-slate-950 px-2.5 py-0.5 rounded-full"></span>
-                        <h2 id="userDisplayName" class="text-base font-black mt-1.5"></h2>
-                        <p id="userDisplayPhone" class="text-xs text-slate-300" dir="ltr"></p>
+                <div class="flex items-start justify-between gap-2">
+                    <div class="flex items-center gap-3 min-w-0">
+                        <div id="userAvatarBox" class="w-14 h-14 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-2xl overflow-hidden shrink-0"></div>
+                        <div class="min-w-0">
+                            <div class="flex flex-wrap items-center gap-1.5">
+                                <span id="userRoleBadge" class="text-[10px] font-black bg-amber-400 text-slate-950 px-2.5 py-0.5 rounded-full"></span>
+                                <span id="userAccessStatusBadge" class="text-[10px] font-bold bg-white/15 text-emerald-300 px-2 py-0.5 rounded-full"></span>
+                            </div>
+                            <h2 id="userDisplayName" class="text-base font-black mt-1 truncate"></h2>
+                            <p id="userDisplayPhone" class="text-xs text-slate-300" dir="ltr"></p>
+                        </div>
                     </div>
-                    <button onclick="logoutUser()" class="text-[11px] font-bold bg-white/10 hover:bg-white/20 text-rose-200 px-3 py-1.5 rounded-xl">خروج</button>
+                    <button onclick="logoutUser()" class="text-[11px] font-bold bg-white/10 hover:bg-white/20 text-rose-200 px-3 py-1.5 rounded-xl shrink-0">خروج</button>
                 </div>
+                <div id="userExtraSummary" class="hidden text-[11px] text-slate-200 bg-white/5 border border-white/10 rounded-2xl p-2.5 space-y-1"></div>
                 <div id="roleQuickActionBox" class="pt-2 border-t border-white/10 flex items-center justify-between gap-2"></div>
             </div>
 
@@ -774,7 +791,7 @@
                     <h3 class="font-black text-sm">سفارش‌های ثبت‌شده</h3>
                     <div id="adminOrdersList" class="space-y-2"></div>
 
-                    <h3 class="font-black text-sm pt-2">ثبت‌نام معلولین و درخواست اسپانسر</h3>
+                    <h3 class="font-black text-sm pt-2">ثبت‌نام معلولین، درخواست دسترسی و اسپانسر</h3>
                     <div id="adminSubmissionsList" class="space-y-2"></div>
                 </div>
 
@@ -784,7 +801,7 @@
 
     </main>
 
-    <!-- ================== مودال انتخاب محله / شهر / استان ================== -->
+    <!-- مودال انتخاب موقعیت -->
     <div id="locationModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-sm rounded-3xl p-5 shadow-2xl space-y-3">
             <div class="flex justify-between items-center border-b pb-2">
@@ -803,7 +820,7 @@
         </div>
     </div>
 
-    <!-- ================== مودال فاکتور دیجیتال ================== -->
+    <!-- مودال فاکتور دیجیتال -->
     <div id="invoiceModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-end sm:items-center justify-center p-3">
         <div class="bg-white w-full max-w-md rounded-3xl p-5 shadow-2xl animate-fade-in max-h-[90vh] overflow-y-auto">
             <div class="text-center border-b border-dashed border-slate-200 pb-3 mb-3">
@@ -846,12 +863,10 @@
         </div>
     </div>
 
-    <!-- توست پیام -->
     <div id="toastMessage" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white text-xs font-bold px-4 py-2.5 rounded-2xl shadow-xl opacity-0 pointer-events-none transition-opacity duration-300 whitespace-nowrap">
         <span id="toastText"></span>
     </div>
 
-    <!-- نوار ناوبری ۵ بخشی پایین -->
     <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white/95 backdrop-blur-md border-t border-slate-200 px-2 py-1.5 flex justify-around items-center z-40">
         <button onclick="switchTab('home')" id="nav-home" class="nav-btn flex flex-col items-center justify-center py-1 px-2.5 rounded-xl text-emerald-600 font-extrabold min-h-[50px]">
             <i data-lucide="home" class="w-5 h-5 mb-0.5"></i><span class="text-[10px]">خانه</span>
@@ -875,7 +890,6 @@
     </nav>
 
     <script>
-        // ================== داده‌های پایه (همراه با عکس پروفایل سفیران) ==================
         const ambassadors = [
             {
                 id: 'alireza',
@@ -954,6 +968,7 @@
         let localOrders = JSON.parse(localStorage.getItem('tavanyar_orders') || '[]');
         let submissions = JSON.parse(localStorage.getItem('tavanyar_submissions') || '[]');
         let currentUser = JSON.parse(localStorage.getItem('tavanyar_user') || 'null');
+        let uploadedAuthPhotoData = '';
 
         let currentTabName = 'home';
         let activeSubMarket = 'hyper';
@@ -979,7 +994,38 @@
             setTimeout(() => toast.classList.add('opacity-0'), 2800);
         }
 
-        // ================== سیستم لاگین و نقش کاربر در کل سایت ==================
+        // ================== لاگین هوشمند با فیلدهای اختصاصی نقش‌ها ==================
+        function onAuthRoleChange() {
+            const role = document.getElementById('authRoleSelect').value;
+            const extraWrap = document.getElementById('memberExtraFields');
+            const hyperBox = document.getElementById('extraHyperFields');
+            const craftBox = document.getElementById('extraHandicraftFields');
+            const skillsBox = document.getElementById('extraSkillsFields');
+
+            const isMember = role !== 'مشتری';
+            extraWrap?.classList.toggle('hidden', !isMember);
+            hyperBox?.classList.toggle('hidden', role !== 'همکار هایپر');
+            craftBox?.classList.toggle('hidden', role !== 'هنرمند صنایع دستی');
+            skillsBox?.classList.toggle('hidden', role !== 'متخصص پیشه و مهارت');
+        }
+
+        function handleAuthPhotoUpload(event) {
+            const file = event.target.files?.[0];
+            if (!file) return;
+            if (file.size > 1200000) {
+                showToast('حجم عکس کمتر از ۱.۲ مگابایت باشد');
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                uploadedAuthPhotoData = e.target.result;
+                const img = document.getElementById('authPhotoPreview');
+                img.src = uploadedAuthPhotoData;
+                img.classList.remove('hidden');
+            };
+            reader.readAsDataURL(file);
+        }
+
         function loginUser() {
             const name = document.getElementById('authNameInput').value.trim();
             const phone = document.getElementById('authPhoneInput').value.trim();
@@ -987,17 +1033,59 @@
 
             if (!name || !phone) return showToast('لطفاً نام و شماره موبایل را وارد کنید');
 
-            currentUser = { name, phone, role };
+            let extraDetails = {};
+            if (role !== 'مشتری') {
+                const city = document.getElementById('authCityInput').value.trim() || 'استان';
+                const accessNote = document.getElementById('authAccessNoteInput').value.trim();
+
+                if (role === 'همکار هایپر') {
+                    const workType = document.getElementById('hyperWorkType').value;
+                    const hours = document.getElementById('hyperHoursInput').value.trim();
+                    if (!hours) return showToast('بازه زمانی در دسترس بودن را وارد کنید');
+                    extraDetails = { city, workType, hours, accessNote };
+                } else if (role === 'هنرمند صنایع دستی') {
+                    const branch = document.getElementById('craftBranchInput').value.trim();
+                    const capacity = document.getElementById('craftCapacityInput').value.trim();
+                    if (!branch) return showToast('شاخه هنری خود را وارد کنید');
+                    extraDetails = { city, branch, capacity, accessNote };
+                } else if (role === 'متخصص پیشه و مهارت') {
+                    const skillTitle = document.getElementById('skillTitleInput').value.trim();
+                    const portfolio = document.getElementById('skillPortfolioInput').value.trim();
+                    if (!skillTitle) return showToast('مهارت اصلی خود را وارد کنید');
+                    extraDetails = { city, skillTitle, portfolio, accessNote };
+                }
+
+                submissions.unshift({
+                    type: `درخواست دسترسی (${role})`,
+                    title: `${name} (${city}) - ${extraDetails.workType || extraDetails.branch || extraDetails.skillTitle || ''}`,
+                    contact: phone,
+                    note: `ساعت/ظرفیت/نمونه: ${extraDetails.hours || extraDetails.capacity || extraDetails.portfolio || '-'} | دسترسی: ${accessNote || '-'}`
+                });
+                localStorage.setItem('tavanyar_submissions', JSON.stringify(submissions));
+            }
+
+            currentUser = {
+                name,
+                phone,
+                role,
+                photo: uploadedAuthPhotoData || '',
+                accessStatus: role === 'مشتری' ? 'فعال' : 'در انتظار تایید دسترسی',
+                extra: extraDetails
+            };
+
             localStorage.setItem('tavanyar_user', JSON.stringify(currentUser));
             renderUserAuthUI();
             applyUserToForms();
-            showToast(`خوش آمدی ${name} (${role})`);
+            updateSmartHeader();
+            showToast(role === 'مشتری' ? `خوش آمدی ${name}` : `درخواست دسترسی ${role} ثبت شد`);
         }
 
         function logoutUser() {
             currentUser = null;
+            uploadedAuthPhotoData = '';
             localStorage.removeItem('tavanyar_user');
             renderUserAuthUI();
+            updateSmartHeader();
             showToast('از حساب کاربری خارج شدید');
         }
 
@@ -1010,6 +1098,7 @@
         }
 
         function renderUserAuthUI() {
+            onAuthRoleChange();
             const guestCard = document.getElementById('authGuestCard');
             const loggedCard = document.getElementById('authLoggedInCard');
             const navAboutLabel = document.querySelector('#nav-about span');
@@ -1025,9 +1114,35 @@
             loggedCard?.classList.remove('hidden');
             if (navAboutLabel) navAboutLabel.innerText = currentUser.name.split(' ')[0];
 
+            const avatarBox = document.getElementById('userAvatarBox');
+            if (currentUser.photo) {
+                avatarBox.innerHTML = `<img src="${currentUser.photo}" alt="${currentUser.name}" class="w-full h-full object-cover">`;
+            } else {
+                avatarBox.innerHTML = currentUser.role === 'مشتری' ? '👤' : '♿';
+            }
+
             document.getElementById('userRoleBadge').innerText = currentUser.role;
+            document.getElementById('userAccessStatusBadge').innerText = currentUser.accessStatus || 'فعال';
             document.getElementById('userDisplayName').innerText = currentUser.name;
             document.getElementById('userDisplayPhone').innerText = currentUser.phone;
+
+            const summaryEl = document.getElementById('userExtraSummary');
+            if (currentUser.role !== 'مشتری' && currentUser.extra) {
+                const ex = currentUser.extra;
+                const lines = [];
+                if (ex.city) lines.push(`📍 محدوده: ${ex.city}`);
+                if (ex.workType) lines.push(`🛠️ همکاری: ${ex.workType}`);
+                if (ex.hours) lines.push(`🕒 زمان: ${ex.hours}`);
+                if (ex.branch) lines.push(`🎨 شاخه: ${ex.branch}`);
+                if (ex.capacity) lines.push(`📦 ظرفیت: ${ex.capacity}`);
+                if (ex.skillTitle) lines.push(`💼 مهارت: ${ex.skillTitle}`);
+                if (ex.portfolio) lines.push(`🔗 نمونه/تحویل: ${ex.portfolio}`);
+                if (ex.accessNote) lines.push(`♿ دسترسی: ${ex.accessNote}`);
+                summaryEl.innerHTML = lines.map(l => `<div>${l}</div>`).join('');
+                summaryEl.classList.toggle('hidden', lines.length === 0);
+            } else {
+                summaryEl.classList.add('hidden');
+            }
 
             const actionBox = document.getElementById('roleQuickActionBox');
             if (currentUser.role === 'هنرمند صنایع دستی') {
@@ -1101,7 +1216,7 @@
             document.getElementById('customLocationInput').value = '';
         }
 
-        // ================== سفیران (همراه با عکس پروفایل و نام) ==================
+        // ================== سفیران ==================
         function renderAmbassadors() {
             document.getElementById('ambassadorsList').innerHTML = ambassadors.map(amb => `
                 <button onclick="openAmbassadorProfile('${amb.id}')" class="flex flex-col items-center shrink-0 w-20">
@@ -1239,7 +1354,7 @@
             `;
         }
 
-        // ================== فرم ثبت‌نام معلولین و درخواست اسپانسر ==================
+        // ================== ثبت‌نام معلولین و درخواست اسپانسر ==================
         function submitMemberRegistration() {
             const name = document.getElementById('regFullName').value.trim();
             const phone = document.getElementById('regPhone').value.trim();
