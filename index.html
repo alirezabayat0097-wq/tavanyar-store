@@ -631,7 +631,7 @@
                     <option value="متخصص پیشه و مهارت">نقش: معلول متخصص پیشه و مهارت (درخواست دسترسی)</option>
                 </select>
 
-                <!-- فیلدهای تکمیلی اختصاصی معلولین (فقط وقتی نقش غیر از مشتری انتخاب شود نمایش داده می‌شود) -->
+                <!-- فیلدهای تکمیلی اختصاصی معلولین -->
                 <div id="memberExtraFields" class="hidden space-y-2.5 pt-2 border-t border-slate-100">
                     <div class="bg-amber-50 border border-amber-200 rounded-xl p-2.5 text-[10px] text-amber-900 leading-relaxed">
                         برای فعال‌سازی دسترسی کاری و نمایش حرفه‌ای در بخش مربوطه، تکمیل اطلاعات زیر الزامی است:
@@ -647,7 +647,6 @@
 
                     <input type="text" id="authCityInput" placeholder="شهرستان / محله فعالیت (مثلاً: شهرضا)" class="w-full h-10 px-3 bg-slate-50 border border-slate-200 rounded-xl text-xs">
 
-                    <!-- فیلدهای ویژه همکار هایپر -->
                     <div id="extraHyperFields" class="hidden space-y-2">
                         <select id="hyperWorkType" class="w-full h-10 px-3 bg-emerald-50/60 border border-emerald-200 rounded-xl text-xs font-bold">
                             <option value="هماهنگی سفارش و تماس">نوع همکاری: هماهنگی سفارش و تماس</option>
@@ -657,13 +656,11 @@
                         <input type="text" id="hyperHoursInput" placeholder="بازه زمانی در دسترس بودن (مثلاً: عصرها ۱۶ تا ۲۱)" class="w-full h-10 px-3 bg-slate-50 border border-slate-200 rounded-xl text-xs">
                     </div>
 
-                    <!-- فیلدهای ویژه صنایع دستی -->
                     <div id="extraHandicraftFields" class="hidden space-y-2">
                         <input type="text" id="craftBranchInput" placeholder="شاخه هنری (چرم، بافت، معرق، رزین، سفال...)" class="w-full h-10 px-3 bg-orange-50/60 border border-orange-200 rounded-xl text-xs">
                         <input type="text" id="craftCapacityInput" placeholder="ظرفیت تولید ماهانه و محدوده قیمت (مثلاً: ۲۰ عدد در ماه)" class="w-full h-10 px-3 bg-slate-50 border border-slate-200 rounded-xl text-xs">
                     </div>
 
-                    <!-- فیلدهای ویژه پیشه و مهارت -->
                     <div id="extraSkillsFields" class="hidden space-y-2">
                         <input type="text" id="skillTitleInput" placeholder="مهارت اصلی (طراحی گرافیک، تایپ، ادیت ویدیو، پشتیبانی...)" class="w-full h-10 px-3 bg-blue-50/60 border border-blue-200 rounded-xl text-xs">
                         <input type="text" id="skillPortfolioInput" placeholder="نمونه کار، سابقه یا نحوه تحویل (آنلاین / حضوری)" class="w-full h-10 px-3 bg-slate-50 border border-slate-200 rounded-xl text-xs">
@@ -742,7 +739,7 @@
 
                 <div class="grid grid-cols-2 gap-2">
                     <button onclick="showAdminSection('products')" class="p-3 bg-emerald-100 text-emerald-900 rounded-xl font-bold text-xs">📦 مدیریت محصولات</button>
-                    <button onclick="showAdminSection('orders')" class="p-3 bg-blue-100 text-blue-900 rounded-xl font-bold text-xs">🧾 سفارش‌ها و ثبت‌نام‌ها</button>
+                    <button onclick="showAdminSection('orders')" class="p-3 bg-blue-100 text-blue-900 rounded-xl font-bold text-xs">🧾 سفارش‌ها، ثبت‌نام و سفیران</button>
                 </div>
 
                 <div id="adminProductsSection" class="space-y-3">
@@ -787,12 +784,46 @@
                     </div>
                 </div>
 
-                <div id="adminOrdersSection" class="hidden space-y-3">
-                    <h3 class="font-black text-sm">سفارش‌های ثبت‌شده</h3>
-                    <div id="adminOrdersList" class="space-y-2"></div>
+                <div id="adminOrdersSection" class="hidden space-y-4">
+                    <div class="space-y-2">
+                        <h3 class="font-black text-sm">سفارش‌های ثبت‌شده</h3>
+                        <div id="adminOrdersList" class="space-y-2"></div>
+                    </div>
 
-                    <h3 class="font-black text-sm pt-2">ثبت‌نام معلولین، درخواست دسترسی و اسپانسر</h3>
-                    <div id="adminSubmissionsList" class="space-y-2"></div>
+                    <div class="space-y-2 pt-2 border-t border-slate-100">
+                        <h3 class="font-black text-sm">ثبت‌نام معلولین، درخواست دسترسی و اسپانسر</h3>
+                        <div id="adminSubmissionsList" class="space-y-2"></div>
+                    </div>
+
+                    <!-- مدیریت و تایید سفیران عمومی -->
+                    <div class="bg-emerald-50/50 border border-emerald-200 rounded-2xl p-3.5 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-black text-sm text-emerald-950">🌟 تایید و افزودن سفیران عمومی</h3>
+                            <span class="text-[10px] font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">دیتابیس عمومی</span>
+                        </div>
+
+                        <div class="bg-white p-3 rounded-xl border border-emerald-100 space-y-2">
+                            <div class="text-[11px] font-bold text-slate-700">افزودن یا ویرایش مستقیم سفیر</div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <input id="ambDirectName" placeholder="نام سفیر" class="h-9 px-2.5 bg-slate-50 border rounded-lg text-xs">
+                                <input id="ambDirectRole" placeholder="نقش / حوزه (مثلاً: صنایع دستی)" class="h-9 px-2.5 bg-slate-50 border rounded-lg text-xs">
+                            </div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <input id="ambDirectCity" placeholder="شهر / منطقه (مثلاً: شهرضا)" class="h-9 px-2.5 bg-slate-50 border rounded-lg text-xs">
+                                <input id="ambDirectIcon" placeholder="ایموجی (مثلاً: 🌟 یا 🎨)" class="h-9 px-2.5 bg-slate-50 border rounded-lg text-xs">
+                            </div>
+                            <input id="ambDirectPhoto" placeholder="لینک عکس پروفایل (اختیاری)" class="w-full h-9 px-2.5 bg-slate-50 border rounded-lg text-xs text-left" dir="ltr">
+                            <input id="ambDirectBio" placeholder="توضیح کوتاه درباره فعالیت و مهارت سفیر" class="w-full h-9 px-2.5 bg-slate-50 border rounded-lg text-xs">
+                            <button type="button" onclick="addAmbassadorDirect()" class="btn-accessible w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-black">
+                                ➕ افزودن سفیر به لیست عمومی
+                            </button>
+                        </div>
+
+                        <div class="space-y-1.5">
+                            <div class="text-[11px] font-bold text-slate-700">سفیران فعال و منتشرشده</div>
+                            <div id="adminAmbassadorsList" class="space-y-2"></div>
+                        </div>
+                    </div>
                 </div>
 
                 <button onclick="adminLogout()" class="w-full p-3 border border-rose-200 text-rose-700 rounded-xl font-bold text-xs">خروج از پنل مدیریت</button>
@@ -890,7 +921,7 @@
     </nav>
 
     <script>
-        const ambassadors = [
+        const defaultAmbassadors = [
             {
                 id: 'alireza',
                 name: 'علیرضا (سفیر شهرضا)',
@@ -964,6 +995,7 @@
             { id: 10, mainCat: 'skills', subCat: 'media', ambassador: 'mohammad', title: 'ادیت ویدیو و تولید محتوای شبکه‌ها', store: 'واحد محتوای توان‌یار', oldPrice: 650000, price: 480000, emoji: '🎬' }
         ];
 
+        let ambassadors = JSON.parse(localStorage.getItem('tavanyar_ambassadors') || 'null') || [...defaultAmbassadors];
         let catalog = JSON.parse(localStorage.getItem('tavanyar_products') || 'null') || [...defaultCatalog];
         let localOrders = JSON.parse(localStorage.getItem('tavanyar_orders') || '[]');
         let submissions = JSON.parse(localStorage.getItem('tavanyar_submissions') || '[]');
@@ -973,16 +1005,16 @@
         let currentTabName = 'home';
         let activeSubMarket = 'hyper';
         let activeSubCat = 'all';
-        let currentLocation = localStorage.getItem('tavanyar_location') || 'شهرضا';
+        let currentLocation = localStorage.getItem('tavanyar_location') || (window.TAVANYAR_CONFIG?.store?.defaultCity || 'شهرضا');
 
         let state = {
             cart: [],
             lastInvoiceText: ''
         };
 
-        const PAYMENT_THRESHOLD = 2000000;
-        const BASE_DELIVERY_FEE = 35000;
-        const COIN_VALUE_TOMAN = 1000;
+        const PAYMENT_THRESHOLD = window.TAVANYAR_CONFIG?.store?.paymentThreshold || 2000000;
+        const BASE_DELIVERY_FEE = window.TAVANYAR_CONFIG?.store?.baseDeliveryFee || 35000;
+        const COIN_VALUE_TOMAN = window.TAVANYAR_CONFIG?.store?.coinValueToman || 1000;
 
         const faNum = n => Number(n || 0).toLocaleString('fa-IR');
         const formatPrice = num => faNum(num) + ' تومان';
@@ -992,6 +1024,96 @@
             document.getElementById('toastText').innerText = msg;
             toast.classList.remove('opacity-0');
             setTimeout(() => toast.classList.add('opacity-0'), 2800);
+        }
+
+        // ================== لایه عمومی سوپابیس (public_store) ==================
+        const PUBLIC_TABLE = window.TAVANYAR_CONFIG?.publicTable || 'public_store';
+        let supabaseClient = null;
+
+        function initSupabaseClient() {
+            if (supabaseClient) return supabaseClient;
+            const cfg = window.TAVANYAR_CONFIG || {};
+            if (!cfg.url || !cfg.anonKey || !window.supabase?.createClient) return null;
+            supabaseClient = window.supabase.createClient(cfg.url, cfg.anonKey);
+            return supabaseClient;
+        }
+
+        async function savePublicStore(key, data) {
+            const client = initSupabaseClient();
+            if (!client) return false;
+            try {
+                const { error } = await client
+                    .from(PUBLIC_TABLE)
+                    .upsert({ key, data, updated_at: new Date().toISOString() }, { onConflict: 'key' });
+                if (error) {
+                    console.warn('Supabase upsert error (' + key + '):', error.message);
+                    return false;
+                }
+                return true;
+            } catch (err) {
+                console.warn('Supabase network error:', err);
+                return false;
+            }
+        }
+
+        async function loadPublicStore(key) {
+            const client = initSupabaseClient();
+            if (!client) return null;
+            try {
+                const { data, error } = await client
+                    .from(PUBLIC_TABLE)
+                    .select('data')
+                    .eq('key', key)
+                    .maybeSingle();
+                if (error) {
+                    console.warn('Supabase select error (' + key + '):', error.message);
+                    return null;
+                }
+                return data ? data.data : null;
+            } catch (err) {
+                console.warn('Supabase read error:', err);
+                return null;
+            }
+        }
+
+        async function syncAllPublicData() {
+            const [cloudCatalog, cloudAmbassadors, cloudSubmissions, cloudOrders] = await Promise.all([
+                loadPublicStore('catalog'),
+                loadPublicStore('ambassadors'),
+                loadPublicStore('submissions'),
+                loadPublicStore('orders')
+            ]);
+
+            if (Array.isArray(cloudCatalog) && cloudCatalog.length > 0) {
+                catalog = cloudCatalog;
+                localStorage.setItem('tavanyar_products', JSON.stringify(catalog));
+            } else {
+                await savePublicStore('catalog', catalog);
+            }
+
+            if (Array.isArray(cloudAmbassadors) && cloudAmbassadors.length > 0) {
+                ambassadors = cloudAmbassadors;
+                localStorage.setItem('tavanyar_ambassadors', JSON.stringify(ambassadors));
+            } else {
+                await savePublicStore('ambassadors', ambassadors);
+            }
+
+            if (Array.isArray(cloudSubmissions)) {
+                submissions = cloudSubmissions;
+                localStorage.setItem('tavanyar_submissions', JSON.stringify(submissions));
+            }
+
+            if (Array.isArray(cloudOrders)) {
+                localOrders = cloudOrders;
+                localStorage.setItem('tavanyar_orders', JSON.stringify(localOrders));
+            }
+
+            renderAmbassadors();
+            if (currentTabName === 'submarket') renderSubMarketContent();
+            if (currentTabName === 'admin' && !document.getElementById('adminDashboard')?.classList.contains('hidden')) {
+                renderAdminProducts();
+                renderAdminOrdersAndSubmissions();
+            }
         }
 
         // ================== لاگین هوشمند با فیلدهای اختصاصی نقش‌ها ==================
@@ -1026,7 +1148,7 @@
             reader.readAsDataURL(file);
         }
 
-        function loginUser() {
+        async function loginUser() {
             const name = document.getElementById('authNameInput').value.trim();
             const phone = document.getElementById('authPhoneInput').value.trim();
             const role = document.getElementById('authRoleSelect').value;
@@ -1056,12 +1178,19 @@
                 }
 
                 submissions.unshift({
+                    id: 'sub_' + Date.now(),
                     type: `درخواست دسترسی (${role})`,
+                    applicantName: name,
+                    roleLabel: role,
+                    city,
+                    specialty: extraDetails.workType || extraDetails.branch || extraDetails.skillTitle || role,
+                    photo: uploadedAuthPhotoData || '',
                     title: `${name} (${city}) - ${extraDetails.workType || extraDetails.branch || extraDetails.skillTitle || ''}`,
                     contact: phone,
                     note: `ساعت/ظرفیت/نمونه: ${extraDetails.hours || extraDetails.capacity || extraDetails.portfolio || '-'} | دسترسی: ${accessNote || '-'}`
                 });
                 localStorage.setItem('tavanyar_submissions', JSON.stringify(submissions));
+                await savePublicStore('submissions', submissions);
             }
 
             currentUser = {
@@ -1121,8 +1250,10 @@
                 avatarBox.innerHTML = currentUser.role === 'مشتری' ? '👤' : '♿';
             }
 
+            const isApprovedAmbassador = ambassadors.some(a => a.phone && currentUser.phone && a.phone === currentUser.phone);
             document.getElementById('userRoleBadge').innerText = currentUser.role;
-            document.getElementById('userAccessStatusBadge').innerText = currentUser.accessStatus || 'فعال';
+            document.getElementById('userAccessStatusBadge').innerText =
+                currentUser.role === 'مشتری' ? 'فعال' : (isApprovedAmbassador ? 'تاییدشده و سفیر عمومی' : (currentUser.accessStatus || 'در انتظار تایید دسترسی'));
             document.getElementById('userDisplayName').innerText = currentUser.name;
             document.getElementById('userDisplayPhone').innerText = currentUser.phone;
 
@@ -1218,11 +1349,13 @@
 
         // ================== سفیران ==================
         function renderAmbassadors() {
-            document.getElementById('ambassadorsList').innerHTML = ambassadors.map(amb => `
+            const box = document.getElementById('ambassadorsList');
+            if (!box) return;
+            box.innerHTML = ambassadors.map(amb => `
                 <button onclick="openAmbassadorProfile('${amb.id}')" class="flex flex-col items-center shrink-0 w-20">
-                    <div class="w-16 h-16 rounded-full ${amb.color} flex items-center justify-center text-2xl mb-1.5 border-2 border-white shadow-sm overflow-hidden relative">
-                        <img src="${amb.photo}" alt="${amb.name}" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <span class="hidden w-full h-full items-center justify-center">${amb.icon}</span>
+                    <div class="w-16 h-16 rounded-full ${amb.color || 'bg-emerald-100 text-emerald-700'} flex items-center justify-center text-2xl mb-1.5 border-2 border-white shadow-sm overflow-hidden relative">
+                        ${amb.photo ? `<img src="${amb.photo}" alt="${amb.name}" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">` : ''}
+                        <span class="${amb.photo ? 'hidden' : 'flex'} w-full h-full items-center justify-center">${amb.icon || '🌟'}</span>
                     </div>
                     <span class="text-[11px] font-bold text-slate-800 text-center line-clamp-1">${amb.name.split(' ')[0]}</span>
                     <span class="text-[9px] text-slate-500 text-center line-clamp-1">${amb.role}</span>
@@ -1234,26 +1367,29 @@
             const amb = ambassadors.find(a => a.id === ambId);
             if (!amb) return;
             const avatarBox = document.getElementById('profAvatarContainer');
-            avatarBox.className = `w-20 h-20 rounded-full flex items-center justify-center text-4xl mx-auto mb-3 border-4 border-white shadow-md overflow-hidden ${amb.color}`;
-            avatarBox.innerHTML = `<img src="${amb.photo}" alt="${amb.name}" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><span class="hidden w-full h-full items-center justify-center">${amb.icon}</span>`;
+            avatarBox.className = `w-20 h-20 rounded-full flex items-center justify-center text-4xl mx-auto mb-3 border-4 border-white shadow-md overflow-hidden ${amb.color || 'bg-emerald-100 text-emerald-700'}`;
+            avatarBox.innerHTML = `${amb.photo ? `<img src="${amb.photo}" alt="${amb.name}" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">` : ''}<span class="${amb.photo ? 'hidden' : 'flex'} w-full h-full items-center justify-center">${amb.icon || '🌟'}</span>`;
 
             document.getElementById('profName').innerText = amb.name;
-            document.getElementById('profRole').innerText = amb.role;
+            document.getElementById('profRole').innerText = amb.role + (amb.city ? ` • ${amb.city}` : '');
             document.getElementById('profBio').innerText = amb.bio;
 
             const prods = catalog.filter(p => p.ambassador === ambId);
-            document.getElementById('ambContent-products').innerHTML = prods.map(p => `
-                <div class="bg-white p-3 rounded-2xl border border-slate-100 flex items-center justify-between">
-                    <div class="flex items-center gap-2.5">
-                        <span class="text-2xl">${p.emoji}</span>
-                        <div>
-                            <h4 class="text-xs font-bold text-slate-900">${p.title}</h4>
-                            <span class="text-[11px] font-black text-emerald-600">${formatPrice(p.price)}</span>
+            document.getElementById('ambContent-products').innerHTML = prods.length
+                ? prods.map(p => `
+                    <div class="bg-white p-3 rounded-2xl border border-slate-100 flex items-center justify-between">
+                        <div class="flex items-center gap-2.5">
+                            <span class="text-2xl">${p.emoji || '📦'}</span>
+                            <div>
+                                <h4 class="text-xs font-bold text-slate-900">${p.title}</h4>
+                                <span class="text-[11px] font-black text-emerald-600">${formatPrice(p.price)}</span>
+                            </div>
                         </div>
+                        <button onclick="addToCart(${p.id})" class="bg-slate-900 text-white text-xs font-bold px-3 py-2 rounded-xl">+ سبد</button>
                     </div>
-                    <button onclick="addToCart(${p.id})" class="bg-slate-900 text-white text-xs font-bold px-3 py-2 rounded-xl">+ سبد</button>
-                </div>
-            `).join('');
+                `).join('')
+                : '<div class="bg-slate-50 p-4 rounded-2xl text-center text-xs text-slate-500">محصول یا خدمتی اختصاصی برای این سفیر ثبت نشده است؛ برای هماهنگی یا ثبت سفارش از فروشگاه استفاده کنید.</div>';
+
             switchTab('ambassador-profile');
         }
 
@@ -1355,7 +1491,7 @@
         }
 
         // ================== ثبت‌نام معلولین و درخواست اسپانسر ==================
-        function submitMemberRegistration() {
+        async function submitMemberRegistration() {
             const name = document.getElementById('regFullName').value.trim();
             const phone = document.getElementById('regPhone').value.trim();
             const city = document.getElementById('regCity').value.trim() || 'استان';
@@ -1365,18 +1501,24 @@
             if (!name || !phone) return showToast('لطفاً نام و شماره تماس را وارد کنید');
 
             submissions.unshift({
+                id: 'sub_' + Date.now(),
                 type: 'ثبت‌نام معلول استان',
+                applicantName: name,
+                roleLabel: field,
+                city,
+                specialty: field,
                 title: `${name} (${city}) - ${field}`,
                 contact: phone,
                 note: desc
             });
             localStorage.setItem('tavanyar_submissions', JSON.stringify(submissions));
+            await savePublicStore('submissions', submissions);
 
             ['regFullName', 'regPhone', 'regCity', 'regSkillDesc'].forEach(id => document.getElementById(id).value = '');
             showToast('✅ درخواست شما برای طرح پایلوت ثبت شد');
         }
 
-        function submitSponsorRequest() {
+        async function submitSponsorRequest() {
             const brand = document.getElementById('sponsorBrandName').value.trim();
             const phone = document.getElementById('sponsorPhone').value.trim();
             const city = document.getElementById('sponsorCity').value.trim() || 'استان';
@@ -1384,12 +1526,18 @@
             if (!brand || !phone) return showToast('نام کسب‌وکار و شماره تماس را وارد کنید');
 
             submissions.unshift({
+                id: 'sub_' + Date.now(),
                 type: 'درخواست اسپانسر',
+                applicantName: brand,
+                roleLabel: 'اسپانسر و حامی توان‌یار',
+                city,
+                specialty: 'حمایت و اسپانسری',
                 title: `اسپانسر: ${brand} (${city})`,
                 contact: phone,
                 note: 'درخواست همکاری اسپانسری'
             });
             localStorage.setItem('tavanyar_submissions', JSON.stringify(submissions));
+            await savePublicStore('submissions', submissions);
 
             ['sponsorBrandName', 'sponsorPhone', 'sponsorCity'].forEach(id => document.getElementById(id).value = '');
             showToast('✅ درخواست اسپانسری شما ثبت شد');
@@ -1502,7 +1650,7 @@
             }
         }
 
-        function submitOrder() {
+        async function submitOrder() {
             const name = document.getElementById('customerName').value.trim();
             const phone = document.getElementById('customerPhone').value.trim();
             const address = document.getElementById('customerAddress').value.trim();
@@ -1541,8 +1689,9 @@
                 : 'p-3 rounded-2xl text-xs font-bold mb-3 border bg-orange-50 border-orange-200 text-orange-900';
             statusBox.innerText = isUnder ? 'روش پرداخت: پرداخت در محل' : 'روش پرداخت: تسویه هنگام تهیه کالا';
 
-            localOrders.unshift({ id: code, customer: name, phone, address, total: grandTotal });
+            localOrders.unshift({ id: code, customer: name, phone, address, total: grandTotal, createdAt: new Date().toISOString() });
             localStorage.setItem('tavanyar_orders', JSON.stringify(localOrders));
+            await savePublicStore('orders', localOrders);
 
             const lines = state.cart.map(c => `▫️ ${c.product.title} (${c.qty}): ${formatPrice(c.product.price * c.qty)}`).join('\n');
             state.lastInvoiceText = `🧾 فاکتور توان‌یار\n🔖 کد: ${code}\n👤 ${name} (${phone})\n📍 ${address}\n---\n${lines}\n---\n💰 مبلغ نهایی: ${formatPrice(grandTotal)}`;
@@ -1569,7 +1718,8 @@
         const defaultGameData = {
             wood: 0, stone: 0, gold: 10, magic: 0, energy: 60, maxEnergy: 100,
             xp: 0, level: 1, axe: 1, pickaxe: 1, treeHp: 10, rockHp: 8, mineDepth: 1,
-            lastDaily: '', lastSponsor: '', streak: 0, vaultUnlocked: true,
+            lastDaily: '', lastSponsor: '', streak: 0,
+            vaultUnlocked: window.TAVANYAR_CONFIG?.store?.defaultVaultOpen ?? true,
             claimed: { wood: false, stone: false, magic: false },
             lifetime: { wood: 0, stone: 0, magic: 0 }
         };
@@ -1761,7 +1911,7 @@
             updateGameUI();
         }
 
-        // ================== پنل مدیریت ==================
+        // ================== پنل مدیریت و تایید سفیران ==================
         let editingProductId = null;
 
         function openAdmin() {
@@ -1769,16 +1919,18 @@
             updateAdminVaultUI();
         }
 
-        function adminLogin() {
+        async function adminLogin() {
             const pass = document.getElementById('adminPassword').value;
-            if (pass === '1234' || pass.length >= 4) {
+            const expectedPass = String(window.TAVANYAR_CONFIG?.support?.adminPasscode || '1234');
+            if (pass === expectedPass || pass === '1234' || pass.length >= 4) {
                 document.getElementById('adminLogin').classList.add('hidden');
                 document.getElementById('adminDashboard').classList.remove('hidden');
+                await syncAllPublicData();
                 renderAdminProducts();
                 renderAdminOrdersAndSubmissions();
                 updateAdminVaultUI();
             } else {
-                showToast('رمز عبور حداقل ۴ رقم باشد (1234)');
+                showToast(`رمز عبور نادرست است (پیش‌فرض: ${expectedPass})`);
             }
         }
 
@@ -1844,7 +1996,7 @@
             document.getElementById('productEditor').classList.remove('hidden');
         }
 
-        function saveProduct() {
+        async function saveProduct() {
             const title = document.getElementById('pTitle').value.trim();
             const price = Number(document.getElementById('pPrice').value);
             if (!title || !price) return showToast('نام و قیمت الزامی است');
@@ -1869,15 +2021,17 @@
             }
 
             localStorage.setItem('tavanyar_products', JSON.stringify(catalog));
+            const synced = await savePublicStore('catalog', catalog);
             cancelProductEdit();
             renderAdminProducts();
             if (currentTabName === 'submarket') renderSubMarketContent();
-            showToast('ذخیره شد');
+            showToast(synced ? 'ذخیره شد و در فروشگاه عمومی منتشر گردید' : 'ذخیره شد (در انتظار همگام‌سازی ابری)');
         }
 
-        function deleteProduct(id) {
+        async function deleteProduct(id) {
             catalog = catalog.filter(x => x.id !== id);
             localStorage.setItem('tavanyar_products', JSON.stringify(catalog));
+            await savePublicStore('catalog', catalog);
             renderAdminProducts();
             if (currentTabName === 'submarket') renderSubMarketContent();
             showToast('حذف شد');
@@ -1887,14 +2041,150 @@
             document.getElementById('productEditor').classList.add('hidden');
         }
 
+        function normalizeAmbassadorEntry(entry = {}) {
+            const defaultCity = window.TAVANYAR_CONFIG?.store?.defaultCity || 'شهرضا';
+            return {
+                id: entry.id || ('amb_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6)),
+                name: (entry.name || 'سفیر توان‌یار').trim(),
+                role: (entry.role || 'سفیر توان‌یار').trim(),
+                city: (entry.city || defaultCity).trim(),
+                phone: (entry.phone || '').trim(),
+                bio: (entry.bio || `سفیر تاییدشده توان‌یار در ${entry.city || defaultCity}`).trim(),
+                color: entry.color || 'bg-emerald-100 text-emerald-700',
+                icon: (entry.icon || '🌟').trim(),
+                photo: (entry.photo || '').trim(),
+                verified: true,
+                approvedAt: entry.approvedAt || new Date().toISOString()
+            };
+        }
+
+        async function persistAmbassadorsList(nextAmbassadors) {
+            ambassadors = nextAmbassadors;
+            localStorage.setItem('tavanyar_ambassadors', JSON.stringify(ambassadors));
+            renderAmbassadors();
+            renderAdminAmbassadorsList();
+            renderUserAuthUI();
+            return await savePublicStore('ambassadors', ambassadors);
+        }
+
+        async function approveSubmissionAsAmbassador(idx) {
+            const sub = submissions[idx];
+            if (!sub) return showToast('درخواست پیدا نشد');
+
+            const rawTitle = String(sub.title || '');
+            const extractedName = sub.applicantName || rawTitle.split('(')[0].replace(/^اسپانسر:\s*/, '').trim() || 'سفیر توان‌یار';
+            const cityMatch = rawTitle.match(/\(([^)]+)\)/);
+            const extractedCity = sub.city || (cityMatch ? cityMatch[1].trim() : (window.TAVANYAR_CONFIG?.store?.defaultCity || 'شهرضا'));
+            const extractedRole = sub.roleLabel || sub.specialty || (rawTitle.includes(' - ') ? rawTitle.split(' - ').slice(1).join(' - ').trim() : sub.type) || 'سفیر توان‌یار';
+
+            const ambassadorObj = normalizeAmbassadorEntry({
+                id: sub.ambassadorId || ('amb_' + (sub.id || idx)),
+                name: extractedName,
+                role: extractedRole,
+                city: extractedCity,
+                phone: sub.contact || '',
+                icon: sub.type?.includes('اسپانسر') ? '🤝' : (extractedRole.includes('صنایع دستی') ? '🎨' : (extractedRole.includes('مهارت') ? '💼' : '🌟')),
+                photo: sub.photo || '',
+                bio: sub.note ? `${extractedName} (${extractedRole}) از ${extractedCity} — ${sub.note}` : `سفیر تاییدشده ${extractedRole} در ${extractedCity}`
+            });
+
+            const existingIdx = ambassadors.findIndex(a => a.id === ambassadorObj.id || (a.name === ambassadorObj.name && a.city === ambassadorObj.city));
+            const updatedAmbassadors = [...ambassadors];
+            if (existingIdx !== -1) {
+                updatedAmbassadors[existingIdx] = { ...updatedAmbassadors[existingIdx], ...ambassadorObj, id: updatedAmbassadors[existingIdx].id };
+            } else {
+                updatedAmbassadors.unshift(ambassadorObj);
+            }
+
+            submissions[idx] = {
+                ...sub,
+                status: 'approved',
+                ambassadorId: ambassadorObj.id,
+                approvedAt: ambassadorObj.approvedAt
+            };
+            localStorage.setItem('tavanyar_submissions', JSON.stringify(submissions));
+            await savePublicStore('submissions', submissions);
+
+            const synced = await persistAmbassadorsList(updatedAmbassadors);
+            renderAdminOrdersAndSubmissions();
+            showToast(synced ? '✅ سفیر تایید و برای همه کاربران منتشر شد' : '✅ سفیر تایید و محلی ذخیره شد');
+        }
+
+        async function addAmbassadorDirect() {
+            const name = document.getElementById('ambDirectName')?.value.trim();
+            const role = document.getElementById('ambDirectRole')?.value.trim() || 'سفیر توان‌یار';
+            const city = document.getElementById('ambDirectCity')?.value.trim() || (window.TAVANYAR_CONFIG?.store?.defaultCity || 'شهرضا');
+            const icon = document.getElementById('ambDirectIcon')?.value.trim() || '🌟';
+            const photo = document.getElementById('ambDirectPhoto')?.value.trim() || '';
+            const bio = document.getElementById('ambDirectBio')?.value.trim() || '';
+
+            if (!name) return showToast('لطفاً نام سفیر را وارد کنید');
+
+            const newAmb = normalizeAmbassadorEntry({ name, role, city, icon, photo, bio });
+            const updatedList = [newAmb, ...ambassadors];
+            const synced = await persistAmbassadorsList(updatedList);
+
+            ['ambDirectName', 'ambDirectRole', 'ambDirectCity', 'ambDirectIcon', 'ambDirectPhoto', 'ambDirectBio'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.value = '';
+            });
+
+            showToast(synced ? '🌟 سفیر جدید در دیتابیس عمومی ذخیره شد' : '🌟 سفیر جدید ذخیره شد');
+        }
+
+        async function removeAmbassador(ambId) {
+            if (ambId === 'alireza') return showToast('سفیر اصلی پایلوت قابل حذف نیست');
+            const filtered = ambassadors.filter(a => String(a.id) !== String(ambId));
+            const synced = await persistAmbassadorsList(filtered);
+            showToast(synced ? 'سفیر از لیست عمومی حذف شد' : 'سفیر حذف شد');
+        }
+
+        function renderAdminAmbassadorsList() {
+            const box = document.getElementById('adminAmbassadorsList');
+            if (!box) return;
+            box.innerHTML = ambassadors.length
+                ? ambassadors.map(a => `
+                    <div class="bg-slate-50 p-2.5 rounded-xl border flex items-center justify-between gap-2 text-xs">
+                        <div class="flex items-center gap-2 min-w-0">
+                            <span class="text-xl">${a.icon || '🌟'}</span>
+                            <div class="min-w-0">
+                                <b class="block truncate">${a.name}</b>
+                                <span class="text-[10px] text-slate-500 block truncate">${a.role} • ${a.city || 'استان'}</span>
+                            </div>
+                        </div>
+                        <div class="flex gap-1.5 shrink-0">
+                            <button type="button" onclick="openAmbassadorProfile('${a.id}')" class="px-2 py-1 bg-emerald-50 text-emerald-700 rounded-lg font-bold">نمایش</button>
+                            ${a.id !== 'alireza' ? `<button type="button" onclick="removeAmbassador('${a.id}')" class="px-2 py-1 bg-rose-50 text-rose-700 rounded-lg font-bold">حذف</button>` : ''}
+                        </div>
+                    </div>
+                `).join('')
+                : '<p class="text-xs text-slate-400">سفیری ثبت نشده است.</p>';
+        }
+
         function renderAdminOrdersAndSubmissions() {
             document.getElementById('adminOrdersList').innerHTML = localOrders.length
                 ? localOrders.map(o => `<div class="bg-white p-3 rounded-xl border text-xs"><b>${o.customer} (${o.id})</b> - <span class="text-emerald-700 font-black">${formatPrice(o.total)}</span><p class="text-[10px] text-slate-500">${o.phone} | ${o.address}</p></div>`).join('')
                 : '<p class="text-xs text-slate-400">سفارشی ثبت نشده است.</p>';
 
             document.getElementById('adminSubmissionsList').innerHTML = submissions.length
-                ? submissions.map(s => `<div class="bg-white p-3 rounded-xl border text-xs"><span class="text-[10px] font-bold text-blue-600">${s.type}</span><b class="block">${s.title}</b><p class="text-[10px] text-slate-500">${s.contact} ${s.note ? ' - ' + s.note : ''}</p></div>`).join('')
+                ? submissions.map((s, idx) => `
+                    <div class="bg-white p-3 rounded-xl border text-xs flex items-start justify-between gap-2">
+                        <div class="min-w-0">
+                            <div class="flex items-center gap-1.5 flex-wrap">
+                                <span class="text-[10px] font-bold text-blue-600">${s.type}</span>
+                                ${s.status === 'approved' ? '<span class="text-[10px] font-black bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">✅ تاییدشده به‌عنوان سفیر</span>' : ''}
+                            </div>
+                            <b class="block mt-0.5">${s.title}</b>
+                            <p class="text-[10px] text-slate-500">${s.contact} ${s.note ? ' - ' + s.note : ''}</p>
+                        </div>
+                        <button type="button" onclick="approveSubmissionAsAmbassador(${idx})" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-[11px] font-black shrink-0">
+                            ${s.status === 'approved' ? 'بروزرسانی سفیر' : 'تایید سفیر'}
+                        </button>
+                    </div>
+                `).join('')
                 : '<p class="text-xs text-slate-400">درخواستی ثبت نشده است.</p>';
+
+            renderAdminAmbassadorsList();
         }
 
         // ================== مودال‌های کمکی و جابه‌جایی تب‌ها ==================
@@ -1902,7 +2192,7 @@
             document.getElementById('modalTitle').innerText = 'لیست سفیران توان‌یار';
             document.getElementById('modalBody').innerHTML = ambassadors.map(a => `
                 <div onclick="closeGenericModal(); openAmbassadorProfile('${a.id}')" class="p-2.5 bg-slate-50 rounded-xl flex items-center gap-2.5 cursor-pointer hover:bg-emerald-50">
-                    <span class="text-2xl">${a.icon}</span>
+                    <span class="text-2xl">${a.icon || '🌟'}</span>
                     <div><b class="text-slate-900 block">${a.name}</b><span class="text-[10px] text-slate-500">${a.role}</span></div>
                 </div>
             `).join('');
@@ -1941,15 +2231,17 @@
             if (tabName === 'cart') renderCartView();
             if (tabName === 'city') updateGameUI();
             if (tabName === 'about') renderUserAuthUI();
+            if (tabName === 'home' || tabName === 'market' || tabName === 'submarket') syncAllPublicData();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        window.onload = function() {
+        window.onload = async function() {
             renderAmbassadors();
             renderUserAuthUI();
             updateGameUI();
             updateSmartHeader();
             lucide.createIcons();
+            await syncAllPublicData();
         };
     </script>
 </body>
