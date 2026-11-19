@@ -159,7 +159,7 @@
 
 <body class="max-w-md mx-auto bg-white min-h-screen shadow-xl relative border-x border-slate-100">
 
-    <!-- هدر هوشمند و منظم برای تمامی صفحات -->
+    <!-- هدر هوشمند و منظم -->
     <header id="mainHeader" class="sticky top-0 z-30 bg-white/95 backdrop-blur-md px-4 pt-3.5 pb-3 border-b border-slate-100 transition-colors duration-200">
         <div class="flex items-center justify-between gap-2">
             <div class="flex items-center gap-2.5 min-w-0">
@@ -188,19 +188,19 @@
         </div>
     </header>
 
-    <!-- گیت ورود اولیه ساده (بدون انتخاب نقش و بدون کادر رمز مدیر) -->
+    <!-- پنجره ورود اولیه سریع (مشتری یا ورود مستقیم توان‌یابان به بخش سفیران) -->
     <div id="initialOnboardingGate" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
         <div class="bg-white w-full max-w-sm rounded-3xl p-5 shadow-2xl space-y-3.5 animate-fade-in my-auto">
             <div class="flex items-center justify-between border-b border-slate-100 pb-3">
                 <div>
                     <span class="text-[10px] font-black bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full">ورود سریع توان‌یار</span>
-                    <h2 class="text-base font-black text-slate-900 mt-1">ثبت‌نام و ورود به حساب</h2>
+                    <h2 class="text-base font-black text-slate-900 mt-1">ورود به سامانه</h2>
                 </div>
                 <div class="w-10 h-10 rounded-2xl bg-emerald-600 text-white flex items-center justify-center text-lg">🤝</div>
             </div>
 
             <p class="text-[11px] text-slate-500 leading-relaxed">
-                نام و شماره موبایل خود را وارد کنید؛ پس از ورود، در <b>صفحه پروفایل</b> می‌توانید نقش نهایی خود را مشخص کنید.
+                نام و شماره موبایل خود را وارد کنید. <b>توان‌یابان عزیز</b> می‌توانند مستقیماً وارد بخش سفیران شوند و فرم ثبت‌نام خود را تکمیل کنند.
             </p>
 
             <div class="space-y-2.5">
@@ -221,9 +221,14 @@
                 </div>
             </div>
 
-            <button type="button" onclick="completeInitialGateLogin()" class="btn-accessible w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl text-xs font-black shadow-lg shadow-emerald-200">
-                تایید و ورود به توان‌یار
-            </button>
+            <div class="grid grid-cols-1 gap-2 pt-1">
+                <button type="button" onclick="completeInitialGateLogin(false)" class="btn-accessible w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl text-xs font-black shadow-md shadow-emerald-200">
+                    🛒 ورود به عنوان مشتری و خریدار
+                </button>
+                <button type="button" onclick="completeInitialGateLogin(true)" class="btn-accessible w-full bg-slate-900 hover:bg-slate-800 text-amber-300 rounded-2xl text-xs font-black">
+                    ♿ ورود توان‌یابان به بخش سفیران و ثبت‌نام
+                </button>
+            </div>
         </div>
     </div>
 
@@ -292,16 +297,16 @@
                             <i data-lucide="award" class="w-7 h-7"></i>
                         </div>
                         <div>
-                            <h3 class="text-xs font-black text-slate-800">فراخوان ثبت‌نام هنرمندان و متخصصین معلول استان</h3>
-                            <p class="text-[10px] text-slate-500 mt-1 line-clamp-2">عزیزان دارای معلولیت در سراسر استان می‌توانند از طریق صفحه پروفایل نقش خود را ثبت کنند.</p>
-                            <span class="text-[9px] text-blue-600 font-bold mt-1 block">اطلاعیه استانی</span>
+                            <h3 class="text-xs font-black text-slate-800">فراخوان ثبت‌نام توان‌یابان استان در طرح پایلوت</h3>
+                            <p class="text-[10px] text-slate-500 mt-1 line-clamp-2">توان‌یابان عزیز و دارای مهارت می‌توانند مستقیماً وارد بخش سفیران شوند و فرم ثبت‌نام خود را تکمیل کنند.</p>
+                            <span class="text-[9px] text-blue-600 font-bold mt-1 block">اطلاعیه استانی • ورود مستقیم سفیران</span>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ================== ۲. صفحه فروشگاه (محیط مشتری - خلوت و منظم) ================== -->
+        <!-- ================== ۲. صفحه فروشگاه (محیط مشتری) ================== -->
         <section id="view-market" class="hidden animate-fade-in space-y-5">
             <div class="relative">
                 <input type="text" id="marketSearchInput" oninput="handleMarketSearch(this.value)" placeholder="جستجوی کالا، هنر یا مهارت..." class="w-full h-11 pr-10 pl-4 bg-slate-100 rounded-2xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white">
@@ -342,16 +347,16 @@
                 </button>
             </div>
 
-            <!-- باکس کوتاه هدایت به پروفایل برای تعیین نقش یا همکاری (بدون اشغال فضای فروشگاه) -->
-            <div id="marketQuickRoleCard" class="bg-emerald-50/80 border border-emerald-200 rounded-3xl p-4 flex items-center justify-between gap-3">
+            <!-- بنر مستقیم ورود توان‌یابان به بخش سفیران -->
+            <div class="bg-slate-900 text-white rounded-3xl p-4 flex items-center justify-between gap-3">
                 <div class="min-w-0">
-                    <h3 class="text-xs font-black text-emerald-950">تعیین نقش همکاری یا ثبت‌نام اسپانسری</h3>
-                    <p class="text-[10px] text-emerald-800 mt-0.5 leading-relaxed">
-                        برای انتخاب نقش (هنرمند، متخصص، هایپر) یا ثبت درخواست اسپانسری وارد صفحه پروفایل شوید.
+                    <h3 class="text-xs font-black text-amber-300">♿ ویژه توان‌یابان و دارای مهارت</h3>
+                    <p class="text-[10px] text-slate-300 mt-0.5 leading-relaxed">
+                        ورود به بخش سفیران برای همه توان‌یابان آزاد است؛ فرم ثبت‌نام در همان‌جا قرار دارد.
                     </p>
                 </div>
-                <button onclick="switchTab('about')" class="px-3.5 py-2.5 bg-emerald-600 text-white rounded-xl text-[11px] font-black shrink-0">
-                    پروفایل ←
+                <button onclick="enterAmbassadorPortalDirect()" class="px-3.5 py-2.5 bg-amber-400 text-slate-950 rounded-xl text-[11px] font-black shrink-0">
+                    بخش سفیران ←
                 </button>
             </div>
         </section>
@@ -620,16 +625,16 @@
             </div>
         </section>
 
-        <!-- ================== ۷. صفحه پروفایل (تعیین نقش نهایی + پروفایل مشتری + فرم‌های جمع‌شونده) ================== -->
+        <!-- ================== ۷. صفحه پروفایل مشتری (کاملاً تمیز و بدون کادر اضافی ثبت‌نام شغلی) ================== -->
         <section id="view-about" class="hidden animate-fade-in space-y-4">
-            <!-- فرم ورود ساده پروفایل -->
+            <!-- فرم ورود سریع پروفایل -->
             <div id="authGuestCard" class="bg-white border border-slate-200 rounded-3xl p-4 shadow-sm space-y-3">
                 <div class="flex items-center justify-between">
                     <h2 class="text-sm font-black text-slate-900">ورود به حساب کاربری</h2>
-                    <span class="text-[10px] font-bold bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-full">ورود سریع</span>
+                    <span class="text-[10px] font-bold bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-full">مشتری / توان‌یاب</span>
                 </div>
                 <p class="text-[11px] text-slate-500 leading-relaxed">
-                    نام و شماره موبایل خود را وارد کنید؛ نقش نهایی شما در همین صفحه پروفایل مشخص می‌شود.
+                    برای پیگیری سفارش‌ها وارد شوید. اگر از توان‌یابان دارای مهارت هستید، می‌توانید مستقیماً وارد بخش سفیران شوید.
                 </p>
 
                 <input type="text" id="authNameInput" placeholder="نام و نام خانوادگی" class="w-full h-10 px-3 bg-slate-50 border border-slate-200 rounded-xl text-xs">
@@ -648,12 +653,17 @@
                     <input type="text" id="authOtpInput" maxlength="4" placeholder="----" class="w-full h-10 px-3 bg-white border border-emerald-300 rounded-xl text-center font-mono text-sm font-black tracking-widest" dir="ltr">
                 </div>
 
-                <button onclick="loginUser()" class="btn-accessible w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-black">
-                    تایید کد و ورود
-                </button>
+                <div class="grid grid-cols-1 gap-2">
+                    <button onclick="loginUser(false)" class="btn-accessible w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-black">
+                        تایید کد و ورود به پروفایل مشتری
+                    </button>
+                    <button onclick="loginUser(true)" class="btn-accessible w-full bg-slate-900 hover:bg-slate-800 text-amber-300 rounded-xl text-xs font-black">
+                        ♿ ورود توان‌یابان به بخش سفیران
+                    </button>
+                </div>
             </div>
 
-            <!-- کارت کاربر واردشده -->
+            <!-- کارت کاربر واردشده (مشتری) -->
             <div id="authLoggedInCard" class="hidden space-y-4">
                 <div class="bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-3xl p-4 shadow-md space-y-3">
                     <div class="flex items-start justify-between gap-2">
@@ -671,35 +681,6 @@
                         <button onclick="logoutUser()" class="text-[11px] font-bold bg-white/10 hover:bg-white/20 text-rose-200 px-3 py-1.5 rounded-xl shrink-0">خروج</button>
                     </div>
                     <div id="roleQuickActionBox" class="pt-2 border-t border-white/10 flex flex-wrap items-center justify-between gap-2"></div>
-                </div>
-
-                <!-- باکس تعیین نقش نهایی در پروفایل (با قابلیت جمع‌شدن پس از ثبت) -->
-                <div id="profileRoleSelectionCard" class="bg-white border border-emerald-200 rounded-3xl p-4 shadow-sm space-y-3">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <h3 class="text-xs font-black text-slate-900">🎯 تعیین نقش نهایی شما در توان‌یار</h3>
-                            <p class="text-[10px] text-slate-500 mt-0.5">نقش خود را مشخص کنید؛ با انتخاب نقش سفیر وارد محیط اختصاصی سفیران می‌شوید.</p>
-                        </div>
-                        <span id="roleRegCounterBadge" class="text-[10px] font-black bg-emerald-50 text-emerald-800 px-2 py-0.5 rounded-full border border-emerald-200">۰ / ۲</span>
-                    </div>
-
-                    <div id="profileRoleFormBody" class="space-y-2.5">
-                        <select id="profileFinalRoleSelect" onchange="onProfileFinalRoleChange()" class="w-full h-10 px-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold">
-                            <option value="مشتری">مشتری (خرید و حمایت از توان‌یار)</option>
-                            <option value="هنرمند صنایع دستی">سفیر: هنرمند صنایع دستی</option>
-                            <option value="متخصص پیشه و مهارت">سفیر: متخصص پیشه و مهارت</option>
-                            <option value="همکار هایپر">سفیر: همکار هایپر محله (پیش‌ثبت‌نام)</option>
-                        </select>
-
-                        <div id="profileRoleExtraInputs" class="hidden space-y-2 bg-slate-50 p-3 rounded-2xl border border-slate-200">
-                            <input type="text" id="profileRoleCityInput" placeholder="شهرستان / محله فعالیت (مثلاً: شهرضا)" class="w-full h-10 px-3 bg-white border border-slate-200 rounded-xl text-xs">
-                            <input type="text" id="profileRoleDescInput" placeholder="توضیح کوتاه هنر، مهارت یا فروشگاه..." class="w-full h-10 px-3 bg-white border border-slate-200 rounded-xl text-xs">
-                        </div>
-
-                        <button type="button" onclick="confirmFinalRoleInProfile()" class="btn-accessible w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-black">
-                            تایید نقش نهایی و ورود به محیط مربوطه
-                        </button>
-                    </div>
                 </div>
 
                 <!-- بخش سفیران اختصاصی مشتری (حداکثر ۵ کد سفیر) -->
@@ -732,7 +713,7 @@
                 <div id="customerOrdersList" class="space-y-2"></div>
             </div>
 
-            <!-- باکس جمع‌شونده اسپانسری (پس از حداکثر ۲ ثبت‌نام محو می‌شود تا فضا اشغال نکند) -->
+            <!-- باکس جمع‌شونده اسپانسری -->
             <div id="sponsorRegistrationWrapper" class="bg-slate-900 text-white rounded-3xl p-4 shadow-md space-y-2.5">
                 <button type="button" onclick="toggleCollapsibleBox('sponsorFormBody')" class="w-full flex items-center justify-between text-right">
                     <div class="flex items-center gap-2">
@@ -757,7 +738,7 @@
                 </div>
             </div>
 
-            <!-- قوانین توان‌یار (جمع‌شونده برای نظم انتهای صفحه) -->
+            <!-- قوانین توان‌یار -->
             <div class="bg-white p-4 rounded-3xl border border-slate-200 space-y-2 text-xs text-slate-600">
                 <button type="button" onclick="toggleCollapsibleBox('rulesDetailsBody')" class="w-full flex items-center justify-between font-black text-slate-900 text-xs">
                     <span>📜 قوانین پرداخت، ضمانت سفیر و گاوصندوق</span>
@@ -794,14 +775,25 @@
             </div>
         </section>
 
-        <!-- ================== ۸. محیط اختصاصی سفیران (اپ جدید) ================== -->
+        <!-- ================== ۸. محیط اختصاصی سفیران (ورود آزاد برای توان‌یابان + فرم ثبت‌نام سفیر داخل همین بخش) ================== -->
         <section id="view-ambassador-app" class="hidden animate-fade-in pb-6 space-y-4">
+            <!-- کارت راهنمای ثبت‌نام ویژه توان‌یابانی که تازه وارد بخش سفیران شده‌اند -->
+            <div id="workspaceUnregisteredBanner" class="hidden bg-gradient-to-br from-emerald-50 to-teal-50 border-2 border-emerald-300 rounded-3xl p-4 space-y-2">
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-black text-emerald-950">♿ خوش آمدید به بخش سفیران توان‌یار</span>
+                    <span class="text-[10px] font-black bg-emerald-600 text-white px-2.5 py-0.5 rounded-full">مرحله ثبت‌نام</span>
+                </div>
+                <p class="text-[11px] text-emerald-900 leading-relaxed">
+                    ورود برای توان‌یابان عزیز آزاد است. لطفاً فرم زیر را با انتخاب رشته فعالیت خود (صنایع دستی، پیشه و مهارت یا همکار هایپر) تکمیل و ارسال کنید تا پس از تایید مدیر، ویترین شما فعال شود.
+                </p>
+            </div>
+
             <div id="workspacePendingBanner" class="hidden bg-amber-50 border border-amber-300 rounded-3xl p-4 space-y-1.5">
                 <div class="flex items-center gap-2 text-amber-900 font-black text-xs">
-                    <span>⏳ حساب سفیر شما در انتظار تایید نهایی مدیریت است</span>
+                    <span>⏳ درخواست ثبت‌نام شما در انتظار تایید نهایی مدیریت است</span>
                 </div>
                 <p class="text-[11px] text-amber-800 leading-relaxed">
-                    پس از تایید مدیر در پنل مدیریت، ویترین عمومی و دریافت سفارش‌های محله/استان برای شما فعال می‌شود.
+                    پس از تایید مدیر در پنل مدیریت، ویترین عمومی، وضعیت آنلاین/آفلاین و دریافت سفارش‌های محله/استان برای شما فعال می‌شود.
                 </p>
             </div>
 
@@ -811,7 +803,8 @@
                         <span id="workspaceBadgeText" class="text-[10px] font-bold bg-white/20 px-2.5 py-0.5 rounded-full">پیشخوان اختصاصی سفیر</span>
                         <h3 id="workspaceTitleText" class="text-base font-black mt-1">محیط کاری سفیر</h3>
                     </div>
-                    <button type="button" onclick="toggleAmbassadorOnlineStatus()" id="workspaceOnlineToggleBtn" class="px-3 py-2 rounded-2xl text-[11px] font-black bg-white text-emerald-900 shadow-sm flex items-center gap-1.5">
+                    <!-- دکمه تغییر وضعیت آنلاین/آفلاین لحظه‌ای (بدون تاخیر و بدون نیاز به رفرش) -->
+                    <button type="button" onclick="toggleAmbassadorOnlineStatus()" id="workspaceOnlineToggleBtn" class="px-3.5 py-2 rounded-2xl text-[11px] font-black bg-white text-emerald-900 shadow-sm flex items-center gap-1.5 transition-all active:scale-95">
                         <span id="workspaceOnlineDot" class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
                         <span id="workspaceOnlineLabel">آنلاین</span>
                     </button>
@@ -861,7 +854,7 @@
                 <div id="wsMyProductsList" class="space-y-2"></div>
             </div>
 
-            <!-- تب بازشوی ۳ سفیر: صفحه «پروفایل» با تمام جزئیات + ورود مدیر در انتهای صفحه -->
+            <!-- تب بازشوی ۳ سفیر: صفحه «پروفایل و فرم ثبت‌نام توان‌یابان» -->
             <div id="wsPanel-profile" class="hidden space-y-4">
                 <!-- کارت اطلاعات هویتی و کد معرف سفیر -->
                 <div class="bg-white border border-slate-200 rounded-3xl p-4 shadow-sm space-y-3">
@@ -869,7 +862,7 @@
                         <div class="flex items-center gap-3 min-w-0">
                             <div id="wsProfileAvatar" class="w-16 h-16 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-2xl overflow-hidden shrink-0"></div>
                             <div class="min-w-0">
-                                <span class="text-[10px] font-black bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">پروفایل سفیر توان‌یار</span>
+                                <span class="text-[10px] font-black bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">پروفایل توان‌یار / سفیر</span>
                                 <h4 id="wsProfileName" class="text-sm font-black text-slate-900 mt-1 truncate"></h4>
                                 <span id="wsProfileRole" class="text-xs font-bold text-emerald-700 block"></span>
                                 <span id="wsProfilePhone" class="text-[11px] text-slate-500 block" dir="ltr"></span>
@@ -888,68 +881,60 @@
                     <div id="wsProfileDetails" class="bg-slate-50 p-3 rounded-2xl border border-slate-100 text-xs text-slate-700 space-y-1.5"></div>
                 </div>
 
-                <!-- بخش تکمیل و ویرایش جزئیات احراز هویت سفیر (با محدودیت حداکثر ۲ ثبت برای جلوگیری از شلوغی) -->
-                <div id="ambassadorMainAuthCard" class="bg-white border border-slate-200 rounded-3xl p-4 shadow-sm space-y-3">
+                <!-- فرم ثبت‌نام توان‌یابان و تکمیل جزئیات سفیر (مستقر در اپ سفیران) -->
+                <div id="ambassadorMainAuthCard" class="bg-white border-2 border-emerald-200 rounded-3xl p-4 shadow-sm space-y-3">
                     <div class="flex items-center justify-between">
                         <div>
-                            <h4 class="text-xs font-black text-slate-900">تکمیل جزئیات پروفایل و احراز هویت سفیر</h4>
-                            <span id="ambAuthSubmitCounter" class="text-[10px] text-slate-500">ثبت اطلاعات تخصصی و عکس پروفایل</span>
+                            <h4 class="text-xs font-black text-slate-900">📝 فرم ثبت‌نام توان‌یابان و تکمیل پروفایل سفیر</h4>
+                            <span id="ambAuthSubmitCounter" class="text-[10px] text-emerald-700 font-bold">انتخاب رشته فعالیت و ارسال برای تایید مدیریت</span>
                         </div>
                         <button type="button" onclick="toggleCollapsibleBox('ambAuthFormBody')" class="text-[10px] font-bold bg-slate-100 text-slate-700 px-2.5 py-1 rounded-full">باز / بسته ▾</button>
                     </div>
-                    <div id="ambAuthFormBody" class="space-y-2">
+                    <div id="ambAuthFormBody" class="space-y-2.5">
+                        <div>
+                            <label class="block text-[11px] font-black text-slate-700 mb-1">۱. انتخاب رشته همکاری در توان‌یار:</label>
+                            <select id="ambRoleCategorySelect" onchange="onAmbassadorRoleSelectChange()" class="w-full h-10 px-3 bg-emerald-50/70 border border-emerald-200 rounded-xl text-xs font-black text-slate-900">
+                                <option value="هنرمند صنایع دستی">🎨 هنرمند صنایع دستی</option>
+                                <option value="متخصص پیشه و مهارت">💼 متخصص پیشه و مهارت</option>
+                                <option value="همکار هایپر">🛒 همکار هایپر محله</option>
+                            </select>
+                        </div>
+
                         <div class="flex items-center gap-3 bg-slate-50 p-2.5 rounded-xl border border-slate-200">
                             <img id="authPhotoPreview" src="" alt="پیش‌نمایش عکس" class="hidden w-12 h-12 rounded-full object-cover border border-slate-300 shrink-0">
                             <div class="flex-1 min-w-0">
-                                <label class="block text-[11px] font-bold text-slate-700 mb-1">📷 عکس پروفایل سفیر</label>
+                                <label class="block text-[11px] font-bold text-slate-700 mb-1">📷 عکس پروفایل سفیر (اختیاری)</label>
                                 <input type="file" id="authPhotoInput" accept="image/*" onchange="handleAuthPhotoUpload(event)" class="w-full text-[10px] text-slate-600">
                             </div>
                         </div>
+
                         <input type="text" id="authCityInput" placeholder="شهرستان / محله فعالیت (مثلاً: شهرضا)" class="w-full h-10 px-3 bg-slate-50 border border-slate-200 rounded-xl text-xs">
+
                         <div id="extraHandicraftFields" class="space-y-2">
                             <input type="text" id="craftBranchInput" placeholder="شاخه هنری (چرم، بافت، معرق، رزین، سفال...)" class="w-full h-10 px-3 bg-orange-50/60 border border-orange-200 rounded-xl text-xs">
                             <input type="text" id="craftCapacityInput" placeholder="زمان آماده‌سازی و ظرفیت ماهانه (مثلاً: تحویل ۳ روزه)" class="w-full h-10 px-3 bg-slate-50 border border-slate-200 rounded-xl text-xs">
                         </div>
-                        <div id="extraSkillsFields" class="space-y-2">
+
+                        <div id="extraSkillsFields" class="hidden space-y-2">
                             <input type="text" id="skillTitleInput" placeholder="مهارت اصلی (طراحی گرافیک، تایپ، ادیت ویدیو، پشتیبانی...)" class="w-full h-10 px-3 bg-blue-50/60 border border-blue-200 rounded-xl text-xs">
                             <input type="text" id="skillPortfolioInput" placeholder="سابقه کاری یا نحوه تحویل پروژه (آنلاین / حضوری)" class="w-full h-10 px-3 bg-slate-50 border border-slate-200 rounded-xl text-xs">
                         </div>
-                        <textarea id="authAccessNoteInput" rows="2" placeholder="توضیح شرایط دسترسی، توانایی‌ها یا نکات تحویل..." class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs"></textarea>
+
+                        <div id="extraHyperFields" class="hidden space-y-2">
+                            <input type="text" id="hyperStoreTitleInput" placeholder="نام فروشگاه یا محدوده توزیع هایپر محله" class="w-full h-10 px-3 bg-emerald-50/60 border border-emerald-200 rounded-xl text-xs">
+                        </div>
+
+                        <textarea id="authAccessNoteInput" rows="2" placeholder="توضیح شرایط دسترسی، نوع توانایی یا نکات تحویل..." class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs"></textarea>
+
                         <label class="flex items-start gap-2 bg-slate-50 p-2.5 rounded-xl border border-slate-200 cursor-pointer">
                             <input type="checkbox" id="ambCommitmentCheckbox" class="w-4 h-4 mt-0.5 accent-emerald-600 rounded shrink-0">
                             <span class="text-[10px] text-slate-700 leading-relaxed">
                                 متعهد می‌شوم سفارش‌های پذیرفته‌شده را در زمان مقرر و با کیفیت توافق‌شده تحویل دهم و در زمان عدم فعالیت، وضعیت خود را روی «آفلاین» قرار دهم.
                             </span>
                         </label>
-                        <button type="button" onclick="saveAmbassadorFullAuth()" class="btn-accessible w-full bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-black">
-                            ذخیره جزئیات پروفایل و کد سفیر
-                        </button>
-                    </div>
-                </div>
 
-                <!-- فرم پیش‌ثبت‌نام هایپر محله (پس از حداکثر ۲ ثبت محو می‌شود) -->
-                <div id="hyperPreRegWrapper" class="bg-emerald-50/70 border border-emerald-200 rounded-3xl p-4 space-y-2">
-                    <button type="button" onclick="toggleCollapsibleBox('hyperPreRegBody')" class="w-full flex items-center justify-between text-right">
-                        <div class="flex items-center gap-2">
-                            <span>🏪</span>
-                            <div>
-                                <h4 class="text-xs font-black text-emerald-950">پیش‌ثبت‌نام هایپر محله</h4>
-                                <span class="text-[10px] text-emerald-800 block">ورود مستقیم هایپر بسته است (ثبت درخواست همکاری)</span>
-                            </div>
-                        </div>
-                        <span class="text-[10px] font-black bg-white text-emerald-900 px-2.5 py-1 rounded-full">باز / بسته ▾</span>
-                    </button>
-                    <div id="hyperPreRegBody" class="hidden pt-2 border-t border-emerald-200 space-y-2">
-                        <div class="grid grid-cols-2 gap-2">
-                            <input type="text" id="hyperPreName" placeholder="نام متقاضی / هایپر" class="h-10 px-3 bg-white border border-emerald-200 rounded-xl text-xs">
-                            <input type="tel" id="hyperPrePhone" placeholder="09130000000" class="h-10 px-3 bg-white border border-emerald-200 rounded-xl text-xs text-left" dir="ltr">
-                        </div>
-                        <div class="grid grid-cols-2 gap-2">
-                            <input type="text" id="hyperPreCity" placeholder="شهر / محله" class="h-10 px-3 bg-white border border-emerald-200 rounded-xl text-xs">
-                            <input type="text" id="hyperPreStoreName" placeholder="عنوان فروشگاه / هایپر" class="h-10 px-3 bg-white border border-emerald-200 rounded-xl text-xs">
-                        </div>
-                        <button type="button" onclick="submitHyperPreRegistration()" class="btn-accessible w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-black">
-                            ارسال فرم پیش‌ثبت‌نام هایپر محله
+                        <button type="button" onclick="saveAmbassadorFullAuth()" class="btn-accessible w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-black shadow-md shadow-emerald-200">
+                            ✅ ثبت نهایی اطلاعات و ارسال برای تایید مدیریت
                         </button>
                     </div>
                 </div>
@@ -1046,14 +1031,14 @@
                     </div>
                 </div>
 
-                <!-- تب اداری ۲: سفارش‌ها، ثبت‌نام سفیران و مدیریت اسپانسری (تفکیک‌شده و منظم) -->
+                <!-- تب اداری ۲: سفارش‌ها، ثبت‌نام سفیران و مدیریت اسپانسری -->
                 <div id="adminOrdersSection" class="hidden space-y-4">
                     <div class="space-y-2">
                         <h3 class="font-black text-sm">🧾 سفارش‌های ثبت‌شده و وضعیت پذیرش سفیر</h3>
                         <div id="adminOrdersList" class="space-y-2"></div>
                     </div>
 
-                    <!-- بخش مجزا: مدیریت اسپانسری (متصل به ثبت‌نام اسپانسری) -->
+                    <!-- بخش مجزا: مدیریت اسپانسری -->
                     <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-3.5 space-y-2.5">
                         <div class="flex items-center justify-between">
                             <h3 class="font-black text-sm text-amber-950">🤝 مدیریت اسپانسری و حامیان</h3>
@@ -1062,10 +1047,10 @@
                         <div id="adminSponsorsList" class="space-y-2"></div>
                     </div>
 
-                    <!-- بخش مجزا: درخواست‌های سفیران، معلولین و پیش‌ثبت‌نام هایپر -->
+                    <!-- بخش مجزا: درخواست‌های ثبت‌نام سفیران و توان‌یابان -->
                     <div class="space-y-2 pt-2 border-t border-slate-100">
                         <div class="flex items-center justify-between">
-                            <h3 class="font-black text-sm">📋 درخواست‌های سفیران و پیش‌ثبت‌نام هایپر</h3>
+                            <h3 class="font-black text-sm">📋 درخواست‌های ثبت‌نام توان‌یابان و سفیران</h3>
                             <span id="adminRegCountBadge" class="text-[10px] font-bold bg-slate-100 text-slate-700 px-2 py-0.5 rounded-full">۰</span>
                         </div>
                         <div id="adminSubmissionsList" class="space-y-2"></div>
@@ -1174,14 +1159,14 @@
         </div>
     </div>
 
-    <!-- مودال عمومی -->
+    <!-- مودال عمومی (اخبار و جستجو) -->
     <div id="genericModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-sm rounded-3xl p-5 shadow-2xl space-y-3">
             <div class="flex justify-between items-center border-b pb-2">
                 <h3 id="modalTitle" class="text-sm font-black text-slate-900"></h3>
                 <button onclick="closeGenericModal()" class="text-slate-400 font-bold">✕</button>
             </div>
-            <div id="modalBody" class="text-xs text-slate-600 leading-relaxed space-y-2 max-h-72 overflow-y-auto"></div>
+            <div id="modalBody" class="text-xs text-slate-600 leading-relaxed space-y-2.5 max-h-72 overflow-y-auto"></div>
         </div>
     </div>
 
@@ -1214,7 +1199,7 @@
         </button>
     </nav>
 
-    <!-- ۲. نوار پایین محیط اختصاصی سفیر (با تب «پروفایل» به جای میز سفیر) -->
+    <!-- ۲. نوار پایین محیط اختصاصی سفیر -->
     <nav id="bottomNav-ambassador" class="hidden fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-slate-900 text-white border-t border-slate-800 px-2 py-1.5 flex justify-around items-center z-40">
         <button onclick="switchWorkspaceSubTab('orders')" id="ambNav-orders" class="flex flex-col items-center justify-center py-1 px-2.5 rounded-xl text-amber-400 font-extrabold min-h-[50px]">
             <i data-lucide="clipboard-list" class="w-5 h-5 mb-0.5"></i><span class="text-[10px]">سفارش‌ها</span>
@@ -1342,12 +1327,13 @@
         let localOrders = JSON.parse(localStorage.getItem('tavanyar_orders') || '[]');
         let submissions = JSON.parse(localStorage.getItem('tavanyar_submissions') || '[]');
         let currentUser = JSON.parse(localStorage.getItem('tavanyar_user') || 'null');
-        let regCounts = JSON.parse(localStorage.getItem('tavanyar_reg_counts') || '{"role":0,"sponsor":0,"hyper":0,"ambAuth":0}');
+        let regCounts = JSON.parse(localStorage.getItem('tavanyar_reg_counts') || '{"sponsor":0,"ambAuth":0}');
         let uploadedAuthPhotoData = '';
         let generatedOtpCode = '';
         let otpVerifiedForPhone = '';
         let gateOtpCode = '';
         let gateOtpPhone = '';
+        let isTogglingOnlineLock = false;
 
         let currentAppMode = 'customer'; // 'customer' | 'ambassador' | 'admin'
         let currentTabName = 'home';
@@ -1382,28 +1368,13 @@
             document.getElementById(id)?.classList.toggle('hidden');
         }
 
-        // محو کردن خودکار فرم‌های ثبت‌نام پس از حداکثر ۲ بار ثبت برای جلوگیری از اشغال فضا
         function applyRegistrationVisibilityLimits() {
-            const rCount = Number(regCounts.role || 0);
             const sCount = Number(regCounts.sponsor || 0);
-            const hCount = Number(regCounts.hyper || 0);
             const aCount = Number(regCounts.ambAuth || 0);
-
-            const roleCard = document.getElementById('profileRoleSelectionCard');
-            const roleBadge = document.getElementById('roleRegCounterBadge');
-            if (roleBadge) roleBadge.innerText = `${faNum(Math.min(2, rCount))} / ۲`;
-            if (roleCard) {
-                roleCard.classList.toggle('hidden', rCount >= 2 || isUserAmbassador(currentUser));
-            }
 
             const sponsorWrap = document.getElementById('sponsorRegistrationWrapper');
             if (sponsorWrap) {
                 sponsorWrap.classList.toggle('hidden', sCount >= 2);
-            }
-
-            const hyperWrap = document.getElementById('hyperPreRegWrapper');
-            if (hyperWrap) {
-                hyperWrap.classList.toggle('hidden', hCount >= 2);
             }
 
             const ambAuthCard = document.getElementById('ambassadorMainAuthCard');
@@ -1428,7 +1399,31 @@
             return `TV-SAF-${suffix}`;
         }
 
-        // ================== گیت ورود اولیه ساده (بدو ورود تعیین نقش نیست) ==================
+        // ================== ورود مستقیم به پورتال سفیران (آزاد برای توان‌یابان) ==================
+        function enterAmbassadorPortalDirect() {
+            if (!currentUser || !currentUser.phone) {
+                document.getElementById('initialOnboardingGate')?.classList.remove('hidden');
+                showToast('لطفاً نام و شماره موبایل خود را وارد کرده و دکمه ورود توان‌یابان را بزنید');
+                return;
+            }
+            if (!isUserAmbassador(currentUser)) {
+                currentUser.isAmbassador = true;
+                if (!currentUser.role || currentUser.role === 'مشتری') {
+                    currentUser.role = 'هنرمند صنایع دستی';
+                }
+                if (!currentUser.referralCode) {
+                    currentUser.referralCode = generateReferralCodeForPhone(currentUser.phone);
+                }
+                localStorage.setItem('tavanyar_user', JSON.stringify(currentUser));
+            }
+            setAppMode('ambassador');
+            const ambRecord = findAmbassadorByUser(currentUser);
+            if (!ambRecord) {
+                switchWorkspaceSubTab('profile');
+            }
+        }
+
+        // ================== پنجره ورود اولیه ==================
         function evaluateInitialOnboardingGate() {
             const gate = document.getElementById('initialOnboardingGate');
             if (!gate) return;
@@ -1452,7 +1447,7 @@
             showToast(`کد ورود ۴ رقمی برای ${phone} صادر شد`);
         }
 
-        async function completeInitialGateLogin() {
+        async function completeInitialGateLogin(asAmbassadorCandidate = false) {
             const name = document.getElementById('gateNameInput').value.trim();
             const phone = normalizePhone(document.getElementById('gatePhoneInput').value);
             const enteredOtp = normalizePhone(document.getElementById('gateOtpInput').value);
@@ -1464,8 +1459,8 @@
             }
 
             const existingAmb = ambassadors.find(a => normalizePhone(a.phone) === phone);
-            const isAmb = Boolean(existingAmb);
-            const finalRole = existingAmb ? existingAmb.role : 'مشتری';
+            const isAmb = Boolean(existingAmb) || asAmbassadorCandidate;
+            const finalRole = existingAmb ? existingAmb.role : (asAmbassadorCandidate ? 'هنرمند صنایع دستی' : 'مشتری');
 
             const prevSavedUser = JSON.parse(localStorage.getItem('tavanyar_user') || 'null');
             const sameUserExclusiveAmbs = (prevSavedUser && normalizePhone(prevSavedUser.phone) === phone && Array.isArray(prevSavedUser.exclusiveAmbassadors))
@@ -1479,7 +1474,7 @@
                 isAmbassador: isAmb,
                 referralCode: existingAmb?.referralCode || (isAmb ? generateReferralCodeForPhone(phone) : ''),
                 photo: existingAmb?.photo || '',
-                accessStatus: isAmb ? 'سفیر تاییدشده' : 'در انتظار تعیین نقش در پروفایل',
+                accessStatus: existingAmb ? 'سفیر تاییدشده' : (asAmbassadorCandidate ? 'در انتظار تکمیل فرم سفیر' : 'پروفایل مشتری'),
                 exclusiveAmbassadors: sameUserExclusiveAmbs,
                 extra: existingAmb ? { city: existingAmb.city } : {}
             };
@@ -1502,20 +1497,23 @@
 
             if (isAmb) {
                 setAppMode('ambassador');
-                showToast(`خوش آمدی ${currentUser.name} • وارد اپ اختصاصی سفیران شدید`);
+                if (!existingAmb) {
+                    switchWorkspaceSubTab('profile');
+                    showToast(`خوش آمدی ${currentUser.name} • فرم ثبت‌نام سفیر را در همین صفحه تکمیل کنید`);
+                } else {
+                    showToast(`خوش آمدی ${currentUser.name} • وارد بخش سفیران شدید`);
+                }
             } else {
                 setAppMode('customer');
-                switchTab('about');
-                showToast(`خوش آمدی ${currentUser.name} • نقش نهایی خود را در پروفایل مشخص کنید`);
+                switchTab('home');
+                showToast(`خوش آمدی ${currentUser.name}`);
             }
         }
 
-        // ================== کنترل مرکزی محیط‌های سه‌گانه (مشتری / سفیر / اداری) ==================
+        // ================== کنترل مرکزی محیط‌های سه‌گانه ==================
         function setAppMode(mode) {
             if (mode === 'ambassador' && !isUserAmbassador(currentUser)) {
-                showToast('⛔ ابتدا نقش سفیر خود را در صفحه پروفایل ثبت کنید');
-                currentAppMode = 'customer';
-                switchTab('about');
+                enterAmbassadorPortalDirect();
                 return;
             }
 
@@ -1528,7 +1526,7 @@
             if (mode === 'ambassador') {
                 const ambRecord = findAmbassadorByUser(currentUser);
                 renderAmbassadorWorkspace(ambRecord);
-                switchWorkspaceSubTab(activeWorkspaceTab || 'orders');
+                switchWorkspaceSubTab(ambRecord ? (activeWorkspaceTab || 'orders') : 'profile');
                 switchTab('ambassador-app');
             } else if (mode === 'admin') {
                 switchTab('admin');
@@ -1567,13 +1565,9 @@
                 const { error } = await client
                     .from(PUBLIC_TABLE)
                     .upsert({ key, data, updated_at: new Date().toISOString() }, { onConflict: 'key' });
-                if (error) {
-                    console.warn('Supabase upsert error (' + key + '):', error.message);
-                    return false;
-                }
+                if (error) return false;
                 return true;
             } catch (err) {
-                console.warn('Supabase network error:', err);
                 return false;
             }
         }
@@ -1587,13 +1581,9 @@
                     .select('data')
                     .eq('key', key)
                     .maybeSingle();
-                if (error) {
-                    console.warn('Supabase select error (' + key + '):', error.message);
-                    return null;
-                }
+                if (error) return null;
                 return data ? data.data : null;
             } catch (err) {
-                console.warn('Supabase read error:', err);
                 return null;
             }
         }
@@ -1614,10 +1604,10 @@
                 await savePublicStore('catalog', catalog);
             }
 
-            if (Array.isArray(cloudAmbassadors) && cloudAmbassadors.length > 0) {
+            if (Array.isArray(cloudAmbassadors) && cloudAmbassadors.length > 0 && !isTogglingOnlineLock) {
                 ambassadors = cloudAmbassadors;
                 localStorage.setItem('tavanyar_ambassadors', JSON.stringify(ambassadors));
-            } else {
+            } else if (!Array.isArray(cloudAmbassadors) || cloudAmbassadors.length === 0) {
                 await savePublicStore('ambassadors', ambassadors);
             }
 
@@ -1731,7 +1721,7 @@
             ) || null;
         }
 
-        async function loginUser() {
+        async function loginUser(asAmbassadorCandidate = false) {
             const name = document.getElementById('authNameInput').value.trim();
             const phone = normalizePhone(document.getElementById('authPhoneInput').value);
             const enteredOtp = normalizePhone(document.getElementById('authOtpInput').value);
@@ -1748,8 +1738,8 @@
                 ? prevSavedUser.exclusiveAmbassadors
                 : [];
 
-            const isAmb = Boolean(preApprovedAmb);
-            const role = preApprovedAmb ? preApprovedAmb.role : 'مشتری';
+            const isAmb = Boolean(preApprovedAmb) || asAmbassadorCandidate;
+            const role = preApprovedAmb ? preApprovedAmb.role : (asAmbassadorCandidate ? 'هنرمند صنایع دستی' : 'مشتری');
 
             currentUser = {
                 name: preApprovedAmb?.name || name,
@@ -1758,7 +1748,7 @@
                 isAmbassador: isAmb,
                 referralCode: preApprovedAmb?.referralCode || (isAmb ? generateReferralCodeForPhone(phone) : ''),
                 photo: preApprovedAmb?.photo || '',
-                accessStatus: isAmb ? 'سفیر تاییدشده' : 'در انتظار تعیین نقش',
+                accessStatus: preApprovedAmb ? 'سفیر تاییدشده' : (asAmbassadorCandidate ? 'در انتظار تکمیل فرم سفیر' : 'پروفایل مشتری'),
                 exclusiveAmbassadors: sameUserExclusiveAmbs,
                 extra: preApprovedAmb ? { city: preApprovedAmb.city } : {}
             };
@@ -1780,84 +1770,39 @@
 
             if (isAmb) {
                 setAppMode('ambassador');
-                showToast(`خوش آمدی ${currentUser.name} • وارد اپ اختصاصی سفیران شدید`);
+                if (!preApprovedAmb) {
+                    switchWorkspaceSubTab('profile');
+                    showToast(`خوش آمدی ${currentUser.name} • فرم ثبت‌نام سفیر را در همین صفحه تکمیل کنید`);
+                } else {
+                    showToast(`خوش آمدی ${currentUser.name} • وارد بخش سفیران شدید`);
+                }
             } else {
                 updateSmartHeader();
-                showToast(`خوش آمدی ${currentUser.name} • نقش خود را در پروفایل مشخص کنید`);
+                showToast(`خوش آمدی ${currentUser.name}`);
             }
         }
 
-        // ================== تعیین نقش نهایی داخل صفحه پروفایل ==================
-        function onProfileFinalRoleChange() {
-            const val = document.getElementById('profileFinalRoleSelect')?.value || 'مشتری';
-            document.getElementById('profileRoleExtraInputs')?.classList.toggle('hidden', val === 'مشتری');
-        }
-
-        async function confirmFinalRoleInProfile() {
-            if (!currentUser) return showToast('ابتدا وارد حساب کاربری شوید');
-            if ((regCounts.role || 0) >= 2) {
-                return showToast('سقف ثبت‌نام نقش تکمیل شده است');
-            }
-
-            const selectedRole = document.getElementById('profileFinalRoleSelect')?.value || 'مشتری';
-            const city = document.getElementById('profileRoleCityInput')?.value.trim() || currentLocation;
-            const desc = document.getElementById('profileRoleDescInput')?.value.trim() || '';
-
-            incrementRegCount('role');
-
-            if (selectedRole === 'مشتری') {
-                currentUser.role = 'مشتری';
-                currentUser.isAmbassador = false;
-                currentUser.accessStatus = 'مشتری تاییدشده';
-                localStorage.setItem('tavanyar_user', JSON.stringify(currentUser));
-                renderUserAuthUI();
-                updateSmartHeader();
-                showToast('✅ نقش شما به عنوان «مشتری» در پروفایل نهایی شد');
-                return;
-            }
-
-            // انتخاب یکی از نقش‌های سفیر و انتقال مستقیم به اپ جدید سفیران
-            const refCode = currentUser.referralCode || generateReferralCodeForPhone(currentUser.phone);
-            currentUser.role = selectedRole;
-            currentUser.isAmbassador = true;
-            currentUser.referralCode = refCode;
-            currentUser.accessStatus = 'در انتظار تایید مدیریت';
-            currentUser.extra = { ...(currentUser.extra || {}), city, accessNote: desc };
-            localStorage.setItem('tavanyar_user', JSON.stringify(currentUser));
-
-            const isHyper = selectedRole === 'همکار هایپر';
-            submissions.unshift({
-                id: 'sub_' + Date.now(),
-                type: isHyper ? 'پیش‌ثبت‌نام هایپر محله' : `ثبت‌نام سفیر (${selectedRole})`,
-                applicantName: currentUser.name,
-                roleLabel: selectedRole,
-                referralCode: refCode,
-                city,
-                specialty: desc || selectedRole,
-                title: `${currentUser.name} (${city}) - ${selectedRole}`,
-                contact: currentUser.phone,
-                note: desc || 'تعیین نقش از صفحه پروفایل'
-            });
-            localStorage.setItem('tavanyar_submissions', JSON.stringify(submissions));
-            await savePublicStore('submissions', submissions);
-
-            renderUserAuthUI();
-            setAppMode('ambassador');
-            switchWorkspaceSubTab('profile');
-            showToast(`✅ نقش «${selectedRole}» ثبت شد • به اپ جدید و صفحه پروفایل سفیر منتقل شدید`);
+        // ================== انتخاب رشته فعالیت داخل فرم ثبت‌نام سفیر ==================
+        function onAmbassadorRoleSelectChange() {
+            const role = document.getElementById('ambRoleCategorySelect')?.value || 'هنرمند صنایع دستی';
+            document.getElementById('extraHandicraftFields')?.classList.toggle('hidden', role !== 'هنرمند صنایع دستی');
+            document.getElementById('extraSkillsFields')?.classList.toggle('hidden', role !== 'متخصص پیشه و مهارت');
+            document.getElementById('extraHyperFields')?.classList.toggle('hidden', role !== 'همکار هایپر');
         }
 
         async function saveAmbassadorFullAuth() {
             if (!isUserAmbassador(currentUser)) return;
             if ((regCounts.ambAuth || 0) >= 2) {
-                return showToast('اطلاعات پروفایل سفیر قبلاً ثبت شده است');
+                return showToast('اطلاعات ثبت‌نام سفیر قبلاً ثبت شده است');
             }
 
+            const selectedRole = document.getElementById('ambRoleCategorySelect')?.value || currentUser.role || 'هنرمند صنایع دستی';
             const city = document.getElementById('authCityInput')?.value.trim() || currentUser.extra?.city || currentLocation;
             const branch = document.getElementById('craftBranchInput')?.value.trim() || '';
             const capacity = document.getElementById('craftCapacityInput')?.value.trim() || '';
             const skillTitle = document.getElementById('skillTitleInput')?.value.trim() || '';
             const portfolio = document.getElementById('skillPortfolioInput')?.value.trim() || '';
+            const hyperStore = document.getElementById('hyperStoreTitleInput')?.value.trim() || '';
             const accessNote = document.getElementById('authAccessNoteInput')?.value.trim() || '';
             const committed = document.getElementById('ambCommitmentCheckbox')?.checked;
 
@@ -1866,81 +1811,49 @@
             incrementRegCount('ambAuth');
 
             const refCode = currentUser.referralCode || generateReferralCodeForPhone(currentUser.phone);
+            currentUser.role = selectedRole;
             currentUser.referralCode = refCode;
             if (uploadedAuthPhotoData) currentUser.photo = uploadedAuthPhotoData;
-            currentUser.accessStatus = 'احراز هویت ثبت‌شده';
-            currentUser.extra = { city, branch, capacity, skillTitle, portfolio, accessNote };
+            currentUser.accessStatus = 'در انتظار تایید مدیریت';
+            currentUser.extra = { city, branch, capacity, skillTitle, portfolio, hyperStore, accessNote };
             localStorage.setItem('tavanyar_user', JSON.stringify(currentUser));
 
             const ambRecord = findAmbassadorByUser(currentUser);
             if (ambRecord) {
+                ambRecord.role = selectedRole;
                 ambRecord.city = city;
                 ambRecord.referralCode = refCode;
                 if (uploadedAuthPhotoData) ambRecord.photo = uploadedAuthPhotoData;
-                ambRecord.bio = `${currentUser.name} (${currentUser.role}) • کد سفیر: ${refCode} • ${accessNote || city}`;
+                ambRecord.bio = `${currentUser.name} (${selectedRole}) • کد سفیر: ${refCode} • ${accessNote || city}`;
                 await persistAmbassadorsList([...ambassadors]);
             }
 
+            const specialtyText = branch || skillTitle || hyperStore || selectedRole;
             submissions.unshift({
                 id: 'sub_' + Date.now(),
-                type: `احراز هویت سفیر (${currentUser.role})`,
+                type: `ثبت‌نام توان‌یابان (${selectedRole})`,
                 applicantName: currentUser.name,
-                roleLabel: currentUser.role,
+                roleLabel: selectedRole,
                 referralCode: refCode,
                 city,
-                specialty: branch || skillTitle || currentUser.role,
+                specialty: specialtyText,
                 photo: currentUser.photo || '',
-                title: `${currentUser.name} (${city}) - کد ${refCode}`,
+                title: `${currentUser.name} (${city}) - ${selectedRole}`,
                 contact: currentUser.phone,
-                note: `ظرفیت/سابقه: ${capacity || portfolio || '-'} | توضیح: ${accessNote || '-'}`
+                note: `تخصص: ${specialtyText} | توضیح: ${accessNote || '-'}`
             });
             localStorage.setItem('tavanyar_submissions', JSON.stringify(submissions));
             await savePublicStore('submissions', submissions);
 
             renderUserAuthUI();
             renderAmbassadorWorkspace(findAmbassadorByUser(currentUser));
-            showToast(`✅ جزئیات پروفایل ثبت شد • کد سفیر شما: ${refCode}`);
+            showToast(`✅ فرم ثبت‌نام توان‌یار ارسال شد • کد سفیر شما: ${refCode}`);
         }
 
         function copyAmbassadorReferralCode() {
             const code = currentUser?.referralCode || generateReferralCodeForPhone(currentUser?.phone || '');
             navigator.clipboard?.writeText(code);
             showToast(`کد سفیر ${code} کپی شد`);
-        }
-
-        async function submitHyperPreRegistration() {
-            if ((regCounts.hyper || 0) >= 2) {
-                return showToast('سقف ثبت فرم پیش‌ثبت‌نام هایپر تکمیل شده است');
-            }
-            const name = document.getElementById('hyperPreName').value.trim();
-            const phone = normalizePhone(document.getElementById('hyperPrePhone').value);
-            const city = document.getElementById('hyperPreCity').value.trim() || currentLocation;
-            const storeName = document.getElementById('hyperPreStoreName').value.trim() || 'هایپر محله';
-
-            if (!name || !isValidIranMobile(phone)) {
-                return showToast('نام و شماره موبایل معتبر ۱۱ رقمی برای پیش‌ثبت‌نام هایپر الزامی است');
-            }
-
-            incrementRegCount('hyper');
-
-            submissions.unshift({
-                id: 'sub_' + Date.now(),
-                type: 'پیش‌ثبت‌نام هایپر محله',
-                applicantName: name,
-                roleLabel: 'همکار هایپر',
-                city,
-                specialty: storeName,
-                title: `${storeName} - ${name} (${city})`,
-                contact: phone,
-                note: 'ورود مستقیم هایپر بسته است؛ ثبت‌شده از فرم پیش‌ثبت‌نام'
-            });
-            localStorage.setItem('tavanyar_submissions', JSON.stringify(submissions));
-            await savePublicStore('submissions', submissions);
-
-            ['hyperPreName', 'hyperPrePhone', 'hyperPreCity', 'hyperPreStoreName'].forEach(id => {
-                document.getElementById(id).value = '';
-            });
-            showToast('✅ فرم پیش‌ثبت‌نام هایپر محله ثبت شد');
         }
 
         // ================== سفیران اختصاصی مشتری (حداکثر ۵ سفیر) ==================
@@ -2050,9 +1963,7 @@
 
             guestCard?.classList.add('hidden');
             loggedCard?.classList.remove('hidden');
-            if (navAboutLabel) {
-                navAboutLabel.innerText = 'پروفایل';
-            }
+            if (navAboutLabel) navAboutLabel.innerText = 'پروفایل';
 
             const ambRecord = findAmbassadorByUser(currentUser);
             const avatarBox = document.getElementById('userAvatarBox');
@@ -2073,7 +1984,7 @@
             const actionBox = document.getElementById('roleQuickActionBox');
             if (isUserAmbassador(currentUser)) {
                 customerOrdersCard?.classList.add('hidden');
-                actionBox.innerHTML = `<span class="text-[11px] text-slate-300">محیط کاری اختصاصی:</span><button onclick="setAppMode('ambassador')" class="bg-amber-400 text-slate-950 text-[11px] font-black px-3.5 py-2 rounded-xl">ورود به اپ اختصاصی سفیر ←</button>`;
+                actionBox.innerHTML = `<span class="text-[11px] text-slate-300">محیط کاری اختصاصی:</span><button onclick="setAppMode('ambassador')" class="bg-amber-400 text-slate-950 text-[11px] font-black px-3.5 py-2 rounded-xl">ورود به بخش سفیران ←</button>`;
             } else {
                 customerOrdersCard?.classList.remove('hidden');
                 renderCustomerOrdersHistory();
@@ -2160,10 +2071,16 @@
             const codeDisp = document.getElementById('wsAmbassadorCodeDisplay');
             if (codeDisp) codeDisp.innerText = refCode;
 
-            document.getElementById('extraHandicraftFields')?.classList.toggle('hidden', currentUser.role !== 'هنرمند صنایع دستی');
-            document.getElementById('extraSkillsFields')?.classList.toggle('hidden', currentUser.role === 'هنرمند صنایع دستی');
+            const roleSelect = document.getElementById('ambRoleCategorySelect');
+            if (roleSelect && currentUser.role) {
+                roleSelect.value = currentUser.role;
+                onAmbassadorRoleSelectChange();
+            }
 
-            document.getElementById('workspacePendingBanner')?.classList.toggle('hidden', Boolean(ambRecord));
+            const hasSubmittedReg = (regCounts.ambAuth || 0) > 0;
+            document.getElementById('workspaceUnregisteredBanner')?.classList.toggle('hidden', Boolean(ambRecord) || hasSubmittedReg);
+            document.getElementById('workspacePendingBanner')?.classList.toggle('hidden', Boolean(ambRecord) || !hasSubmittedReg);
+
             document.getElementById('workspaceHeaderBox').className = cfg.headerClass;
             document.getElementById('workspaceBadgeText').innerText = cfg.badge;
             document.getElementById('workspaceTitleText').innerText = cfg.title;
@@ -2172,13 +2089,7 @@
             document.getElementById('wsOrdersHeading').innerText = cfg.ordersHeading;
             document.getElementById('wsItemExtraMeta').placeholder = cfg.extraPlaceholder;
 
-            const isOnline = ambRecord ? (ambRecord.isOnline !== false) : false;
-            const onlineDot = document.getElementById('workspaceOnlineDot');
-            const onlineLabel = document.getElementById('workspaceOnlineLabel');
-            if (onlineDot && onlineLabel) {
-                onlineDot.className = isOnline ? 'w-2.5 h-2.5 rounded-full bg-emerald-500' : 'w-2.5 h-2.5 rounded-full bg-slate-400';
-                onlineLabel.innerText = ambRecord ? (isOnline ? 'آنلاین' : 'آفلاین') : 'در انتظار تایید';
-            }
+            updateOnlineToggleButtonUI(ambRecord);
 
             const wsAvatar = document.getElementById('wsProfileAvatar');
             const photo = currentUser.photo || ambRecord?.photo || '';
@@ -2196,13 +2107,14 @@
             if (wsPhone) wsPhone.innerText = currentUser.phone;
             if (wsDetails) {
                 const ex = currentUser.extra || {};
+                const isOn = ambRecord ? (ambRecord.isOnline !== false) : false;
                 wsDetails.innerHTML = `
                     <div>کد معرف اختصاصی سفیر: <b class="font-mono">${refCode}</b></div>
-                    <div>وضعیت تایید مدیریت: <b>${ambRecord ? '✅ تاییدشده و فعال در ویترین عمومی' : '⏳ در انتظار بررسی مدیریت'}</b></div>
-                    <div>وضعیت نمایش در خانه: <b>${isOnline ? '🟢 آنلاین (قابل مشاهده برای مشتریان)' : '⚪ آفلاین (مخفی موقت)'}</b></div>
+                    <div>وضعیت تایید مدیریت: <b>${ambRecord ? '✅ تاییدشده و فعال در ویترین عمومی' : '⏳ در انتظار بررسی فرم ثبت‌نام'}</b></div>
+                    <div>وضعیت نمایش در خانه: <b>${isOn ? '🟢 آنلاین (قابل مشاهده برای مشتریان)' : '⚪ آفلاین (مخفی موقت)'}</b></div>
                     ${ex.branch ? `<div>شاخه هنری: <b>${ex.branch}</b> ${ex.capacity ? `(${ex.capacity})` : ''}</div>` : ''}
                     ${ex.skillTitle ? `<div>مهارت تخصصی: <b>${ex.skillTitle}</b> ${ex.portfolio ? `(${ex.portfolio})` : ''}</div>` : ''}
-                    <div>توضیحات پروفایل: ${ambRecord?.bio || ex.accessNote || 'ثبت‌شده در سیستم توان‌یار'}</div>
+                    <div>توضیحات پروفایل: ${ambRecord?.bio || ex.accessNote || 'فرم ثبت‌نام را در پایین تکمیل کنید'}</div>
                 `;
             }
 
@@ -2285,6 +2197,62 @@
                 : '<p class="text-[11px] text-slate-400 text-center py-4">سفارشی در این بخش ثبت نشده است.</p>';
         }
 
+        function updateOnlineToggleButtonUI(ambRecord) {
+            const isOnline = ambRecord ? (ambRecord.isOnline !== false) : false;
+            const btn = document.getElementById('workspaceOnlineToggleBtn');
+            const onlineDot = document.getElementById('workspaceOnlineDot');
+            const onlineLabel = document.getElementById('workspaceOnlineLabel');
+            if (!btn || !onlineDot || !onlineLabel) return;
+
+            if (!ambRecord) {
+                onlineDot.className = 'w-2.5 h-2.5 rounded-full bg-amber-400';
+                onlineLabel.innerText = 'در انتظار تایید';
+                btn.className = 'px-3.5 py-2 rounded-2xl text-[11px] font-black bg-white/90 text-slate-800 shadow-sm flex items-center gap-1.5';
+                return;
+            }
+
+            if (isOnline) {
+                onlineDot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse';
+                onlineLabel.innerText = 'آنلاین';
+                btn.className = 'px-3.5 py-2 rounded-2xl text-[11px] font-black bg-white text-emerald-900 shadow-sm flex items-center gap-1.5 transition-all';
+            } else {
+                onlineDot.className = 'w-2.5 h-2.5 rounded-full bg-slate-400';
+                onlineLabel.innerText = 'آفلاین';
+                btn.className = 'px-3.5 py-2 rounded-2xl text-[11px] font-black bg-slate-200 text-slate-700 shadow-sm flex items-center gap-1.5 transition-all';
+            }
+        }
+
+        // تغییر لحظه‌ای (Optimistic UI) بدون تاخیر و بدون نیاز به رفرش صفحه
+        async function toggleAmbassadorOnlineStatus() {
+            if (!isUserAmbassador(currentUser)) return;
+            const userPhone = normalizePhone(currentUser.phone);
+            const ambIdx = ambassadors.findIndex(a =>
+                (userPhone && normalizePhone(a.phone) === userPhone) ||
+                (a.name && currentUser.name && a.name.trim() === currentUser.name.trim())
+            );
+            if (ambIdx === -1) return showToast('ابتدا فرم ثبت‌نام سفیر را ارسال کنید تا توسط مدیر تایید شود');
+
+            const nextOnlineState = !(ambassadors[ambIdx].isOnline !== false);
+
+            // ۱. آپدیت فوری در حافظه، LocalStorage و رابط کاربری در کسری از ثانیه
+            ambassadors[ambIdx] = { ...ambassadors[ambIdx], isOnline: nextOnlineState };
+            localStorage.setItem('tavanyar_ambassadors', JSON.stringify(ambassadors));
+
+            updateOnlineToggleButtonUI(ambassadors[ambIdx]);
+            renderAmbassadors();
+            renderUserAuthUI();
+            renderAmbassadorWorkspace(ambassadors[ambIdx]);
+            showToast(nextOnlineState ? '🟢 وضعیت شما در لحظه آنلاین شد' : '⚪ وضعیت شما در لحظه آفلاین شد');
+
+            // ۲. همگام‌سازی در پس‌زمینه با دیتابیس بدون قفل کردن رابط کاربری
+            isTogglingOnlineLock = true;
+            try {
+                await savePublicStore('ambassadors', ambassadors);
+            } finally {
+                isTogglingOnlineLock = false;
+            }
+        }
+
         function switchWorkspaceSubTab(tab) {
             if (!isUserAmbassador(currentUser)) {
                 setAppMode('customer');
@@ -2307,15 +2275,6 @@
                 }
             });
             updateSmartHeader();
-        }
-
-        async function toggleAmbassadorOnlineStatus() {
-            if (!isUserAmbassador(currentUser)) return;
-            const ambRecord = findAmbassadorByUser(currentUser);
-            if (!ambRecord) return showToast('ابتدا باید توسط مدیر تایید شوید');
-            ambRecord.isOnline = !(ambRecord.isOnline !== false);
-            await persistAmbassadorsList([...ambassadors]);
-            showToast(ambRecord.isOnline ? '🟢 وضعیت شما آنلاین شد و در صفحه خانه نمایش داده می‌شوید' : '⚪ وضعیت شما آفلاین شد و موقتاً از لیست عمومی پنهان شدید');
         }
 
         function openAmbassadorItemEditor(itemId = null) {
@@ -2447,7 +2406,7 @@
             showToast('🎉 وضعیت سفارش برای شما و مشتری به «انجام شده» تغییر یافت');
         }
 
-        // ================== مدیریت سربرگ منظم برای تمام محیط‌ها ==================
+        // ================== مدیریت سربرگ منظم ==================
         function updateSmartHeader() {
             const header = document.getElementById('mainHeader');
             const iconBox = document.getElementById('headerBrandIcon');
@@ -2469,8 +2428,8 @@
                 exitBtn?.classList.remove('hidden');
                 modeBadge?.classList.remove('hidden');
                 modeBadge.className = 'text-[9px] font-black px-2 py-0.5 rounded-full bg-amber-100 text-amber-900';
-                modeBadge.innerText = activeWorkspaceTab === 'profile' ? 'پروفایل سفیر' : 'اپ سفیران';
-                titleEl.innerText = activeWorkspaceTab === 'profile' ? 'پروفایل سفیر' : (currentUser ? currentUser.name : 'اپ سفیران');
+                modeBadge.innerText = activeWorkspaceTab === 'profile' ? 'پروفایل و ثبت‌نام' : 'بخش سفیران';
+                titleEl.innerText = activeWorkspaceTab === 'profile' ? 'پروفایل سفیر' : (currentUser ? currentUser.name : 'بخش سفیران');
                 subEl.innerText = currentUser ? `${currentUser.role} • پنل عملیاتی` : 'پنل سفیر';
                 iconBox.className = 'w-11 h-11 rounded-2xl bg-slate-900 text-amber-400 flex items-center justify-center shadow-md shrink-0';
                 return;
@@ -2496,7 +2455,7 @@
 
             if (currentTabName === 'home') {
                 titleEl.innerText = currentUser ? `توان‌یار | ${currentUser.name.split(' ')[0]}` : 'توان‌یار';
-                subEl.innerText = currentUser ? `${currentUser.role} • اشتغال معلولین استان` : 'اشتغال و توانمندی معلولین استان';
+                subEl.innerText = 'اشتغال و توانمندی معلولین استان';
                 locLabel.innerText = '📍 استان';
                 iconBox.className = 'w-11 h-11 rounded-2xl bg-emerald-600 text-white flex items-center justify-center shadow-md shrink-0';
             } else if (currentTabName === 'market') {
@@ -2531,7 +2490,7 @@
                 iconBox.className = 'w-11 h-11 rounded-2xl bg-emerald-700 text-white flex items-center justify-center shadow-md shrink-0';
             } else if (currentTabName === 'about') {
                 titleEl.innerText = 'پروفایل کاربری';
-                subEl.innerText = 'تعیین نقش، سفیران اختصاصی و سفارش‌ها';
+                subEl.innerText = 'سفیران اختصاصی و پیگیری سفارش‌ها';
                 locLabel.innerText = `📍 ${currentLocation}`;
                 iconBox.className = 'w-11 h-11 rounded-2xl bg-slate-900 text-emerald-400 flex items-center justify-center shadow-md shrink-0';
             } else if (currentTabName === 'ambassador-profile') {
@@ -3151,7 +3110,6 @@
             setAppMode('admin');
         }
 
-        // ورود مدیر از انتهای صفحه پروفایل (هم پروفایل عمومی و هم پروفایل سفیر)
         async function loginAdminFromProfile(prefix) {
             const email = document.getElementById(prefix === 'ws' ? 'wsAdminEmail' : 'profileAdminEmail')?.value.trim() || '';
             const pass = document.getElementById(prefix === 'ws' ? 'wsAdminPassword' : 'profileAdminPassword')?.value || '';
@@ -3168,7 +3126,6 @@
             const expectedPass = String(window.TAVANYAR_CONFIG?.support?.adminPasscode || '1234');
             let authenticated = false;
 
-            // اگر ایمیل وارد شده باشد، ابتدا احراز هویت سوپابیس را هم بررسی می‌کنیم
             const client = initSupabaseClient();
             if (client && email && pass) {
                 try {
@@ -3350,7 +3307,6 @@
             return await savePublicStore('ambassadors', ambassadors);
         }
 
-        // تایید یا رد درخواست اسپانسری در مدیریت اسپانسری
         async function toggleSponsorApproval(subId) {
             const idx = submissions.findIndex(s => s.id === subId);
             if (idx === -1) return;
@@ -3508,7 +3464,6 @@
                 }).join('')
                 : '<p class="text-xs text-slate-400">سفارشی ثبت نشده است.</p>';
 
-            // تفکیک اسپانسرها در بخش مدیریت اسپانسری
             const sponsorSubs = submissions.filter(s => s.type === 'درخواست اسپانسر');
             const otherSubs = submissions.filter(s => s.type !== 'درخواست اسپانسر');
 
@@ -3576,20 +3531,28 @@
                 : '<p class="text-xs text-slate-400">در حال حاضر سفیر آنلاینی ثبت نشده است.</p>';
             document.getElementById('genericModal').classList.remove('hidden');
         }
-        function openNewsArchive() { openNewsArticle(1); }
+        function openNewsArchive() { openNewsArticle(2); }
         function openNewsArticle(id) {
-            document.getElementById('modalTitle').innerText = id === 1 ? 'آغاز پایلوت هایپر محله شهرضا' : 'ثبت‌نام معلولین استان در طرح پایلوت';
-            document.getElementById('modalBody').innerHTML = id === 1
-                ? '<p>پایلوت هایپر محله در شهرضا آغاز شده و الگوی توسعه برای سایر نقاط استان محسوب می‌شود.</p>'
-                : '<p>از طریق صفحه پروفایل می‌توانید نقش خود را به عنوان هنرمند صنایع دستی، متخصص پیشه و مهارت یا همکار هایپر ثبت کنید.</p>';
+            if (id === 1) {
+                document.getElementById('modalTitle').innerText = 'آغاز پایلوت هایپر محله شهرضا';
+                document.getElementById('modalBody').innerHTML = '<p>پایلوت هایپر محله در شهرضا آغاز شده و الگوی توسعه برای سایر نقاط استان محسوب می‌شود.</p>';
+            } else {
+                document.getElementById('modalTitle').innerText = 'فراخوان ثبت‌نام توان‌یابان استان در طرح پایلوت';
+                document.getElementById('modalBody').innerHTML = `
+                    <p class="leading-relaxed">توان‌یابان عزیز و دارای مهارت در سراسر استان می‌توانند برای همکاری در بخش‌های <b>هنرمندان صنایع دستی</b>، <b>متخصصان پیشه و مهارت</b> و <b>همکاران هایپر</b>، مستقیماً وارد بخش سفیران شوند و فرم ثبت‌نام خود را تکمیل کنند.</p>
+                    <button type="button" onclick="closeGenericModal(); enterAmbassadorPortalDirect();" class="btn-accessible w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-black mt-2">
+                        ♿ ورود به پنل سفیران و ثبت‌نام ←
+                    </button>
+                `;
+            }
             document.getElementById('genericModal').classList.remove('hidden');
         }
         function closeGenericModal() { document.getElementById('genericModal').classList.add('hidden'); }
 
         function switchTab(tabName) {
             if (tabName === 'ambassador-app' && !isUserAmbassador(currentUser)) {
-                showToast('⛔ ابتدا نقش سفیر خود را در پروفایل ثبت کنید');
-                tabName = 'about';
+                enterAmbassadorPortalDirect();
+                return;
             }
 
             currentTabName = tabName;
