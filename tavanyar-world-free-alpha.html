@@ -78,8 +78,8 @@ cube(avatar,0,.62,.12,1.2,.15,1.1,chair);cube(avatar,0,.94,-.34,1,.95,.16,chair)
 const wheelMeshes=[];for(let s of [-1,1]){let wheel=new THREE.Mesh(new THREE.TorusGeometry(.58,.075,8,24),rubber);wheel.rotation.y=Math.PI/2;wheel.position.set(s*.7,.63,.1);avatar.add(wheel);wheelMeshes.push(wheel);let hub=cyl(avatar,s*.71,.63,.1,.14,.12,metal);hub.rotation.z=Math.PI/2}
 avatar.position.set(0,0,9);
 let yaw=0;
-let currentSpeed=0,targetSpeed=0,steer=0,targetSteer=0;
-const maxSpeed=7.2,turnRate=.38;
+let currentSpeed=0,targetSpeed=0,lateralSpeed=0,targetLateralSpeed=0;
+const maxSpeed=7.2,lateralMaxSpeed=5.2;
 const pointers=new Map();
 let touchStart=null,lastTouch=null;
 const canvas=renderer.domElement;
@@ -90,13 +90,13 @@ function setTouch(e){
  if(!p)return;
  p.x=e.clientX;p.y=e.clientY;
  const dx=e.clientX-touchStart.x,dy=e.clientY-touchStart.y;
- // حرکت شبیه دستهٔ مجازی: هر دو محور مستقل‌اند و می‌توان هم‌زمان جلو رفت و پیچید.
+ // محور عمودی فقط جلو/عقب می‌رود؛ محور افقی فقط حرکت جانبی می‌دهد.
+ // حرکت افقی بدنه را نمی‌چرخاند و جهت جلوی ویلچر ثابت می‌ماند.
  const dead=13;
  const nx=Math.abs(dx)<dead?0:Math.sign(dx)*Math.min(1,(Math.abs(dx)-dead)/72);
  const ny=Math.abs(dy)<dead?0:Math.sign(dy)*Math.min(1,(Math.abs(dy)-dead)/78);
  targetSpeed=THREE.MathUtils.clamp(-ny*maxSpeed,-maxSpeed,maxSpeed);
- // محور افقی اصلاح شد: راستِ انگشت باید راستِ مسیر باشد.
- targetSteer=-nx;
+ targetLateralSpeed=THREE.MathUtils.clamp(nx*lateralMaxSpeed,-lateralMaxSpeed,lateralMaxSpeed);
  lastTouch={x:e.clientX,y:e.clientY};
 }
 canvas.addEventListener('pointerdown',e=>{
@@ -105,13 +105,13 @@ canvas.addEventListener('pointerdown',e=>{
  canvas.setPointerCapture(e.pointerId);
  pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
  touchStart={x:e.clientX,y:e.clientY};lastTouch={...touchStart};
- targetSpeed=0;targetSteer=0;
+ targetSpeed=0;targetLateralSpeed=0;
 });
 canvas.addEventListener('pointermove',e=>{if(pointers.has(e.pointerId))setTouch(e)});
 function releasePointer(e){
  if(!pointers.has(e.pointerId))return;
  pointers.delete(e.pointerId);
- touchStart=null;lastTouch=null;targetSpeed=0;targetSteer=0;
+ touchStart=null;lastTouch=null;targetSpeed=0;targetLateralSpeed=0;
 }
 canvas.addEventListener('pointerup',releasePointer);
 canvas.addEventListener('pointercancel',releasePointer);
@@ -166,26 +166,34 @@ document.querySelector('#interact').onclick=interact;document.querySelector('#cl
 function behindCharacter(){notify('دوربین به‌صورت خودکار بهترین زاویه را انتخاب می‌کند.');}
 document.querySelector('#behind').onclick=behindCharacter;
 
-document.querySelector('#home').onclick=()=>{avatar.position.set(0,0,9);avatar.rotation.y=0;currentSpeed=0;targetSpeed=0;steer=0;targetSteer=0;yaw=0;document.querySelector('#panel').classList.remove('show');notify('به میدان مرکزی برگشتی.')};
+document.querySelector('#home').onclick=()=>{avatar.position.set(0,0,9);avatar.rotation.y=0;currentSpeed=0;targetSpeed=0;lateralSpeed=0;targetLateralSpeed=0;yaw=0;document.querySelector('#panel').classList.remove('show');notify('به میدان مرکزی برگشتی.')};
 const clock=new THREE.Clock(),look=new THREE.Vector3(),forward=new THREE.Vector3(),desired=new THREE.Vector3(),moveDir=new THREE.Vector3();
 function animate(){
  requestAnimationFrame(animate);
  const dt=Math.min(clock.getDelta(),.04);
- // واکنش سریع و قابل پیش‌بینی؛ رها کردن انگشت یعنی توقف، نه سر خوردن.
+ // جلو/عقب و چپ/راست دو محور مستقل‌اند؛ هیچ‌کدام بدنه را دور خودش نمی‌چرخاند.
+ // رها کردن انگشت، هر دو حرکت را نرم متوقف می‌کند.
  currentSpeed=THREE.MathUtils.damp(currentSpeed,targetSpeed,13.5,dt);
- steer=THREE.MathUtils.damp(steer,targetSteer,15.0,dt);
- // پیچیدن فقط هنگام حرکت؛ دنده عقب جهت بدنه را برعکس نمی‌کند.
- // فقط هنگام حرکت رو به جلو فرمان پیچش اثر دارد؛ در دنده‌عقب جهت بدنه ثابت می‌ماند.
- if(currentSpeed>.12)yaw+=steer*turnRate*(currentSpeed/maxSpeed)*dt;
+ lateralSpeed=THREE.MathUtils.damp(lateralSpeed,targetLateralSpeed,13.5,dt);
  avatar.rotation.y=yaw;
- if(Math.abs(currentSpeed)>.025){
-  const forward=new THREE.Vector3(-Math.sin(yaw),0,Math.cos(yaw));
-  const proposed=avatar.position.clone().addScaledVector(forward,currentSpeed*dt);
+ const forward=new THREE.Vector3(-Math.sin(yaw),0,Math.cos(yaw));
+ const right=new THREE.Vector3(Math.cos(yaw),0,Math.sin(yaw));
+ if(Math.abs(currentSpeed)>.025 || Math.abs(lateralSpeed)>.025){
+  const longitudinal=forward.clone().multiplyScalar(currentSpeed*dt);
+  const lateral=right.clone().multiplyScalar(lateralSpeed*dt);
+  const proposed=avatar.position.clone().add(longitudinal).add(lateral);
   if(!blockedAt(proposed)){
    avatar.position.copy(proposed);
   }else{
-   currentSpeed=0;targetSpeed=0;
+   // کنار مانع، اگر یکی از محور‌ها آزاد بود همان محور حرکت می‌کند.
+   const forwardOnly=avatar.position.clone().add(longitudinal);
+   const lateralOnly=avatar.position.clone().add(lateral);
+   let moved=false;
+   if(Math.abs(currentSpeed)>.025 && !blockedAt(forwardOnly)){avatar.position.copy(forwardOnly);moved=true;}
+   if(Math.abs(lateralSpeed)>.025 && !blockedAt(lateralOnly)){avatar.position.copy(lateralOnly);moved=true;}
+   if(!moved){currentSpeed=0;targetSpeed=0;lateralSpeed=0;targetLateralSpeed=0;}
   }
+  // چرخ‌های اصلی فقط با حرکت طولی می‌چرخند؛ حرکت جانبی باعث چرخش بدنه نمی‌شود.
   for(const wheel of wheelMeshes)wheel.rotation.x-=currentSpeed*dt/.58;
  }
  const indoor=isInsideBuilding();
