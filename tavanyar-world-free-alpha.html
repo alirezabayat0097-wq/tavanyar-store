@@ -28,7 +28,7 @@ button.primary{background:#087b5d;border-color:#72e5b5;font-weight:bold}
 <body>
 <div id="world"></div>
 <header><div class="pill brand"><b>توان‌یار | جهان آزاد</b><small>نسخه آزمایشی · کنترل تک‌انگشتی و دوربین هوشمند</small></div><div class="pill" id="coords">میدان مرکزی</div></header>
-<div class="tip">یک انگشت را روی صفحه بکش: بالا حرکت رو به جلو، پایین حرکت رو به عقب، چپ و راست تغییر مسیر. دوربین خودش زاویه و فاصله را تنظیم می‌کند.</div>
+<div class="tip">یک انگشت را مثل دستهٔ مجازی بکش: بالا جلو، پایین عقب، چپ و راست فرمان؛ حرکت مورب یعنی حرکت و پیچیدن هم‌زمان. رها کنی، توقف می‌کند.</div>
 <div class="actions"><button id="home">بازگشت به میدان</button><button id="behind">دوربین پشت شخصیت</button><button class="primary" id="interact">تعامل با مکان نزدیک</button></div>
 <div id="panel"><h2 id="panelTitle"></h2><p id="panelText"></p><button id="close">ادامه گشت‌وگذار</button></div>
 <div id="toast"></div>
@@ -90,16 +90,12 @@ function setTouch(e){
  if(!p)return;
  p.x=e.clientX;p.y=e.clientY;
  const dx=e.clientX-touchStart.x,dy=e.clientY-touchStart.y;
- const sy=Math.max(-1,Math.min(1,dy/85));
- // حرکت عمودی مستقل است؛ لرزش طبیعی انگشت هنگام جلو/عقب نباید فرمان چرخش بسازد.
- targetSpeed=THREE.MathUtils.clamp(-sy*maxSpeed,-maxSpeed,maxSpeed);
- const horizontalIntent=Math.abs(dx)>24 && Math.abs(dx)>Math.abs(dy)*0.55;
- if(horizontalIntent){
-  const steerAmount=Math.sign(dx)*Math.min(1,(Math.abs(dx)-24)/65);
-  targetSteer=steerAmount;
- }else{
-  targetSteer=0;
- }
+ // حرکت شبیه دستهٔ مجازی: هر دو محور مستقل‌اند و می‌توان هم‌زمان جلو رفت و پیچید.
+ const dead=13;
+ const nx=Math.abs(dx)<dead?0:Math.sign(dx)*Math.min(1,(Math.abs(dx)-dead)/72);
+ const ny=Math.abs(dy)<dead?0:Math.sign(dy)*Math.min(1,(Math.abs(dy)-dead)/78);
+ targetSpeed=THREE.MathUtils.clamp(-ny*maxSpeed,-maxSpeed,maxSpeed);
+ targetSteer=nx;
  lastTouch={x:e.clientX,y:e.clientY};
 }
 canvas.addEventListener('pointerdown',e=>{
@@ -120,6 +116,19 @@ canvas.addEventListener('pointerup',releasePointer);
 canvas.addEventListener('pointercancel',releasePointer);
 canvas.addEventListener('lostpointercapture',releasePointer);
 function wrapAngle(a){return Math.atan2(Math.sin(a),Math.cos(a))}
+function blockedAt(pos){
+ // دیوار ساختمان‌ها: حاشیهٔ امن برای عرض ویلچر
+ for(const p of places){
+  if(Math.abs(pos.x-p.pos.x)<p.halfW+.95 && Math.abs(pos.z-p.pos.z)<p.halfD+.95)return true;
+ }
+ // تنهٔ درخت‌ها: همان شبکهٔ درخت‌کاری محیط
+ for(let x=-145;x<=145;x+=19)for(let z=-145;z<=145;z+=19){
+  if(Math.abs(x%38)<7||Math.abs(z%38)<7||(Math.abs(x)<24&&Math.abs(z)<24))continue;
+  const dx=pos.x-x,dz=pos.z-z;
+  if(dx*dx+dz*dz<1.35*1.35)return true;
+ }
+ return Math.abs(pos.x)>320||Math.abs(pos.z)>320;
+}
 function isInsideBuilding(){
  for(const p of places){
   if(Math.abs(avatar.position.x-p.pos.x)<p.halfW*.43 &&
@@ -161,14 +170,20 @@ const clock=new THREE.Clock(),look=new THREE.Vector3(),forward=new THREE.Vector3
 function animate(){
  requestAnimationFrame(animate);
  const dt=Math.min(clock.getDelta(),.04);
- currentSpeed=THREE.MathUtils.damp(currentSpeed,targetSpeed,3.2,dt);
- steer=THREE.MathUtils.damp(steer,targetSteer,5.0,dt);
- // فرمان چپ/راست جهت ویلچر را آرام تغییر می‌دهد؛ عقب‌رفتن جهت بدن را برعکس نمی‌کند.
- if(Math.abs(currentSpeed)>.06)yaw+=steer*turnRate*dt*(currentSpeed<0?-.72:1);
+ // واکنش سریع و قابل پیش‌بینی؛ رها کردن انگشت یعنی توقف، نه سر خوردن.
+ currentSpeed=THREE.MathUtils.damp(currentSpeed,targetSpeed,13.5,dt);
+ steer=THREE.MathUtils.damp(steer,targetSteer,15.0,dt);
+ // پیچیدن فقط هنگام حرکت؛ دنده عقب جهت بدنه را برعکس نمی‌کند.
+ if(Math.abs(currentSpeed)>.12)yaw+=steer*turnRate*dt*Math.sign(currentSpeed);
  avatar.rotation.y=yaw;
- if(Math.abs(currentSpeed)>.018){
+ if(Math.abs(currentSpeed)>.025){
   const forward=new THREE.Vector3(-Math.sin(yaw),0,Math.cos(yaw));
-  avatar.position.addScaledVector(forward,currentSpeed*dt);
+  const proposed=avatar.position.clone().addScaledVector(forward,currentSpeed*dt);
+  if(!blockedAt(proposed)){
+   avatar.position.copy(proposed);
+  }else{
+   currentSpeed=0;targetSpeed=0;
+  }
   for(const wheel of wheelMeshes)wheel.rotation.x-=currentSpeed*dt/.58;
  }
  const indoor=isInsideBuilding();
@@ -180,14 +195,14 @@ function animate(){
   camera.position.lerp(firstPerson,1-Math.exp(-5.5*dt));
   camera.lookAt(firstPerson.clone().addScaledVector(lookDir,8).add(new THREE.Vector3(0,.1,0)));
  }else{
-  // دوربین بیرونی فقط همراه جابه‌جایی آواتار منتقل می‌شود؛
-  // جایگاه و جهت دید آن با چرخش آواتار نمی‌چرخد و دور آواتار مدار نمی‌زند.
-  const fixedOffset=new THREE.Vector3(-2.0,4.1,-8.2);
-  const preferred=avatar.position.clone().add(fixedOffset);
+  // دوربین سوم‌شخص دنبال آواتار می‌آید و همیشه به خود آواتار نگاه می‌کند.
+  // فاصلهٔ پشت شانه با جهت حرکت هماهنگ است؛ دوربین دیگر آواتار را از کادر置 نمی‌گذارد.
+  const back=new THREE.Vector3(Math.sin(yaw),0,-Math.cos(yaw));
+  const side=new THREE.Vector3(Math.cos(yaw),0,Math.sin(yaw));
+  const preferred=avatar.position.clone().addScaledVector(back,7.2).addScaledVector(side,-1.15).add(new THREE.Vector3(0,3.7,0));
   const safe=cameraPositionAvoidingWalls(target,preferred,dt);
-  camera.position.lerp(safe,1-Math.exp(-3.4*dt));
-  const fixedViewDirection=new THREE.Vector3(0,-.12,1);
-  camera.lookAt(camera.position.clone().add(fixedViewDirection.multiplyScalar(12)));
+  camera.position.lerp(safe,1-Math.exp(-6.5*dt));
+  camera.lookAt(target.clone().add(new THREE.Vector3(0,.35,0)));
  }
  document.querySelector('#coords').textContent=indoor?'نمای داخلی · دید آواتار':Math.abs(currentSpeed)>.15?(currentSpeed<0?'حرکت به عقب':'حرکت رو به جلو'):'جهان آزاد · آماده حرکت';
  renderer.render(scene,camera);
