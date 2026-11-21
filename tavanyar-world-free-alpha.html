@@ -28,8 +28,8 @@ button.primary{background:#087b5d;border-color:#72e5b5;font-weight:bold}
 <body>
 <div id="world"></div>
 <header><div class="pill brand"><b>توان‌یار | جهان آزاد</b><small>نسخه آزمایشی · حرکت بدون جوی‌استیک</small></div><div class="pill" id="coords">میدان مرکزی</div></header>
-<div class="tip">نیمه چپ صفحه را نگه دار: حرکت. دکمه «سرعت حرکت» را برای جابه‌جایی بین راه‌رفتن و دویدن بزن. نیمه راست: چرخش دوربین. دو انگشت: زوم نرم.</div>
-<div class="actions"><button id="home">بازگشت به میدان</button><button id="behind">دوربین پشت شخصیت</button><button id="speedMode">سرعت حرکت: آرام</button><button class="primary" id="interact">تعامل با مکان نزدیک</button></div>
+<div class="tip">نیمه چپ را نگه دار: حرکت آواتار. یک انگشت در نیمه راست: چرخش آزاد دوربین. دو انگشت در سمت راست: بازکردن فاصله برای افزایش سرعت؛ بستن برای کاهش سرعت تا توقف و سپس بالا رفتن دوربین به نمای هوایی.</div>
+<div class="actions"><button id="home">بازگشت به میدان</button><button id="behind">دوربین پشت شخصیت</button><button class="primary" id="interact">تعامل با مکان نزدیک</button></div>
 <div id="panel"><h2 id="panelTitle"></h2><p id="panelText"></p><button id="close">ادامه گشت‌وگذار</button></div>
 <div id="toast"></div>
 <script type="module">
@@ -78,7 +78,7 @@ cube(avatar,0,.62,.12,1.2,.15,1.1,chair);cube(avatar,0,.94,-.34,1,.95,.16,chair)
 const wheelMeshes=[];for(let s of [-1,1]){let wheel=new THREE.Mesh(new THREE.TorusGeometry(.58,.075,8,24),rubber);wheel.rotation.y=Math.PI/2;wheel.position.set(s*.7,.63,.1);avatar.add(wheel);wheelMeshes.push(wheel);let hub=cyl(avatar,s*.71,.63,.1,.14,.12,metal);hub.rotation.z=Math.PI/2}
 avatar.position.set(0,0,9);
 let yaw=0,pitch=.42,cameraDistance=11,targetDistance=11;
-let moving=false,runMode=false;const walkSpeed=3.4,runSpeed=8.2;const pointers=new Map();let throttlePointer=null,cameraPointer=null,pinchDistance=0;
+let moving=false,currentSpeed=0,targetSpeed=0,aerialLevel=0;const maxSpeed=8.2;const pointers=new Map();let throttlePointer=null,cameraPointer=null,pinchDistance=0;
 const canvas=renderer.domElement;
 function rightPointers(){return [...pointers.values()].filter(p=>p.side==='camera')}
 canvas.addEventListener('pointerdown',e=>{
@@ -96,7 +96,23 @@ canvas.addEventListener('pointermove',e=>{
  const rp=rightPointers();
  if(rp.length>=2){
   const d=Math.hypot(rp[0].x-rp[1].x,rp[0].y-rp[1].y);
-  if(pinchDistance>0)targetDistance=THREE.MathUtils.clamp(targetDistance-(d-pinchDistance)*.045,8,42);
+  if(pinchDistance>0){
+   let delta=d-pinchDistance;
+   if(delta>0){
+    const lowerAerial=Math.min(delta,aerialLevel/.006);
+    aerialLevel=Math.max(0,aerialLevel-lowerAerial*.006);
+    delta-=lowerAerial;
+    if(delta>0)targetSpeed=THREE.MathUtils.clamp(targetSpeed+delta*.035,0,maxSpeed);
+   }else if(delta<0){
+    let close=-delta;
+    if(targetSpeed>0){
+     const used=Math.min(close,targetSpeed/.035);
+     targetSpeed=Math.max(0,targetSpeed-used*.035);
+     close-=used;
+    }
+    if(close>0&&currentSpeed<.10&&targetSpeed<.08)aerialLevel=THREE.MathUtils.clamp(aerialLevel+close*.006,0,1);
+   }
+  }
   pinchDistance=d;return;
  }
  if(p.side==='camera'){
@@ -111,33 +127,38 @@ function release(e){
  const rp=rightPointers();pinchDistance=rp.length===2?Math.hypot(rp[0].x-rp[1].x,rp[0].y-rp[1].y):0;
 }
 canvas.addEventListener('pointerup',release);canvas.addEventListener('pointercancel',release);
-canvas.addEventListener('wheel',e=>{targetDistance=THREE.MathUtils.clamp(targetDistance+e.deltaY*.025,8,42)},{passive:true});
+canvas.addEventListener('wheel',e=>{targetDistance=THREE.MathUtils.clamp(targetDistance+e.deltaY*.025,8,18)},{passive:true});
 const toast=document.querySelector('#toast');let toastTimer;function notify(t){toast.textContent=t;toast.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.remove('show'),2400)}
 function nearPlace(){let best=null,d=Infinity;for(let p of places){let n=avatar.position.distanceTo(p.pos);if(n<d){d=n;best=p}}return d<23?best:null}
 function interact(){let p=nearPlace();if(!p){notify('به یکی از ساختمان‌ها نزدیک‌تر شو تا بتوانی تعامل کنی.');return}document.querySelector('#panelTitle').textContent=p.name;document.querySelector('#panelText').textContent=p.info;document.querySelector('#panel').classList.add('show')}
 document.querySelector('#interact').onclick=interact;document.querySelector('#close').onclick=()=>document.querySelector('#panel').classList.remove('show');
 function behindCharacter(){yaw=-avatar.rotation.y;pitch=.42;targetDistance=11;notify('دوربین پشت شخصیت تنظیم شد.')}
 document.querySelector('#behind').onclick=behindCharacter;
-document.querySelector('#speedMode').onclick=()=>{runMode=!runMode;document.querySelector('#speedMode').textContent='سرعت حرکت: '+(runMode?'سریع':'آرام');notify(runMode?'حالت دویدن فعال شد.':'حالت راه‌رفتن آرام فعال شد.')};
-document.querySelector('#home').onclick=()=>{avatar.position.set(0,0,9);avatar.rotation.y=0;moving=false;yaw=0;pitch=.42;targetDistance=11;cameraDistance=11;document.querySelector('#panel').classList.remove('show');notify('به میدان مرکزی برگشتی.')};
+
+document.querySelector('#home').onclick=()=>{avatar.position.set(0,0,9);avatar.rotation.y=0;moving=false;currentSpeed=0;targetSpeed=0;aerialLevel=0;yaw=0;pitch=.42;targetDistance=11;cameraDistance=11;document.querySelector('#panel').classList.remove('show');notify('به میدان مرکزی برگشتی.')};
 const clock=new THREE.Clock(),look=new THREE.Vector3(),forward=new THREE.Vector3(),desired=new THREE.Vector3(),moveDir=new THREE.Vector3();
 function animate(){
  requestAnimationFrame(animate);let dt=Math.min(clock.getDelta(),.04);
- if(moving){
+ const desiredSpeed=moving?targetSpeed:0;
+ currentSpeed=THREE.MathUtils.damp(currentSpeed,desiredSpeed,3.8,dt);
+ if(currentSpeed>.025){
   forward.set(-Math.sin(yaw),0,Math.cos(yaw));
-  moveDir.copy(forward);const speed=runMode?runSpeed:walkSpeed;
-  avatar.position.addScaledVector(moveDir,speed*dt);
+  moveDir.copy(forward);avatar.position.addScaledVector(moveDir,currentSpeed*dt);
   avatar.rotation.y=Math.atan2(moveDir.x,moveDir.z);
-  for(const wheel of wheelMeshes)wheel.rotation.x-=speed*dt/.58;
+  for(const wheel of wheelMeshes)wheel.rotation.x-=currentSpeed*dt/.58;
  }
  cameraDistance=THREE.MathUtils.damp(cameraDistance,targetDistance,4.2,dt);
- const horizontal=Math.cos(pitch)*cameraDistance;
- const vertical=Math.max(2.2,Math.sin(pitch)*cameraDistance);
+ const horizontalBase=Math.cos(pitch)*cameraDistance;
+ const verticalBase=Math.max(2.2,Math.sin(pitch)*cameraDistance);
+ const horizontal=THREE.MathUtils.lerp(horizontalBase,55,aerialLevel);
+ const vertical=THREE.MathUtils.lerp(verticalBase,66,aerialLevel);
  desired.set(avatar.position.x+Math.sin(yaw)*horizontal,avatar.position.y+vertical,avatar.position.z-Math.cos(yaw)*horizontal);
- camera.position.lerp(desired,1-Math.exp(-5.5*dt));
- look.set(avatar.position.x,avatar.position.y+1.15,avatar.position.z);camera.lookAt(look);
- let closest=nearPlace();document.querySelector('#coords').textContent=closest?closest.name:'جهان آزاد · '+(moving?(runMode?'دویدن':'راه‌رفتن آرام'):'ایستاده');
+ camera.position.lerp(desired,1-Math.exp(-3.8*dt));
+ look.set(avatar.position.x,avatar.position.y+1.15+aerialLevel*1.5,avatar.position.z);camera.lookAt(look);
+ let closest=nearPlace();
+ document.querySelector('#coords').textContent=aerialLevel>.12?'نمای هوایی شهر توان':closest?closest.name:'جهان آزاد · '+(currentSpeed>.15?'در حال حرکت':'ایستاده');
  renderer.render(scene,camera)
+}
 }
 animate();addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.2));renderer.setSize(innerWidth,innerHeight)});
 notify('نگه‌داشتن سمت چپ: حرکت رو به جلو · کشیدن سمت راست: چرخش دوربین · دو انگشت سمت راست: زوم');
