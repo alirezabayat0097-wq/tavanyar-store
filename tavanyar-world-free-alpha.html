@@ -137,7 +137,7 @@ function cameraPositionAvoidingWalls(target,preferred,dt){
   const direction=candidate.clone().sub(target);
   const distance=direction.length();
   raycaster.set(target,direction.normalize());
-  const hits=raycaster.intersectObjects(scene.children,true).filter(h=>h.object!==ground && h.distance<distance-.45);
+  const hits=raycaster.intersectObjects(scene.children,true).filter(h=>h.object!==ground && !avatar.getObjectById(h.object.id) && h.distance<distance-.45);
   if(hits.length===0){chosen=candidate;break;}
   const safeDistance=Math.max(2.0,hits[0].distance-.55);
   if(safeDistance>2.8)chosen=target.clone().addScaledVector(direction.normalize(),safeDistance);
