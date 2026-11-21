@@ -196,10 +196,12 @@ function animate(){
   // فاصلهٔ پشت شانه با جهت حرکت هماهنگ است؛ دوربین دیگر آواتار را از کادر置 نمی‌گذارد.
   const back=new THREE.Vector3(-Math.sin(yaw),0,-Math.cos(yaw));
   const shoulderSide=new THREE.Vector3(Math.cos(yaw),0,-Math.sin(yaw));
-  // انتقال دوربین به سمت شانهٔ مقابلِ نمای قبلی؛ زاویهٔ سه‌رخ واضح و ارتفاع نزدیک شانه.
-  const shoulderCamera=avatar.position.clone().addScaledVector(back,2.8).addScaledVector(shoulderSide,2.15).add(new THREE.Vector3(0,1.65,0));
+  // دوربین روی شانهٔ چپ، بالاتر از شانه؛ نگاه به جلو و مسیر پیش روی ویلچر، نه پهلوی آواتار.
+  const shoulderCamera=avatar.position.clone().addScaledVector(back,2.8).addScaledVector(shoulderSide,2.15).add(new THREE.Vector3(0,2.75,0));
   camera.position.lerp(shoulderCamera,1-Math.exp(-9*dt));
-  camera.lookAt(target.clone().add(new THREE.Vector3(0,.35,0)));
+  const viewForward=new THREE.Vector3(Math.sin(yaw),0,Math.cos(yaw));
+  const forwardViewTarget=target.clone().addScaledVector(viewForward,4.2).add(new THREE.Vector3(0,.55,0));
+  camera.lookAt(forwardViewTarget);
  }
  document.querySelector('#coords').textContent=indoor?'نمای داخلی · دید آواتار':Math.abs(currentSpeed)>.15?(currentSpeed<0?'حرکت به عقب':'حرکت رو به جلو'):'جهان آزاد · آماده حرکت';
  renderer.render(scene,camera);
