@@ -27,8 +27,8 @@ button.primary{background:#087b5d;border-color:#72e5b5;font-weight:bold}
 </head>
 <body>
 <div id="world"></div>
-<header><div class="pill brand"><b>توان‌یار | جهان آزاد</b><small>نسخه آزمایشی · کنترل تک‌انگشتی و دوربین هوشمند</small></div><div class="pill" id="coords">میدان مرکزی</div></header>
-<div class="tip">یک انگشت را مثل دستهٔ مجازی بکش: بالا جلو، پایین عقب، راست برای گردش به راست و چپ برای گردش به چپ؛ زاویهٔ گردش حداکثر ۴۵ درجه است.</div>
+<header><div class="pill brand"><b>توان‌یار | جهان آزاد</b><small>نسخه آزمایشی · دوربین سینمایی</small></div><div class="pill" id="coords">میدان مرکزی</div></header>
+<div class="tip">با کشیدن انگشت به بالا/پایین حرکت کنید. برای دور زدن درجا، انگشت را فقط به چپ یا راست بکشید.</div>
 <div class="actions"><button id="home">بازگشت به میدان</button><button id="behind">دوربین پشت شخصیت</button><button class="primary" id="interact">تعامل با مکان نزدیک</button></div>
 <div id="panel"><h2 id="panelTitle"></h2><p id="panelText"></p><button id="close">ادامه گشت‌وگذار</button></div>
 <div id="toast"></div>
@@ -77,14 +77,18 @@ let head=new THREE.Mesh(new THREE.SphereGeometry(.36,14,10),skin);head.position.
 cube(avatar,0,.62,.12,1.2,.15,1.1,chair);cube(avatar,0,.94,-.34,1,.95,.16,chair);cube(avatar,0,.24,.36,.78,.12,.8,mat(0x283c58));
 const wheelMeshes=[];for(let s of [-1,1]){let wheel=new THREE.Mesh(new THREE.TorusGeometry(.58,.075,8,24),rubber);wheel.rotation.y=Math.PI/2;wheel.position.set(s*.7,.63,.1);avatar.add(wheel);wheelMeshes.push(wheel);let hub=cyl(avatar,s*.71,.63,.1,.14,.12,metal);hub.rotation.z=Math.PI/2}
 avatar.position.set(0,0,9);
-let yaw=0;
+let yaw=0; // جهت فعلی ویلچر
 let currentSpeed=0,targetSpeed=0,steerAngle=0,targetSteerAngle=0;
-const maxSpeed=7.2,maxSteerAngle=THREE.MathUtils.degToRad(45);
+const maxSpeed=7.2, maxSteerAngle=THREE.MathUtils.degToRad(45);
+
+// مقداردهی اولیه دوربین
+let camYaw = 0; 
+const cameraTargetPos = new THREE.Vector3();
+
 const pointers=new Map();
-let touchStart=null,lastTouch=null;
+let touchStart=null;
 const canvas=renderer.domElement;
-const raycaster=new THREE.Raycaster();
-const cameraCandidates=[];
+
 function setTouch(e){
  const p=pointers.get(e.pointerId);
  if(!p)return;
@@ -93,27 +97,32 @@ function setTouch(e){
  const dead=13;
  const nx=Math.abs(dx)<dead?0:Math.sign(dx)*Math.min(1,(Math.abs(dx)-dead)/72);
  const ny=Math.abs(dy)<dead?0:Math.sign(dy)*Math.min(1,(Math.abs(dy)-dead)/78);
+ 
+ // ۱. کنترل حرکت جلو/عقب
  targetSpeed=THREE.MathUtils.clamp(-ny*maxSpeed,-maxSpeed,maxSpeed);
+ 
+ // ۲. کنترل چرخش درجا: اگر افقی بکشیم، می‌چرخد (مستقل از سرعت)
+ // علامت منفی برای این است که کشیدن به راست = چرخش به راست
  targetSteerAngle=THREE.MathUtils.clamp(-nx*maxSteerAngle,-maxSteerAngle,maxSteerAngle);
- lastTouch={x:e.clientX,y:e.clientY};
 }
 canvas.addEventListener('pointerdown',e=>{
  if(e.pointerType==='mouse'&&e.button!==0)return;
  if(pointers.size>0)return;
  canvas.setPointerCapture(e.pointerId);
  pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
- touchStart={x:e.clientX,y:e.clientY};lastTouch={...touchStart};
+ touchStart={x:e.clientX,y:e.clientY};
  targetSpeed=0;targetSteerAngle=0;
 });
 canvas.addEventListener('pointermove',e=>{if(pointers.has(e.pointerId))setTouch(e)});
 function releasePointer(e){
  if(!pointers.has(e.pointerId))return;
  pointers.delete(e.pointerId);
- touchStart=null;lastTouch=null;targetSpeed=0;targetSteerAngle=0;
+ touchStart=null;targetSpeed=0;targetSteerAngle=0;
 }
 canvas.addEventListener('pointerup',releasePointer);
 canvas.addEventListener('pointercancel',releasePointer);
 canvas.addEventListener('lostpointercapture',releasePointer);
+
 function blockedAt(pos){
  for(const p of places){
   if(Math.abs(pos.x-p.pos.x)<p.halfW+.95 && Math.abs(pos.z-p.pos.z)<p.halfD+.95)return true;
@@ -136,61 +145,92 @@ const toast=document.querySelector('#toast');let toastTimer;function notify(t){t
 function nearPlace(){let best=null,d=Infinity;for(let p of places){let n=avatar.position.distanceTo(p.pos);if(n<d){d=n;best=p}}return d<23?best:null}
 function interact(){let p=nearPlace();if(!p){notify('به یکی از ساختمان‌ها نزدیک‌تر شو تا بتوانی تعامل کنی.');return}document.querySelector('#panelTitle').textContent=p.name;document.querySelector('#panelText').textContent=p.info;document.querySelector('#panel').classList.add('show')}
 document.querySelector('#interact').onclick=interact;document.querySelector('#close').onclick=()=>document.querySelector('#panel').classList.remove('show');
-function behindCharacter(){notify('دوربین به‌صورت خودکار بهترین زاویه را انتخاب می‌کند.');}
-document.querySelector('#behind').onclick=behindCharacter;
 
-document.querySelector('#home').onclick=()=>{avatar.position.set(0,0,9);avatar.rotation.y=0;currentSpeed=0;targetSpeed=0;steerAngle=0;targetSteerAngle=0;yaw=0;document.querySelector('#panel').classList.remove('show');notify('به میدان مرکزی برگشتی.')};
-const clock=new THREE.Clock(),look=new THREE.Vector3(),forward=new THREE.Vector3(),desired=new THREE.Vector3(),moveDir=new THREE.Vector3();
+document.querySelector('#behind').onclick=()=>{
+  // بازنشانی زاویه دوربین به پشت ویلچر
+  camYaw = yaw;
+  notify('دوربین به پشت شخصیت تنظیم شد.');
+};
+
+document.querySelector('#home').onclick=()=>{
+  avatar.position.set(0,0,9);yaw=0;camYaw=0;
+  currentSpeed=0;targetSpeed=0;steerAngle=0;targetSteerAngle=0;
+  document.querySelector('#panel').classList.remove('show');
+  notify('به میدان مرکزی برگشتی.');
+};
+
+const clock=new THREE.Clock();
+let cameraInitialized = false;
+
 function animate(){
  requestAnimationFrame(animate);
  const dt=Math.min(clock.getDelta(),.04);
+ 
+ // ۱. به‌روزرسانی فیزیک ویلچر
  currentSpeed=THREE.MathUtils.damp(currentSpeed,targetSpeed,13.5,dt);
- steerAngle=THREE.MathUtils.damp(steerAngle,targetSteerAngle,9,dt);
- yaw=THREE.MathUtils.clamp(steerAngle,-maxSteerAngle,maxSteerAngle);
- avatar.rotation.y=yaw;
+ steerAngle=THREE.MathUtils.damp(steerAngle,targetSteerAngle,10,dt);
+ 
+ // چرخش درجا: جهت ویلچر مستقیماً با steerAngle تغییر می‌کند (چه در حال حرکت باشیم چه نه)
+ yaw = steerAngle; 
+ avatar.rotation.y = yaw;
+ 
  const forward=new THREE.Vector3(Math.sin(yaw),0,Math.cos(yaw));
+ 
+ // حرکت به جلو/عقب با برخورد
  if(Math.abs(currentSpeed)>.025){
-  const longitudinal=forward.multiplyScalar(currentSpeed*dt);
+  const longitudinal=forward.clone().multiplyScalar(currentSpeed*dt);
   const proposed=avatar.position.clone().add(longitudinal);
   if(!blockedAt(proposed)) avatar.position.copy(proposed);
   else {currentSpeed=0;targetSpeed=0;}
   for(const wheel of wheelMeshes)wheel.rotation.x-=currentSpeed*dt/.58;
  }
+
  const indoor=isInsideBuilding();
- const target=new THREE.Vector3(avatar.position.x,avatar.position.y+(indoor?2.05:1.35),avatar.position.z);
+ 
  if(indoor){
-  // داخل ساختمان: نمای اول‌شخص از دید آواتار
+  // زاویه دوربین اول‌شخص
   const lookDir=new THREE.Vector3(Math.sin(yaw),0,Math.cos(yaw));
-  const firstPerson=target.clone().add(new THREE.Vector3(0,.02,0));
-  camera.position.lerp(firstPerson,1-Math.exp(-5.5*dt));
-  camera.lookAt(firstPerson.clone().addScaledVector(lookDir,8).add(new THREE.Vector3(0,.1,0)));
- }else{
-  // دوربین سوم‌شخص اصلاح‌شده: عقب‌تر، بالاتر، کمی به راست و نگاه مستقیم به جلو
-  const back=new THREE.Vector3(-Math.sin(yaw),0,-Math.cos(yaw));
-  const shoulderSide=new THREE.Vector3(Math.cos(yaw),0,-Math.sin(yaw));
+  const targetHeight = 2.05;
+  const camPos = avatar.position.clone().add(new THREE.Vector3(0, targetHeight, 0)).addScaledVector(lookDir, 0.2);
+  camera.position.lerp(camPos, 1-Math.exp(-5.5*dt));
+  camera.lookAt(camPos.clone().addScaledVector(lookDir, 8));
+ } else {
+  // ۲. دوربین سوم‌شخص سینمایی (نرم و تاخیردار)
+  // دوربین با تاخیر بیشتری همراستای yaw می‌شود تا چرخش ویلچر دیده شود
+  camYaw = THREE.MathUtils.damp(camYaw, yaw, 3.5, dt); 
   
-  // تنظیمات جدید: 7.5 = عقب‌تر رفتن، 1.8 = کمی به راست، 4.5 = بالاتر
-  const shoulderCamera=avatar.position.clone()
-    .addScaledVector(back,7.5)
-    .addScaledVector(shoulderSide,1.8)
-    .add(new THREE.Vector3(0,4.5,0));
-    
-  // نرم‌تر شدن حرکت دوربین
-  camera.position.lerp(shoulderCamera,1-Math.exp(-7*dt));
+  // موقعیت دوربین: عقب‌تر و بالاتر
+  // از زاویه camYaw برای تعیین پشت استفاده می‌کنیم تا دوربین شلاق نخورد
+  const camBack = new THREE.Vector3(-Math.sin(camYaw), 0, -Math.cos(camYaw));
+  const camRight = new THREE.Vector3(Math.cos(camYaw), 0, -Math.sin(camYaw));
   
-  // نگاه مستقیم به جلو (به نقطه‌ای 15 متر جلوتر)
-  const viewForward=new THREE.Vector3(Math.sin(yaw),0,Math.cos(yaw));
-  const forwardViewTarget=avatar.position.clone()
-    .addScaledVector(viewForward,15)
-    .add(new THREE.Vector3(0,1.5,0));
-    
-  camera.lookAt(forwardViewTarget);
+  // تنظیمات موقعیت: 8.5 = فاصله عقب، 2.5 = فاصله به راست، 4.5 = ارتفاع
+  cameraTargetPos.copy(avatar.position)
+    .addScaledVector(camBack, 8.5)
+    .addScaledVector(camRight, 2.5)
+    .add(new THREE.Vector3(0, 4.5, 0));
+  
+  if(!cameraInitialized) {
+    camera.position.copy(cameraTargetPos);
+    cameraInitialized = true;
+  } else {
+    camera.position.lerp(cameraTargetPos, 1-Math.exp(-7*dt));
+  }
+  
+  // نقطه نگاه: کمی جلوتر از ویلچر، هم‌راستا با camYaw برای جلوگیری از لرزش
+  const lookForward = new THREE.Vector3(Math.sin(camYaw), 0, Math.cos(camYaw));
+  const lookTarget = avatar.position.clone()
+    .addScaledVector(lookForward, 10)
+    .add(new THREE.Vector3(0, 1.5, 0));
+  
+  camera.lookAt(lookTarget);
  }
- document.querySelector('#coords').textContent=indoor?'نمای داخلی · دید آواتار':Math.abs(currentSpeed)>.15?(currentSpeed<0?'حرکت به عقب':'حرکت رو به جلو'):'جهان آزاد · آماده حرکت';
+
+ document.querySelector('#coords').textContent = indoor ? 'نمای داخلی' : (Math.abs(currentSpeed)>.15 ? (currentSpeed<0?'حرکت به عقب':'حرکت رو به جلو') : 'آماده حرکت');
  renderer.render(scene,camera);
 }
 animate();
 addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.2));renderer.setSize(innerWidth,innerHeight)});
-notify('کنترل فعال شد: جلو/عقب و گردش حداکثر ۴۵ درجه');
+notify('آماده حرکت. برای دور زدن، به چپ یا راست بکشید.');
 </script>
 </body></html>
