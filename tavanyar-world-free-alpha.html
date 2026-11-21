@@ -79,7 +79,7 @@ const wheelMeshes=[];for(let s of [-1,1]){let wheel=new THREE.Mesh(new THREE.Tor
 avatar.position.set(0,0,9);
 let yaw=0;
 let currentSpeed=0,targetSpeed=0,steer=0,targetSteer=0;
-const maxSpeed=7.2,turnRate=1.35;
+const maxSpeed=7.2,turnRate=.62;
 const pointers=new Map();
 let touchStart=null,lastTouch=null;
 const canvas=renderer.domElement;
@@ -180,17 +180,14 @@ function animate(){
   camera.position.lerp(firstPerson,1-Math.exp(-5.5*dt));
   camera.lookAt(firstPerson.clone().addScaledVector(lookDir,8).add(new THREE.Vector3(0,.1,0)));
  }else{
-  // نمای بیرونی روی شانه چپ؛ قاب روی شهر و مسیر پیش رو تمرکز دارد.
-  const back=new THREE.Vector3(Math.sin(yaw),0,-Math.cos(yaw));
-  const left=new THREE.Vector3(-Math.cos(yaw),0,-Math.sin(yaw));
-  const preferred=avatar.position.clone()
-   .addScaledVector(back,8.2).addScaledVector(left,2.0)
-   .add(new THREE.Vector3(0,4.1,0));
+  // دوربین بیرونی فقط همراه جابه‌جایی آواتار منتقل می‌شود؛
+  // جایگاه و جهت دید آن با چرخش آواتار نمی‌چرخد و دور آواتار مدار نمی‌زند.
+  const fixedOffset=new THREE.Vector3(-2.0,4.1,-8.2);
+  const preferred=avatar.position.clone().add(fixedOffset);
   const safe=cameraPositionAvoidingWalls(target,preferred,dt);
   camera.position.lerp(safe,1-Math.exp(-3.4*dt));
-  const lookDir=new THREE.Vector3(-Math.sin(yaw),0,Math.cos(yaw));
-  const focus=avatar.position.clone().addScaledVector(lookDir,5.5).add(new THREE.Vector3(0,1.2,0));
-  camera.lookAt(focus);
+  const fixedViewDirection=new THREE.Vector3(0,-.12,1);
+  camera.lookAt(camera.position.clone().add(fixedViewDirection.multiplyScalar(12)));
  }
  document.querySelector('#coords').textContent=indoor?'نمای داخلی · دید آواتار':Math.abs(currentSpeed)>.15?(currentSpeed<0?'حرکت به عقب':'حرکت رو به جلو'):'جهان آزاد · آماده حرکت';
  renderer.render(scene,camera);
