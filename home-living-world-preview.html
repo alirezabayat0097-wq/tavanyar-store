@@ -1,150 +1,715 @@
-
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#f7f8f3">
-  <meta name="description" content="پیش‌نمایش مستقل جهان زنده توان‌یار">
-  <title>توان‌یار | جهان زنده</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <style>
-    :root{--ink:#18352d;--muted:#718078;--green:#176b50;--green2:#2f9871;--mint:#dff1e7;--gold:#c99d4b;--paper:#f7f8f3;--white:#fff;--navy:#18263c}
-    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:Vazirmatn,Tahoma,sans-serif;overflow-x:hidden}
-    button,a{font:inherit}button{cursor:pointer}.wrap{width:min(1160px,92%);margin:auto}
-    .topbar{height:70px;display:flex;align-items:center;justify-content:space-between;gap:16px}
-    .brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:22px}.brandmark{width:40px;height:40px;border-radius:14px;background:linear-gradient(145deg,#278c67,#12543e);display:grid;place-items:center;color:#fff;box-shadow:0 8px 20px #176b5030}
-    .brand small{display:block;font-size:10px;color:var(--muted);font-weight:500;margin-top:-4px}
-    .nav{display:flex;gap:20px;align-items:center}.nav a{color:#53665d;text-decoration:none;font-size:13px}.nav a:hover{color:var(--green)}
-    .pill{border:0;border-radius:30px;background:var(--green);color:white;padding:11px 18px;font-weight:700;box-shadow:0 8px 20px #176b5028}
-    .hero{position:relative;min-height:560px;padding:50px 0 25px;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:20px;isolation:isolate}
-    .hero:before{content:"";position:absolute;z-index:-2;width:650px;height:470px;border-radius:50%;background:radial-gradient(ellipse,#d9eee2 0%,#eaf3e9 48%,transparent 72%);left:2%;top:25px;filter:blur(4px)}
-    .hero-copy{padding:20px 0}.eyebrow{display:inline-flex;align-items:center;gap:8px;background:#e8f2eb;color:var(--green);padding:8px 14px;border-radius:30px;font-size:12px;font-weight:700}
-    h1{font-size:clamp(34px,5vw,58px);line-height:1.35;margin:18px 0 14px;letter-spacing:-1.5px}h1 span{color:var(--green2)}
-    .lead{color:#64746c;line-height:2.1;max-width:500px;font-size:15px}
-    .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}.outline{border:1px solid #cbd9d0;border-radius:30px;padding:10px 18px;color:var(--green);background:#ffffffa8;font-weight:700}
-    .hero-note{font-size:11px;color:#87948d;margin-top:18px}
-    .scene{height:440px;position:relative;perspective:900px;display:grid;place-items:center}
-    .orb{position:absolute;border-radius:50%;filter:blur(1px)}.orb.one{width:280px;height:280px;background:radial-gradient(circle at 35% 30%,#fff,#d5ecdf 65%,#b8d8c5);top:55px;right:17%}
-    .orb.two{width:100px;height:100px;background:radial-gradient(circle at 35% 30%,#fff0c9,#d5b36e);left:10%;top:65px;opacity:.75}
-    .platform{position:absolute;width:360px;height:105px;border-radius:50%;bottom:45px;background:linear-gradient(180deg,#e6eee7,#b8cfc0);transform:rotateX(65deg) rotateZ(-8deg);box-shadow:0 28px 40px #173d2c26}
-    .platform:after{content:"";position:absolute;inset:12px 25px;border:1px solid #ffffffb8;border-radius:50%}
-    .person{position:absolute;z-index:2;bottom:112px;display:flex;flex-direction:column;align-items:center;animation:float 5s ease-in-out infinite;filter:drop-shadow(0 14px 12px #18352d20)}
-    .person .head{width:58px;height:58px;border-radius:50%;background:#e8b995;border:5px solid #fff;z-index:2}
-    .person .body{width:100px;height:125px;border-radius:48px 48px 24px 24px;background:linear-gradient(145deg,#2d9270,#155840);margin-top:-4px;position:relative}
-    .person .body:after{content:"";position:absolute;width:130px;height:18px;border-radius:50%;background:#263d36;bottom:-16px;right:-15px}
-    .wheel{position:absolute;width:125px;height:125px;border:8px solid #344d47;border-radius:50%;bottom:-34px;right:-14px;z-index:-1}
-    .wheel:before,.wheel:after{content:"";position:absolute;background:#71857b;left:50%;top:0;bottom:0;width:2px;transform:translateX(-50%)}.wheel:after{transform:translateX(-50%) rotate(90deg)}
-    .person.p2{transform:scale(.72);right:8%;bottom:115px;animation-delay:-2s}.person.p2 .body{background:linear-gradient(145deg,#d6a64f,#9b6c29)}
-    .person.p3{transform:scale(.6);left:5%;bottom:125px;animation-delay:-3s}.person.p3 .body{background:linear-gradient(145deg,#8a83b9,#55507e)}
-    .float-tag{position:absolute;z-index:3;background:#fff;border:1px solid #edf1ec;padding:10px 14px;border-radius:16px;box-shadow:0 12px 30px #1c45301a;font-size:12px;font-weight:700}
-    .tag-a{top:85px;right:2%}.tag-b{bottom:100px;left:0}.tag-c{top:35px;left:15%;color:var(--green)}
-    @keyframes float{0%,100%{translate:0 0}50%{translate:0 -12px}}
-    section{padding:55px 0}.section-head{display:flex;align-items:end;justify-content:space-between;gap:15px;margin-bottom:25px}.section-head h2{font-size:27px;margin:0}.section-head p{margin:6px 0 0;color:var(--muted);font-size:13px}
-    .ambassador-track{display:flex;gap:18px;overflow-x:auto;padding:12px 4px 25px;scroll-snap-type:x mandatory;scrollbar-width:thin}
-    .amb{min-width:145px;text-align:center;scroll-snap-align:start}.avatar-ring{width:112px;height:112px;border-radius:50%;padding:5px;margin:auto;background:conic-gradient(from 20deg,#d7b66d,#fff0c5,#4e9d7c,#d7b66d);box-shadow:0 12px 28px #173d2c18}
-    .avatar{height:100%;border-radius:50%;background:linear-gradient(145deg,#e7f1e9,#c5dfce);display:grid;place-items:center;font-size:43px;border:4px solid #fff}
-    .amb strong{display:block;margin-top:12px;font-size:13px}.amb small{color:var(--muted);font-size:11px}
-    .portals{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-    .portal{position:relative;min-height:190px;border-radius:25px;padding:22px;color:#fff;overflow:hidden;box-shadow:0 16px 35px #1a44301a;transition:.25s;cursor:pointer}
-    .portal:hover{transform:translateY(-7px)}.portal:after{content:"";position:absolute;width:170px;height:170px;border:1px solid #ffffff38;border-radius:50%;left:-55px;bottom:-90px;box-shadow:0 0 0 18px #ffffff0b,0 0 0 38px #ffffff08}
-    .portal .emoji{font-size:35px}.portal h3{margin:14px 0 5px;font-size:18px}.portal p{margin:0;font-size:12px;opacity:.82;line-height:1.8}.portal.market{background:linear-gradient(145deg,#287e60,#15533e)}.portal.city{background:linear-gradient(145deg,#313b66,#171f3d)}.portal.skills{background:linear-gradient(145deg,#b58a43,#765323)}.portal.support{background:linear-gradient(145deg,#477d91,#285365)}
-    .news-area{background:#eef3ed;border-radius:32px;padding:30px}.news-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:15px}.news{background:#fff;border-radius:20px;padding:20px;min-height:190px;display:flex;flex-direction:column;justify-content:space-between}.news.feature{background:linear-gradient(145deg,#173e31,#286d51);color:#fff}.news .kind{font-size:10px;color:#9a7b40;font-weight:800}.news.feature .kind{color:#e5c77e}.news h3{font-size:17px;line-height:1.7;margin:12px 0}.news p{font-size:12px;line-height:1.9;color:#718078}.news.feature p{color:#d3e4d9}.news a{font-size:12px;color:var(--green);font-weight:700;text-decoration:none}.news.feature a{color:#f0d48d}
-    .sponsors{display:flex;gap:14px;overflow:auto;padding:5px 0 15px}.sponsor{min-width:175px;background:#fff;border:1px solid #e9eee8;border-radius:18px;padding:18px;text-align:center;color:#728078;font-weight:700;font-size:13px}.sponsor b{display:block;font-size:25px;margin-bottom:8px;color:#b99a5b}
-    footer{padding:30px 0 45px;border-top:1px solid #e7ece6;color:#7d8982;font-size:12px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
-    .sound{position:fixed;z-index:10;left:18px;bottom:18px;border:1px solid #dce6dd;background:#fff;border-radius:50px;padding:11px 15px;box-shadow:0 8px 25px #173d2c1a;color:var(--green);font-weight:700}
-    .toast{position:fixed;z-index:20;bottom:78px;left:18px;background:#173e31;color:#fff;padding:12px 16px;border-radius:14px;font-size:12px;opacity:0;transform:translateY(8px);transition:.25s;pointer-events:none}.toast.show{opacity:1;transform:translateY(0)}
-    @media(max-width:800px){.nav{display:none}.hero{grid-template-columns:1fr;padding-top:25px}.hero-copy{text-align:center}.lead{margin:auto}.hero-actions{justify-content:center}.scene{height:370px}.portals{grid-template-columns:repeat(2,1fr)}.news-grid{grid-template-columns:1fr}.news-area{padding:20px}.section-head{align-items:start;flex-direction:column}}
-    @media(max-width:420px){.portals{gap:10px}.portal{padding:16px;min-height:175px}.portal h3{font-size:16px}.scene{transform:scale(.9);margin:-10px -15px}.hero{min-height:unset}h1{font-size:36px}}
-    @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6f8f5">
+<meta name="description" content="توان‌یار؛ جهانی زنده برای توانمندی، همکاری و فرصت‌های برابر">
+<title>توان‌یار | جهانی برای توانمندی و فرصت</title>
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+
+<style>
+*,*::before,*::after{box-sizing:border-box}
+
+:root{
+  --bg:#f6f8f5;
+  --surface:#ffffff;
+  --ink:#12241e;
+  --muted:#57665e;
+  --line:#e2e9e2;
+  --green:#14664b;
+  --green-strong:#0f4f3a;
+  --green-bright:#1c8460;
+  --green-soft:#e7f2eb;
+  --gold:#8a6a22;
+  --radius:20px;
+  --shadow-sm:0 1px 2px rgba(18,36,30,.05),0 4px 14px rgba(18,36,30,.05);
+  --shadow-md:0 10px 30px rgba(18,36,30,.09);
+  --shadow-lg:0 22px 56px rgba(18,36,30,.13);
+  --container:1140px;
+  --font:"Vazirmatn","Vazir","IRANSansX","IRANSans","Segoe UI",Tahoma,Arial,sans-serif;
+}
+
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  font-family:var(--font);
+  background:var(--bg);
+  color:var(--ink);
+  line-height:1.8;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+h1,h2,h3,p{margin:0}
+a{color:var(--green)}
+img,svg{max-width:100%;display:block}
+
+:focus-visible{
+  outline:3px solid var(--green);
+  outline-offset:3px;
+  border-radius:10px;
+}
+
+.container{width:min(var(--container),calc(100% - 40px));margin-inline:auto}
+
+.skip-link{
+  position:absolute;inset-inline-start:50%;top:0;
+  transform:translate(-50%,-140%);
+  z-index:200;background:var(--green);color:#fff;
+  padding:12px 22px;border-radius:0 0 12px 12px;
+  font-weight:700;font-size:14px;text-decoration:none;
+  transition:transform .2s;
+}
+.skip-link:focus{transform:translate(-50%,0)}
+
+/* ---------- Header ---------- */
+.site-header{
+  position:sticky;top:0;z-index:50;
+  background:rgba(246,248,245,.88);
+  -webkit-backdrop-filter:blur(14px);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.header-inner{
+  display:flex;align-items:center;gap:24px;
+  min-height:74px;flex-wrap:wrap;
+}
+.brand{
+  display:flex;align-items:center;gap:12px;
+  text-decoration:none;color:inherit;flex-shrink:0;
+}
+.brand-mark{
+  width:44px;height:44px;border-radius:14px;
+  display:grid;place-items:center;
+  background:linear-gradient(150deg,#1f8a63,#0f4f3a);
+  color:#fff;font-weight:800;font-size:20px;
+  box-shadow:0 6px 18px rgba(20,102,75,.28);
+}
+.brand-text{display:flex;flex-direction:column;line-height:1.35}
+.brand-text b{font-size:18px;font-weight:800}
+.brand-text span{font-size:11px;color:var(--muted);font-weight:500}
+
+.nav{display:flex;gap:4px;margin-inline-start:auto;flex-wrap:wrap}
+.nav a{
+  color:var(--muted);text-decoration:none;
+  font-size:14px;font-weight:600;
+  padding:9px 13px;border-radius:11px;
+  transition:background .2s,color .2s;
+}
+.nav a:hover{background:var(--green-soft);color:var(--green)}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  border:0;border-radius:999px;
+  padding:12px 24px;
+  font-family:inherit;font-size:14px;font-weight:700;
+  text-decoration:none;cursor:pointer;
+  transition:background .2s,color .2s,transform .2s,box-shadow .2s;
+}
+.btn-primary{
+  background:var(--green);color:#fff;
+  box-shadow:0 8px 22px rgba(20,102,75,.24);
+}
+.btn-primary:hover{background:var(--green-strong);transform:translateY(-1px)}
+.btn-ghost{
+  background:var(--surface);color:var(--green);
+  border:1px solid var(--line);
+}
+.btn-ghost:hover{background:var(--green-soft);border-color:#cfe3d8}
+
+/* ---------- Hero ---------- */
+.hero{padding-block:clamp(44px,7vw,84px) clamp(36px,5vw,60px)}
+.hero-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
+  gap:clamp(32px,5vw,64px);
+  align-items:center;
+}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--green-soft);color:var(--green);
+  border:1px solid #d3e7db;
+  padding:7px 15px;border-radius:999px;
+  font-size:12px;font-weight:700;
+}
+h1{
+  font-size:clamp(29px,4.4vw,48px);
+  line-height:1.42;
+  font-weight:800;
+  letter-spacing:0;
+  margin:18px 0 16px;
+}
+h1 .accent{color:var(--green-bright)}
+.lead{
+  font-size:clamp(14px,1.5vw,16px);
+  color:var(--muted);
+  line-height:2.05;
+  max-width:52ch;
+}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.hero-note{
+  margin-top:20px;font-size:12px;color:var(--muted);
+  display:flex;align-items:center;gap:8px;
+}
+.hero-note::before{
+  content:"";width:7px;height:7px;border-radius:50%;
+  background:var(--green-bright);flex-shrink:0;
+}
+
+/* کارت پروفایل هیرو */
+.hero-card{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:26px;
+  padding:24px;
+  box-shadow:var(--shadow-lg);
+}
+.hc-head{display:flex;align-items:center;gap:14px;padding-bottom:20px;border-bottom:1px solid var(--line)}
+.hc-avatar{
+  width:56px;height:56px;border-radius:18px;flex-shrink:0;
+  display:grid;place-items:center;font-size:26px;
+  background:linear-gradient(150deg,#eaf3ec,#d3e8db);
+  border:1px solid #d8e8de;
+}
+.hc-id{display:flex;flex-direction:column;line-height:1.5;min-width:0}
+.hc-id b{font-size:15px;font-weight:800}
+.hc-id span{font-size:12px;color:var(--muted)}
+.hc-badge{
+  margin-inline-start:auto;flex-shrink:0;
+  font-size:11px;font-weight:700;
+  color:var(--green);background:var(--green-soft);
+  border:1px solid #cfe6d9;
+  padding:5px 11px;border-radius:999px;
+}
+.hc-bars{display:flex;flex-direction:column;gap:16px;padding-block:20px}
+.bar-top{
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:12px;font-weight:600;color:var(--muted);margin-bottom:8px;
+}
+.bar-top span:last-child{color:var(--ink);font-weight:700}
+.track{height:8px;border-radius:999px;background:#eef2ec;overflow:hidden}
+.track i{
+  display:block;height:100%;border-radius:999px;
+  background:linear-gradient(90deg,#2f9871,#14664b);
+}
+.hc-foot{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:8px;padding-top:20px;border-top:1px solid var(--line);
+  text-align:center;
+}
+.hc-foot div{display:flex;flex-direction:column;line-height:1.5}
+.hc-foot b{font-size:19px;font-weight:800;color:var(--green)}
+.hc-foot span{font-size:11px;color:var(--muted)}
+
+/* ---------- آمار ---------- */
+.stats-section{padding-bottom:clamp(36px,5vw,60px)}
+.stats-card{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow-sm);
+  overflow:hidden;
+}
+.stat{
+  padding:22px 16px;text-align:center;
+  border-inline-start:1px solid var(--line);
+  display:flex;flex-direction:column;gap:4px;
+}
+.stat:first-child{border-inline-start:0}
+.stat b{font-size:clamp(20px,2.4vw,26px);font-weight:800;color:var(--green)}
+.stat span{font-size:12px;color:var(--muted)}
+
+/* ---------- بخش‌ها ---------- */
+.section{padding-block:clamp(40px,6vw,72px)}
+section[id]{scroll-margin-top:92px}
+
+.section-head{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  gap:20px;flex-wrap:wrap;margin-bottom:28px;
+}
+.section-head h2{
+  font-size:clamp(21px,2.8vw,29px);
+  font-weight:800;line-height:1.5;
+}
+.section-head p{margin-top:8px;color:var(--muted);font-size:14px}
+
+/* سفیران */
+.amb-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(155px,1fr));
+  gap:16px;
+}
+.amb{
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:22px 14px;text-align:center;
+  transition:transform .25s,box-shadow .25s;
+}
+.amb:hover{transform:translateY(-4px);box-shadow:var(--shadow-md)}
+.avatar-ring{
+  width:84px;height:84px;border-radius:50%;padding:3px;margin:0 auto 12px;
+  background:conic-gradient(from 210deg,#c9a75f,#f2e3bb,#2f9871,#c9a75f);
+}
+.avatar{
+  width:100%;height:100%;border-radius:50%;
+  background:#eef4ee;border:3px solid #fff;
+  display:grid;place-items:center;font-size:33px;
+}
+.amb b{display:block;font-size:13.5px;font-weight:700}
+.amb span{font-size:11.5px;color:var(--muted)}
+
+/* پورتال‌ها */
+.portal-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(238px,1fr));
+  gap:16px;
+}
+.portal{
+  position:relative;
+  border-radius:var(--radius);
+  padding:26px 24px;
+  color:#fff;
+  overflow:hidden;
+  min-height:186px;
+  display:flex;flex-direction:column;
+  box-shadow:var(--shadow-md);
+  transition:transform .25s,box-shadow .25s;
+}
+.portal:hover,.portal:focus-within{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+.portal::after{
+  content:"";position:absolute;
+  width:180px;height:180px;border-radius:50%;
+  inset-inline-start:-60px;bottom:-96px;
+  border:1px solid rgba(255,255,255,.22);
+  box-shadow:0 0 0 18px rgba(255,255,255,.06),0 0 0 40px rgba(255,255,255,.04);
+  pointer-events:none;
+}
+.portal .emoji{font-size:30px;line-height:1}
+.portal h3{margin:14px 0 6px;font-size:17px;font-weight:800;line-height:1.6}
+.portal h3 a{color:inherit;text-decoration:none}
+.portal h3 a::after{content:"";position:absolute;inset:0;border-radius:inherit}
+.portal p{font-size:13px;line-height:1.9;color:rgba(255,255,255,.93)}
+
+.portal.market{background:linear-gradient(150deg,#1c7a5a,#0e4a37)}
+.portal.city{background:linear-gradient(150deg,#37436f,#1a2340)}
+.portal.skills{background:linear-gradient(150deg,#7d5c1e,#4c3911)}
+.portal.support{background:linear-gradient(150deg,#3d7186,#214555)}
+
+/* خبر */
+.news-wrap{
+  background:#edf3ed;
+  border-radius:28px;
+  padding:clamp(20px,4vw,34px);
+  border:1px solid #e2eae2;
+}
+.news-grid{
+  display:grid;
+  grid-template-columns:1.3fr 1fr 1fr;
+  gap:16px;
+}
+.news{
+  background:var(--surface);
+  border:1px solid #e4ebe4;
+  border-radius:18px;padding:22px;
+  display:flex;flex-direction:column;justify-content:space-between;gap:18px;
+}
+.news .kind{
+  font-size:10.5px;font-weight:800;
+  color:var(--gold);letter-spacing:0;
+}
+.news h3{font-size:16px;font-weight:800;line-height:1.75;margin-top:10px}
+.news p{font-size:12.5px;line-height:1.95;color:var(--muted);margin-top:8px}
+.news a{font-size:12.5px;font-weight:700;text-decoration:none;color:var(--green)}
+.news a:hover{text-decoration:underline}
+.news.feature{
+  background:linear-gradient(150deg,#164a37,#0d2f24);
+  border-color:transparent;color:#fff;
+}
+.news.feature .kind{color:#e8cb86}
+.news.feature p{color:#cfe2d7}
+.news.feature a{color:#f0d48d}
+
+/* حامیان */
+.sponsor-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(178px,1fr));
+  gap:14px;
+}
+.sponsor{
+  background:var(--surface);
+  border:1px dashed #d5e2d9;
+  border-radius:16px;
+  padding:22px 16px;text-align:center;
+  color:var(--muted);font-size:13px;font-weight:600;
+  transition:border-color .25s,color .25s,background .25s;
+}
+.sponsor:hover{border-color:#bcd9c9;color:var(--green);background:#fbfdfb}
+.sponsor b{display:block;font-size:23px;color:var(--gold);margin-bottom:8px}
+
+/* CTA پایانی */
+.cta-card{
+  background:linear-gradient(150deg,#14664b,#0b3f2e);
+  border-radius:26px;
+  padding:clamp(28px,5vw,46px);
+  color:#fff;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:26px;flex-wrap:wrap;
+  box-shadow:var(--shadow-lg);
+}
+.cta-card h2{font-size:clamp(20px,2.6vw,26px);font-weight:800;line-height:1.6}
+.cta-card p{margin-top:8px;font-size:13.5px;color:#cfe2d7;max-width:56ch;line-height:1.9}
+.cta-card .btn{background:#fff;color:var(--green);box-shadow:none;flex-shrink:0}
+.cta-card .btn:hover{background:#eaf4ee}
+
+/* فوتر */
+.site-footer{
+  border-top:1px solid var(--line);
+  margin-top:clamp(32px,5vw,56px);
+  padding-block:28px 40px;
+  color:var(--muted);font-size:12.5px;
+}
+.footer-inner{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
+.footer-inner nav{display:flex;gap:16px;flex-wrap:wrap}
+.footer-inner nav a{color:var(--muted);text-decoration:none}
+.footer-inner nav a:hover{color:var(--green)}
+
+/* توست */
+.toast{
+  position:fixed;inset-inline-start:20px;bottom:20px;z-index:100;
+  background:#12241e;color:#fff;
+  padding:14px 18px;border-radius:14px;
+  font-size:13px;line-height:1.7;
+  max-width:min(340px,calc(100% - 40px));
+  box-shadow:var(--shadow-lg);
+  opacity:0;transform:translateY(12px);
+  pointer-events:none;
+  transition:opacity .25s,transform .25s;
+}
+.toast.show{opacity:1;transform:translateY(0)}
+
+/* ---------- واکنش‌گرا ---------- */
+@media (max-width:920px){
+  .hero-grid{grid-template-columns:1fr}
+  .news-grid{grid-template-columns:1fr}
+  .stats-card{grid-template-columns:repeat(2,1fr)}
+  .stat:nth-child(3){border-inline-start:0}
+  .stat:nth-child(n+3){border-top:1px solid var(--line)}
+  .nav{order:3;width:100%;margin-inline-start:0;padding-bottom:10px}
+  .header-inner{padding-block:10px;gap:12px}
+  .header-inner > .btn{margin-inline-start:auto}
+}
+@media (max-width:520px){
+  .container{width:calc(100% - 32px)}
+  .hero-card{padding:20px}
+  .hc-foot b{font-size:17px}
+  .stat{padding:18px 10px}
+  .cta-card{flex-direction:column;align-items:flex-start}
+  .cta-card .btn{width:100%}
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{
+    animation-duration:.001ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.001ms!important;
+  }
+}
+</style>
 </head>
 <body>
-  <div class="wrap">
-    <header class="topbar">
-      <div class="brand"><div class="brandmark">ت</div><div>توان‌یار<small>جهانی برای توانمندی و فرصت</small></div></div>
-      <nav class="nav"><a href="#ambassadors">سفیران</a><a href="#portals">جهان توان‌یار</a><a href="#news">پایگاه خبری</a><a href="#supporters">حامیان</a></nav>
-      <button class="pill" onclick="showToast('این بخش در نسخه پیش‌نمایش نمایشی است')">ورود به توان‌یار</button>
-    </header>
 
-    <main>
-      <section class="hero">
-        <div class="hero-copy">
-          <div class="eyebrow">✦ یک جهان، هزاران امکان</div>
-          <h1>توان‌یار؛ جایی برای<br><span>ساختن فرصت‌های تازه</span></h1>
-          <p class="lead">اینجا افراد دارای معلولیت فقط مخاطب خدمات نیستند؛ آن‌ها سازندگان، مدیران، فروشندگان و سفیران یک اقتصاد فراگیرند. جهانی زنده برای همکاری، یادگیری و درآمد پایدار.</p>
-          <div class="hero-actions">
-            <button class="pill" onclick="showToast('به‌زودی در نسخه اصلی فعال می‌شود')">کشف جهان توان‌یار</button>
-            <button class="outline" onclick="document.querySelector('#ambassadors').scrollIntoView({behavior:'smooth'})">آشنایی با سفیران</button>
-          </div>
-          <div class="hero-note">پیش‌نمایش مستقل رابط کاربری · بدون اتصال به اطلاعات واقعی کاربران</div>
-        </div>
-        <div class="scene" aria-label="تصویرسازی مفهومی از جامعه توان‌یار">
-          <div class="orb one"></div><div class="orb two"></div>
-          <div class="float-tag tag-a">🌱 رشد با هم</div><div class="float-tag tag-b">♿ فرصت برابر</div><div class="float-tag tag-c">✦ توانمندی، نه ترحم</div>
-          <div class="platform"></div>
-          <div class="person p2"><div class="head"></div><div class="body"><div class="wheel"></div></div></div>
-          <div class="person"><div class="head"></div><div class="body"><div class="wheel"></div></div></div>
-          <div class="person p3"><div class="head"></div><div class="body"><div class="wheel"></div></div></div>
-        </div>
-      </section>
+<a class="skip-link" href="#main">پرش به محتوای اصلی</a>
 
-      <section id="ambassadors">
-        <div class="section-head"><div><h2>چهره‌های جهان توان‌یار</h2><p>سفیرانی که حلقه‌های ارتباط و فرصت را گسترش می‌دهند</p></div><span class="eyebrow">همراهی، اعتماد، اثرگذاری</span></div>
-        <div class="ambassador-track">
-          <div class="amb"><div class="avatar-ring"><div class="avatar">🧑🏻‍🦽</div></div><strong>سفیر توانمندی</strong><small>جامعه و ارتباطات</small></div>
-          <div class="amb"><div class="avatar-ring"><div class="avatar">👩🏻‍💻</div></div><strong>سفیر مهارت</strong><small>آموزش و فناوری</small></div>
-          <div class="amb"><div class="avatar-ring"><div class="avatar">🧑🏽‍🦽</div></div><strong>سفیر بازار</strong><small>فروش و همکاری</small></div>
-          <div class="amb"><div class="avatar-ring"><div class="avatar">👨🏻‍🎨</div></div><strong>سفیر خلاقیت</strong><small>هنر و تولید</small></div>
-          <div class="amb"><div class="avatar-ring"><div class="avatar">👩🏽‍🦽</div></div><strong>سفیر شهر</strong><small>توسعه محلی</small></div>
-          <div class="amb"><div class="avatar-ring"><div class="avatar">🤝</div></div><strong>همراه توان‌یار</strong><small>همکاری اجتماعی</small></div>
-        </div>
-      </section>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="#">
+      <span class="brand-mark" aria-hidden="true">ت</span>
+      <span class="brand-text">
+        <b>توان‌یار</b>
+        <span>جهانی برای توانمندی و فرصت</span>
+      </span>
+    </a>
 
-      <section id="portals">
-        <div class="section-head"><div><h2>دروازه‌های ورود به جهان توان‌یار</h2><p>هر مسیر، شروع یک تجربه و فرصت تازه است</p></div></div>
-        <div class="portals">
-          <article class="portal market" onclick="showToast('بازار در نسخه اصلی به فروشگاه متصل خواهد شد')"><div class="emoji">🛍️</div><h3>بازار توان‌یار</h3><p>خرید، فروش و همکاری با کسب‌وکارهای همراه</p></article>
-          <article class="portal city" onclick="showToast('شهر توان در حال طراحی و توسعه است')"><div class="emoji">🏙️</div><h3>شهر توان</h3><p>بازی، ساخت منابع، کارگاه و مسیرهای پیشرفت</p></article>
-          <article class="portal skills" onclick="showToast('بخش مهارت و اشتغال به‌زودی فعال می‌شود')"><div class="emoji">🧩</div><h3>مهارت و اشتغال</h3><p>نمایش توانایی‌ها و اتصال به فرصت‌های کاری</p></article>
-          <article class="portal support" onclick="showToast('درگاه همکاری و حمایت در نسخه اصلی تکمیل می‌شود')"><div class="emoji">🌍</div><h3>همکاری و حمایت</h3><p>پیوند شرکت‌ها، حامیان و جامعه توان‌یار</p></article>
-        </div>
-      </section>
+    <nav class="nav" aria-label="ناوبری اصلی">
+      <a href="#ambassadors">سفیران</a>
+      <a href="#portals">جهان توان‌یار</a>
+      <a href="#news">پایگاه خبری</a>
+      <a href="#supporters">حامیان</a>
+    </nav>
 
-      <section id="news">
-        <div class="news-area">
-          <div class="section-head"><div><h2>پایگاه خبری توان‌یار</h2><p>روایت فرصت‌ها، تجربه‌ها و دستاوردهای جامعه فراگیر</p></div><span class="eyebrow">رسانه مستقل توان‌یار</span></div>
-          <div class="news-grid">
-            <article class="news feature"><div><span class="kind">ویژه · نمونه نمایشی</span><h3>اقتصاد فراگیر؛ وقتی فرصت‌ها با مشارکت همه ساخته می‌شوند</h3><p>توان‌یار به دنبال ساخت بستری است که نقش افراد دارای معلولیت را از دریافت‌کننده خدمت به شریک و سازنده فرصت تغییر دهد.</p></div><a href="#supporters">بیشتر درباره چشم‌انداز ←</a></article>
-            <article class="news"><div><span class="kind">جامعه · نمونه</span><h3>سفیران محلی؛ حلقه اتصال کسب‌وکارها و مردم</h3><p>معرفی مدلی برای همکاری محلی، ارتباط انسانی و ایجاد درآمد از مسیر اعتماد.</p></div><a href="#ambassadors">آشنایی با سفیران ←</a></article>
-            <article class="news"><div><span class="kind">فناوری · نمونه</span><h3>طراحی دسترس‌پذیر، از ابتدا و برای همه</h3><p>تجربه‌ای ساده و قابل استفاده با صفحه‌خوان، موبایل و حرکت کمتر؛ بدون کنار گذاشتن زیبایی.</p></div><a href="#portals">دیدن بخش‌ها ←</a></article>
-          </div>
-        </div>
-      </section>
-
-      <section id="supporters">
-        <div class="section-head"><div><h2>همراهان و حامیان</h2><p>جایگاهی برای برندها و مجموعه‌هایی که به فرصت برابر باور دارند</p></div></div>
-        <div class="sponsors">
-          <div class="sponsor"><b>✦</b>جایگاه حامی نخست</div>
-          <div class="sponsor"><b>◈</b>همراه توسعه محلی</div>
-          <div class="sponsor"><b>◎</b>حامی نوآوری</div>
-          <div class="sponsor"><b>❖</b>شریک اجتماعی</div>
-          <div class="sponsor"><b>✧</b>همراه توان‌یار</div>
-        </div>
-      </section>
-    </main>
-    <footer><span>© توان‌یار · پیش‌نمایش مستقل رابط کاربری</span><span>ساخته‌شده با رویکرد RTL و دسترس‌پذیری</span></footer>
+    <button class="btn btn-primary" type="button" data-demo="ورود به توان‌یار در نسخهٔ نمایشی غیرفعال است">
+      ورود به توان‌یار
+    </button>
   </div>
-  <button class="sound" id="soundBtn" aria-pressed="false" onclick="toggleSound()">♪ صدای تعامل: خاموش</button>
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script>
-    let audioOn=false, audioCtx=null;
-    function showToast(message){const t=document.getElementById('toast');t.textContent=message;t.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove('show'),2600)}
-    function toggleSound(){audioOn=!audioOn;const b=document.getElementById('soundBtn');b.textContent=audioOn?'♪ صدای تعامل: روشن':'♪ صدای تعامل: خاموش';b.setAttribute('aria-pressed',String(audioOn));if(audioOn)playTone(660,.09)}
-    function playTone(freq,duration){if(!audioOn)return;try{audioCtx=audioCtx||new(window.AudioContext||window.webkitAudioContext)();const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.frequency.value=freq;o.type='sine';g.gain.setValueAtTime(.0001,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(.045,audioCtx.currentTime+.02);g.gain.exponentialRampToValueAtTime(.0001,audioCtx.currentTime+duration);o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+duration)}catch(e){}}
-    document.querySelectorAll('.portal').forEach((p,i)=>p.addEventListener('click',()=>playTone(420+i*75,.12)));
-  </script>
+</header>
+
+<main id="main">
+
+  <!-- هیرو -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="eyebrow">✦ یک جهان، هزاران امکان</span>
+        <h1>توان‌یار؛ جایی برای<br><span class="accent">ساختن فرصت‌های تازه</span></h1>
+        <p class="lead">
+          اینجا افراد دارای معلولیت فقط مخاطب خدمات نیستند؛ آن‌ها سازندگان، مدیران،
+          فروشندگان و سفیران یک اقتصاد فراگیرند. جهانی زنده برای همکاری، یادگیری و درآمد پایدار.
+        </p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" type="button" data-demo="کشف جهان توان‌یار در نسخهٔ اصلی فعال می‌شود">
+            کشف جهان توان‌یار
+          </button>
+          <a class="btn btn-ghost" href="#ambassadors">آشنایی با سفیران</a>
+        </div>
+        <p class="hero-note">پیش‌نمایش مستقل رابط کاربری — بدون اتصال به اطلاعات واقعی کاربران</p>
+      </div>
+
+      <aside class="hero-card" aria-label="نمونهٔ کارت مهارت یک سفیر">
+        <div class="hc-head">
+          <span class="hc-avatar" aria-hidden="true">👩🏻‍💻</span>
+          <span class="hc-id">
+            <b>سفیر مهارت</b>
+            <span>آموزش و فناوری · سطح ۳</span>
+          </span>
+          <span class="hc-badge">فعال</span>
+        </div>
+
+        <div class="hc-bars">
+          <div class="bar">
+            <div class="bar-top"><span>مهارت‌های دیجیتال</span><span>۸۲٪</span></div>
+            <div class="track"><i style="width:82%"></i></div>
+          </div>
+          <div class="bar">
+            <div class="bar-top"><span>همکاری و ارتباط</span><span>۶۷٪</span></div>
+            <div class="track"><i style="width:67%"></i></div>
+          </div>
+          <div class="bar">
+            <div class="bar-top"><span>تجربهٔ بازار</span><span>۴۵٪</span></div>
+            <div class="track"><i style="width:45%"></i></div>
+          </div>
+        </div>
+
+        <div class="hc-foot">
+          <div><b>۱۲</b><span>فرصت فعال</span></div>
+          <div><b>۴</b><span>همکاری جاری</span></div>
+          <div><b>۳۸</b><span>امتیاز توان</span></div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- آمار -->
+  <section class="stats-section" aria-label="آمار کلی جامعه">
+    <div class="container">
+      <div class="stats-card">
+        <div class="stat"><b>۱٬۲۰۰+</b><span>عضو جامعه</span></div>
+        <div class="stat"><b>۳۴۰</b><span>فرصت شغلی</span></div>
+        <div class="stat"><b>۹۶</b><span>کسب‌وکار همراه</span></div>
+        <div class="stat"><b>۲۸</b><span>شهر فعال</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- سفیران -->
+  <section class="section" id="ambassadors">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2>چهره‌های جهان توان‌یار</h2>
+          <p>سفیرانی که حلقه‌های ارتباط و فرصت را گسترش می‌دهند</p>
+        </div>
+        <span class="eyebrow">همراهی، اعتماد، اثرگذاری</span>
+      </div>
+
+      <div class="amb-grid">
+        <div class="amb">
+          <div class="avatar-ring"><div class="avatar" aria-hidden="true">🧑🏻‍🦽</div></div>
+          <b>سفیر توانمندی</b><span>جامعه و ارتباطات</span>
+        </div>
+        <div class="amb">
+          <div class="avatar-ring"><div class="avatar" aria-hidden="true">👩🏻‍💻</div></div>
+          <b>سفیر مهارت</b><span>آموزش و فناوری</span>
+        </div>
+        <div class="amb">
+          <div class="avatar-ring"><div class="avatar" aria-hidden="true">🧑🏽‍🦽</div></div>
+          <b>سفیر بازار</b><span>فروش و همکاری</span>
+        </div>
+        <div class="amb">
+          <div class="avatar-ring"><div class="avatar" aria-hidden="true">👨🏻‍🎨</div></div>
+          <b>سفیر خلاقیت</b><span>هنر و تولید</span>
+        </div>
+        <div class="amb">
+          <div class="avatar-ring"><div class="avatar" aria-hidden="true">👩🏽‍🦽</div></div>
+          <b>سفیر شهر</b><span>توسعهٔ محلی</span>
+        </div>
+        <div class="amb">
+          <div class="avatar-ring"><div class="avatar" aria-hidden="true">🤝</div></div>
+          <b>همراه توان‌یار</b><span>همکاری اجتماعی</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- پورتال‌ها -->
+  <section class="section" id="portals">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2>دروازه‌های ورود به جهان توان‌یار</h2>
+          <p>هر مسیر، شروع یک تجربه و فرصت تازه است</p>
+        </div>
+      </div>
+
+      <div class="portal-grid">
+        <article class="portal market">
+          <span class="emoji" aria-hidden="true">🛍️</span>
+          <h3><a href="#portals" data-demo="بازار توان‌یار در نسخهٔ اصلی به فروشگاه متصل می‌شود">بازار توان‌یار</a></h3>
+          <p>خرید، فروش و همکاری با کسب‌وکارهای همراه</p>
+        </article>
+
+        <article class="portal city">
+          <span class="emoji" aria-hidden="true">🏙️</span>
+          <h3><a href="#portals" data-demo="شهر توان در حال طراحی و توسعه است">شهر توان</a></h3>
+          <p>بازی، ساخت منابع، کارگاه و مسیرهای پیشرفت</p>
+        </article>
+
+        <article class="portal skills">
+          <span class="emoji" aria-hidden="true">🧩</span>
+          <h3><a href="#portals" data-demo="بخش مهارت و اشتغال به‌زودی فعال می‌شود">مهارت و اشتغال</a></h3>
+          <p>نمایش توانایی‌ها و اتصال به فرصت‌های کاری</p>
+        </article>
+
+        <article class="portal support">
+          <span class="emoji" aria-hidden="true">🌍</span>
+          <h3><a href="#portals" data-demo="درگاه همکاری و حمایت در نسخهٔ اصلی تکمیل می‌شود">همکاری و حمایت</a></h3>
+          <p>پیوند شرکت‌ها، حامیان و جامعهٔ توان‌یار</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- خبر -->
+  <section class="section" id="news">
+    <div class="container">
+      <div class="news-wrap">
+        <div class="section-head">
+          <div>
+            <h2>پایگاه خبری توان‌یار</h2>
+            <p>روایت فرصت‌ها، تجربه‌ها و دستاوردهای جامعهٔ فراگیر</p>
+          </div>
+          <span class="eyebrow">رسانهٔ مستقل توان‌یار</span>
+        </div>
+
+        <div class="news-grid">
+          <article class="news feature">
+            <div>
+              <span class="kind">ویژه · نمونهٔ نمایشی</span>
+              <h3>اقتصاد فراگیر؛ وقتی فرصت‌ها با مشارکت همه ساخته می‌شوند</h3>
+              <p>توان‌یار به دنبال ساخت بستری است که نقش افراد دارای معلولیت را از دریافت‌کنندهٔ خدمت به شریک و سازندهٔ فرصت تغییر دهد.</p>
+            </div>
+            <a href="#supporters">بیشتر دربارهٔ چشم‌انداز ←</a>
+          </article>
+
+          <article class="news">
+            <div>
+              <span class="kind">جامعه · نمونه</span>
+              <h3>سفیران محلی؛ حلقهٔ اتصال کسب‌وکارها و مردم</h3>
+              <p>معرفی مدلی برای همکاری محلی، ارتباط انسانی و ایجاد درآمد از مسیر اعتماد.</p>
+            </div>
+            <a href="#ambassadors">آشنایی با سفیران ←</a>
+          </article>
+
+          <article class="news">
+            <div>
+              <span class="kind">فناوری · نمونه</span>
+              <h3>طراحی دسترس‌پذیر، از ابتدا و برای همه</h3>
+              <p>تجربه‌ای ساده و قابل استفاده با صفحه‌خوان، موبایل و حرکت کمتر؛ بدون کنار گذاشتن زیبایی.</p>
+            </div>
+            <a href="#portals">دیدن بخش‌ها ←</a>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- حامیان -->
+  <section class="section" id="supporters">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2>همراهان و حامیان</h2>
+          <p>جایگاهی برای برندها و مجموعه‌هایی که به فرصت برابر باور دارند</p>
+        </div>
+      </div>
+
+      <div class="sponsor-grid">
+        <div class="sponsor"><b aria-hidden="true">✦</b>جایگاه حامی نخست</div>
+        <div class="sponsor"><b aria-hidden="true">◈</b>همراه توسعهٔ محلی</div>
+        <div class="sponsor"><b aria-hidden="true">◎</b>حامی نوآوری</div>
+        <div class="sponsor"><b aria-hidden="true">❖</b>شریک اجتماعی</div>
+        <div class="sponsor"><b aria-hidden="true">✧</b>همراه توان‌یار</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <div class="cta-card">
+        <div>
+          <h2>آماده‌اید بخشی از جهان توان‌یار باشید؟</h2>
+          <p>چه فرد، چه کسب‌وکار و چه حامی — هر نقش، یک حلقهٔ تازه در زنجیرهٔ فرصت می‌سازد.</p>
+        </div>
+        <button class="btn" type="button" data-demo="ثبت‌نام در نسخهٔ نمایشی فعال نیست">
+          شروع همکاری
+        </button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <span>© توان‌یار — پیش‌نمایش مستقل رابط کاربری</span>
+    <nav aria-label="ناوبری فوتر">
+      <a href="#ambassadors">سفیران</a>
+      <a href="#portals">جهان توان‌یار</a>
+      <a href="#news">پایگاه خبری</a>
+      <a href="#supporters">حامیان</a>
+    </nav>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  var toastEl = document.getElementById('toast');
+  var toastTimer;
+
+  function showToast(message) {
+    toastEl.textContent = message;
+    toastEl.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      toastEl.classList.remove('show');
+    }, 2800);
+  }
+
+  document.querySelectorAll('[data-demo]').forEach(function (el) {
+    el.addEventListener('click', function (event) {
+      event.preventDefault();
+      showToast(el.getAttribute('data-demo') || 'این بخش نمایشی است');
+    });
+  });
+})();
+</script>
+
 </body>
 </html>
