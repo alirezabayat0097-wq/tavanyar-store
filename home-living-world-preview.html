@@ -22,6 +22,10 @@
     button:active{transform:scale(.97)}
     #city-canvas-container{position:relative;width:100%;height:min(74vh,760px);min-height:480px;overflow:hidden;border:1px solid #ffffff2b;border-radius:22px;background:linear-gradient(#87ceeb,#b7d7e8 55%,#4ade80);box-shadow:0 24px 70px #0008;touch-action:none}
     #city-canvas-container canvas{display:block;width:100%;height:100%;touch-action:none;outline:none}
+    .city-drive-hud{position:absolute;z-index:4;top:12px;right:12px;left:12px;display:flex;justify-content:space-between;gap:8px;pointer-events:none;font-size:12px}
+    .city-drive-hud span{padding:8px 11px;border-radius:12px;background:#071426d9;border:1px solid #ffffff35;color:#d1fae5;backdrop-filter:blur(8px)}
+    .city-drive-help{color:#d1fae5}
+
     #loading-city{position:absolute;inset:0;display:grid;place-items:center;background:#101b35;color:#d1fae5;z-index:2}
     .loader{display:flex;flex-direction:column;align-items:center;gap:12px}
     .spinner{width:34px;height:34px;border:3px solid #ffffff30;border-top-color:#34d399;border-radius:50%;animation:spin .8s linear infinite}
@@ -58,10 +62,11 @@
       <button id="main-site" type="button">↗ وب‌سایت توان‌یار</button>
     </div>
     <section id="city-canvas-container" aria-label="محیط سه‌بعدی شهر توان‌یار">
+      <div class="city-drive-hud"><span id="avatar-state">آواتار: ایستاده</span><span id="camera-state">دوربین: نمای شخصیت</span></div>
       <div id="loading-city"><div class="loader"><div class="spinner"></div><div>در حال ساخت شهر توان‌یار…</div></div></div>
       <div id="city-toast" role="status" aria-live="polite"></div>
     </section>
-    <p class="hint"><strong>راهنمای حرکت:</strong> با یک انگشت یا ماوس محیط را بچرخانید؛ برای نزدیک و دور شدن از دو انگشت یا چرخ ماوس استفاده کنید. روی ساختمان‌ها بزنید تا معرفی بخش آن‌ها نمایش داده شود.</p>
+    <p class="hint"><strong>راهنمای حرکت:</strong> با یک انگشت دوربین را ۳۶۰ درجه بچرخانید. دو انگشت را باز کنید تا آواتار شتاب بگیرد و بدود؛ انگشت‌ها را نزدیک کنید تا سرعت کم شود و بایستد. پس از توقف، ادامه جمع کردن انگشت‌ها دوربین را به نمای هوایی می‌برد. برای بازگشت، انگشت‌ها را باز کنید. روی ساختمان‌ها بزنید تا معرفی بخش آن‌ها نمایش داده شود.</p>
     <footer>توان‌یار · شهر فرصت‌ها، مهارت‌ها و همکاری</footer>
   </main>
   <script type="module">
@@ -111,9 +116,9 @@ import * as THREE from 'three';
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
-    controls.autoRotate = true;
+    controls.autoRotate = false;
     controls.autoRotateSpeed = 0.5;
-    controls.maxPolarAngle = Math.PI / 2.1; // جلوگیری از رفتن به زیر زمین
+    controls.minPolarAngle = 0.08; // امکان نگاه از بالا\n    controls.maxPolarAngle = Math.PI - 0.08; // امکان نگاه از پایین و چرخش عمودی گسترده\n    controls.enableZoom = false; // زوم دو انگشتی به کنترل حرکت و نمای هوایی اختصاص دارد\n    controls.enablePan = false;
     controls.minDistance = 20;
     controls.maxDistance = 100;
     controls.target.set(0, 5, 0);
@@ -353,10 +358,138 @@ import * as THREE from 'three';
     water.position.set(0, 0.1, 0);
     scene.add(water);
 
-    // ۱۰. انیمیشن
+
+    // ۱۰. آواتار سه‌بعدی و کنترل حرکتی اختصاصی با ژست دو انگشتی
+    const avatar = new THREE.Group();
+    avatar.position.set(0, 0, 11);
+    scene.add(avatar);
+
+    const skinMat = new THREE.MeshStandardMaterial({color:0xf2c9a5, roughness:0.82});
+    const clothMat = new THREE.MeshStandardMaterial({color:0x0f766e, roughness:0.72});
+    const darkMat = new THREE.MeshStandardMaterial({color:0x172554, roughness:0.8});
+    const torso = new THREE.Mesh(new THREE.CapsuleGeometry(0.72, 1.05, 4, 8), clothMat);
+    torso.position.y = 2.05; torso.castShadow = true; avatar.add(torso);
+    const head = new THREE.Mesh(new THREE.SphereGeometry(0.48, 16, 12), skinMat);
+    head.position.y = 3.35; head.castShadow = true; avatar.add(head);
+    const leftArm = new THREE.Mesh(new THREE.CapsuleGeometry(0.17, 0.72, 3, 6), clothMat);
+    leftArm.position.set(-0.88,2.15,0); leftArm.rotation.z=-0.18; avatar.add(leftArm);
+    const rightArm = leftArm.clone(); rightArm.position.x=0.88; rightArm.rotation.z=0.18; avatar.add(rightArm);
+    const leftLeg = new THREE.Mesh(new THREE.CapsuleGeometry(0.2,0.78,3,6),darkMat);
+    leftLeg.position.set(-0.3,0.72,0); avatar.add(leftLeg);
+    const rightLeg = leftLeg.clone(); rightLeg.position.x=0.3; avatar.add(rightLeg);
+    const shadow = new THREE.Mesh(new THREE.CircleGeometry(0.9,24),new THREE.MeshBasicMaterial({color:0x0b1728,transparent:true,opacity:0.22}));
+    shadow.rotation.x=-Math.PI/2; shadow.position.y=0.035; avatar.add(shadow);
+
+    const avatarState=document.getElementById('avatar-state');
+    const cameraState=document.getElementById('camera-state');
+    const drive={speed:0,altitude:0,lastSpan:0,touching:false,heading:0,walkPhase:0};
+    const clock=new THREE.Clock();
+    const groundOffset=camera.position.clone().sub(controls.target);
+    const aerialDirection=new THREE.Vector3(groundOffset.x,0,groundOffset.z).normalize();
+    if(aerialDirection.lengthSq()<0.001)aerialDirection.set(0,0,1);
+    const desiredMove=new THREE.Vector3();
+    let pinchPointers=new Map();
+
+    function pinchDistance(){
+      const pts=[...pinchPointers.values()];
+      if(pts.length<2)return 0;
+      return Math.hypot(pts[0].x-pts[1].x,pts[0].y-pts[1].y);
+    }
+    function setDriveStatus(){
+      if(avatarState)avatarState.textContent='آواتار: '+(drive.speed>72?'دویدن سریع':drive.speed>5?'راه رفتن':'ایستاده');
+      if(cameraState)cameraState.textContent='دوربین: '+(drive.altitude>0.5?'نمای هوایی':drive.altitude>0.02?'در حال اوج‌گیری / فرود':'نمای شخصیت');
+    }
+    function onPinchChange(delta){
+      if(delta>0.35){
+        if(drive.altitude>0)drive.altitude=Math.max(0,drive.altitude-delta/150);
+        else drive.speed=Math.min(100,drive.speed+delta*1.35);
+      }else if(delta< -0.35){
+        if(drive.speed>0.5)drive.speed=Math.max(0,drive.speed+delta*1.45);
+        else drive.altitude=Math.min(1,drive.altitude+(-delta)/150);
+      }
+      setDriveStatus();
+    }
+    container.addEventListener('pointerdown',e=>{
+      if(e.pointerType==='touch'){
+        pinchPointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+        if(pinchPointers.size===2){
+          drive.touching=true;drive.lastSpan=pinchDistance();
+          controls.enabled=false;
+        }
+      }
+    },{passive:true});
+    container.addEventListener('pointermove',e=>{
+      if(!pinchPointers.has(e.pointerId))return;
+      pinchPointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+      if(pinchPointers.size===2&&drive.touching){
+        const span=pinchDistance();
+        onPinchChange(span-drive.lastSpan);
+        drive.lastSpan=span;
+      }
+    },{passive:true});
+    function endPinch(e){
+      pinchPointers.delete(e.pointerId);
+      if(pinchPointers.size<2){
+        drive.touching=false;drive.lastSpan=0;
+        controls.enabled=true;
+      }
+    }
+    container.addEventListener('pointerup',endPinch,{passive:true});
+    container.addEventListener('pointercancel',endPinch,{passive:true});
+    container.addEventListener('lostpointercapture',endPinch,{passive:true});
+
+    // چرخش بدن مستقل از جهت نگاه دوربین؛ حرکت همواره رو به مسیر انتخاب‌شده است
+    function updateAvatarMotion(dt){
+      const forward=new THREE.Vector3();
+      camera.getWorldDirection(forward);
+      forward.y=0;forward.normalize();
+      if(forward.lengthSq()<0.001)forward.set(0,0,-1);
+      desiredMove.copy(forward);
+      if(drive.speed>0.5){
+        const step=desiredMove.multiplyScalar((drive.speed/100)*13*dt);
+        avatar.position.add(step);
+        const targetYaw=Math.atan2(step.x,step.z);
+        let diff=((targetYaw-avatar.rotation.y+Math.PI*3)%(Math.PI*2))-Math.PI;
+        avatar.rotation.y+=diff*Math.min(1,dt*8);
+        drive.walkPhase+=dt*(4+drive.speed*0.12);
+      }
+      const moving=drive.speed>5;
+      const swing=moving?Math.sin(drive.walkPhase)*Math.min(0.65,drive.speed/120):0;
+      leftLeg.rotation.x=swing;rightLeg.rotation.x=-swing;
+      leftArm.rotation.x=-swing*0.75;rightArm.rotation.x=swing*0.75;
+      torso.position.y=2.05+(moving?Math.abs(Math.sin(drive.walkPhase*2))*0.07:0);
+      // دوربین زمینی همراه آواتار جابه‌جا می‌شود؛ زاویه آزادش حفظ می‌شود
+      if(drive.altitude===0){
+        const shift=stepForCamera(dt);
+        camera.position.add(shift);controls.target.add(shift);
+      }
+    }
+    function stepForCamera(dt){
+      if(drive.speed<=0.5)return new THREE.Vector3();
+      const d=new THREE.Vector3();camera.getWorldDirection(d);d.y=0;d.normalize();
+      return d.multiplyScalar((drive.speed/100)*13*dt);
+    }
+    function updateAerialCamera(){
+      if(drive.altitude<=0)return;
+      const t=drive.altitude;
+      const groundTarget=avatar.position.clone().add(new THREE.Vector3(0,3,0));
+      const groundPos=groundTarget.clone().add(groundOffset);
+      const skyTarget=avatar.position.clone().add(new THREE.Vector3(0,34,0));
+      const skyPos=skyTarget.clone().add(aerialDirection.clone().multiplyScalar(105)).add(new THREE.Vector3(0,72,0));
+      controls.target.lerpVectors(groundTarget,skyTarget,t);
+      camera.position.lerpVectors(groundPos,skyPos,t);
+      camera.lookAt(controls.target);
+      controls.update();
+    }
+
+    // ۱۱. انیمیشن
     function animate() {
         requestAnimationFrame(animate);
-        controls.update();
+        const dt=Math.min(clock.getDelta(),0.05);
+        updateAvatarMotion(dt);
+        updateAerialCamera();
+        if(drive.altitude===0)controls.update();
+        setDriveStatus();
         renderer.render(scene, camera);
     }
     animate();
@@ -410,6 +543,8 @@ import * as THREE from 'three';
     document.getElementById('reset-view').addEventListener('click', () => {
         camera.position.copy(initialPosition);
         controls.target.set(0, 5, 0);
+        avatar.position.set(0,0,11);drive.speed=0;drive.altitude=0;drive.walkPhase=0;
+        controls.enabled=true;setDriveStatus();
         controls.autoRotate = false;
         document.getElementById('rotate-toggle').textContent = '▶ شروع چرخش خودکار';
         controls.update();
