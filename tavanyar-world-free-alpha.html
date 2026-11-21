@@ -79,7 +79,7 @@ const wheelMeshes=[];for(let s of [-1,1]){let wheel=new THREE.Mesh(new THREE.Tor
 avatar.position.set(0,0,9);
 let yaw=0;
 let currentSpeed=0,targetSpeed=0,steer=0,targetSteer=0;
-const maxSpeed=7.2,turnRate=.62;
+const maxSpeed=7.2,turnRate=.38;
 const pointers=new Map();
 let touchStart=null,lastTouch=null;
 const canvas=renderer.domElement;
@@ -95,7 +95,8 @@ function setTouch(e){
  const nx=Math.abs(dx)<dead?0:Math.sign(dx)*Math.min(1,(Math.abs(dx)-dead)/72);
  const ny=Math.abs(dy)<dead?0:Math.sign(dy)*Math.min(1,(Math.abs(dy)-dead)/78);
  targetSpeed=THREE.MathUtils.clamp(-ny*maxSpeed,-maxSpeed,maxSpeed);
- targetSteer=nx;
+ // محور افقی اصلاح شد: راستِ انگشت باید راستِ مسیر باشد.
+ targetSteer=-nx;
  lastTouch={x:e.clientX,y:e.clientY};
 }
 canvas.addEventListener('pointerdown',e=>{
@@ -174,7 +175,8 @@ function animate(){
  currentSpeed=THREE.MathUtils.damp(currentSpeed,targetSpeed,13.5,dt);
  steer=THREE.MathUtils.damp(steer,targetSteer,15.0,dt);
  // پیچیدن فقط هنگام حرکت؛ دنده عقب جهت بدنه را برعکس نمی‌کند.
- if(Math.abs(currentSpeed)>.12)yaw+=steer*turnRate*dt*Math.sign(currentSpeed);
+ // فقط هنگام حرکت رو به جلو فرمان پیچش اثر دارد؛ در دنده‌عقب جهت بدنه ثابت می‌ماند.
+ if(currentSpeed>.12)yaw+=steer*turnRate*(currentSpeed/maxSpeed)*dt;
  avatar.rotation.y=yaw;
  if(Math.abs(currentSpeed)>.025){
   const forward=new THREE.Vector3(-Math.sin(yaw),0,Math.cos(yaw));
