@@ -96,7 +96,7 @@ function setTouch(e){
  const nx=Math.abs(dx)<dead?0:Math.sign(dx)*Math.min(1,(Math.abs(dx)-dead)/72);
  const ny=Math.abs(dy)<dead?0:Math.sign(dy)*Math.min(1,(Math.abs(dy)-dead)/78);
  targetSpeed=THREE.MathUtils.clamp(-ny*maxSpeed,-maxSpeed,maxSpeed);
- targetSteerAngle=THREE.MathUtils.clamp(nx*maxSteerAngle,-maxSteerAngle,maxSteerAngle);
+ targetSteerAngle=THREE.MathUtils.clamp(-nx*maxSteerAngle,-maxSteerAngle,maxSteerAngle);
  lastTouch={x:e.clientX,y:e.clientY};
 }
 canvas.addEventListener('pointerdown',e=>{
@@ -197,7 +197,7 @@ function animate(){
   const back=new THREE.Vector3(-Math.sin(yaw),0,-Math.cos(yaw));
   const left=new THREE.Vector3(-Math.cos(yaw),0,Math.sin(yaw));
   // دوربین سه‌رخ از سمت شانهٔ چپ: جابه‌جایی جانبی واضح‌تر، کمی عقب‌تر و هم‌ارتفاع شانه.
-  const shoulderCamera=avatar.position.clone().addScaledVector(back,3.25).addScaledVector(left,1.35).add(new THREE.Vector3(0,2.25,0));
+  const shoulderCamera=avatar.position.clone().addScaledVector(back,2.75).addScaledVector(left,2.0).add(new THREE.Vector3(0,1.62,0));
   camera.position.lerp(shoulderCamera,1-Math.exp(-9*dt));
   camera.lookAt(target.clone().add(new THREE.Vector3(0,.35,0)));
  }
