@@ -1,0 +1,150 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f7f8f3">
+  <meta name="description" content="پیش‌نمایش مستقل جهان زنده توان‌یار">
+  <title>توان‌یار | جهان زنده</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{--ink:#18352d;--muted:#718078;--green:#176b50;--green2:#2f9871;--mint:#dff1e7;--gold:#c99d4b;--paper:#f7f8f3;--white:#fff;--navy:#18263c}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:Vazirmatn,Tahoma,sans-serif;overflow-x:hidden}
+    button,a{font:inherit}button{cursor:pointer}.wrap{width:min(1160px,92%);margin:auto}
+    .topbar{height:70px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:22px}.brandmark{width:40px;height:40px;border-radius:14px;background:linear-gradient(145deg,#278c67,#12543e);display:grid;place-items:center;color:#fff;box-shadow:0 8px 20px #176b5030}
+    .brand small{display:block;font-size:10px;color:var(--muted);font-weight:500;margin-top:-4px}
+    .nav{display:flex;gap:20px;align-items:center}.nav a{color:#53665d;text-decoration:none;font-size:13px}.nav a:hover{color:var(--green)}
+    .pill{border:0;border-radius:30px;background:var(--green);color:white;padding:11px 18px;font-weight:700;box-shadow:0 8px 20px #176b5028}
+    .hero{position:relative;min-height:560px;padding:50px 0 25px;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:20px;isolation:isolate}
+    .hero:before{content:"";position:absolute;z-index:-2;width:650px;height:470px;border-radius:50%;background:radial-gradient(ellipse,#d9eee2 0%,#eaf3e9 48%,transparent 72%);left:2%;top:25px;filter:blur(4px)}
+    .hero-copy{padding:20px 0}.eyebrow{display:inline-flex;align-items:center;gap:8px;background:#e8f2eb;color:var(--green);padding:8px 14px;border-radius:30px;font-size:12px;font-weight:700}
+    h1{font-size:clamp(34px,5vw,58px);line-height:1.35;margin:18px 0 14px;letter-spacing:-1.5px}h1 span{color:var(--green2)}
+    .lead{color:#64746c;line-height:2.1;max-width:500px;font-size:15px}
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}.outline{border:1px solid #cbd9d0;border-radius:30px;padding:10px 18px;color:var(--green);background:#ffffffa8;font-weight:700}
+    .hero-note{font-size:11px;color:#87948d;margin-top:18px}
+    .scene{height:440px;position:relative;perspective:900px;display:grid;place-items:center}
+    .orb{position:absolute;border-radius:50%;filter:blur(1px)}.orb.one{width:280px;height:280px;background:radial-gradient(circle at 35% 30%,#fff,#d5ecdf 65%,#b8d8c5);top:55px;right:17%}
+    .orb.two{width:100px;height:100px;background:radial-gradient(circle at 35% 30%,#fff0c9,#d5b36e);left:10%;top:65px;opacity:.75}
+    .platform{position:absolute;width:360px;height:105px;border-radius:50%;bottom:45px;background:linear-gradient(180deg,#e6eee7,#b8cfc0);transform:rotateX(65deg) rotateZ(-8deg);box-shadow:0 28px 40px #173d2c26}
+    .platform:after{content:"";position:absolute;inset:12px 25px;border:1px solid #ffffffb8;border-radius:50%}
+    .person{position:absolute;z-index:2;bottom:112px;display:flex;flex-direction:column;align-items:center;animation:float 5s ease-in-out infinite;filter:drop-shadow(0 14px 12px #18352d20)}
+    .person .head{width:58px;height:58px;border-radius:50%;background:#e8b995;border:5px solid #fff;z-index:2}
+    .person .body{width:100px;height:125px;border-radius:48px 48px 24px 24px;background:linear-gradient(145deg,#2d9270,#155840);margin-top:-4px;position:relative}
+    .person .body:after{content:"";position:absolute;width:130px;height:18px;border-radius:50%;background:#263d36;bottom:-16px;right:-15px}
+    .wheel{position:absolute;width:125px;height:125px;border:8px solid #344d47;border-radius:50%;bottom:-34px;right:-14px;z-index:-1}
+    .wheel:before,.wheel:after{content:"";position:absolute;background:#71857b;left:50%;top:0;bottom:0;width:2px;transform:translateX(-50%)}.wheel:after{transform:translateX(-50%) rotate(90deg)}
+    .person.p2{transform:scale(.72);right:8%;bottom:115px;animation-delay:-2s}.person.p2 .body{background:linear-gradient(145deg,#d6a64f,#9b6c29)}
+    .person.p3{transform:scale(.6);left:5%;bottom:125px;animation-delay:-3s}.person.p3 .body{background:linear-gradient(145deg,#8a83b9,#55507e)}
+    .float-tag{position:absolute;z-index:3;background:#fff;border:1px solid #edf1ec;padding:10px 14px;border-radius:16px;box-shadow:0 12px 30px #1c45301a;font-size:12px;font-weight:700}
+    .tag-a{top:85px;right:2%}.tag-b{bottom:100px;left:0}.tag-c{top:35px;left:15%;color:var(--green)}
+    @keyframes float{0%,100%{translate:0 0}50%{translate:0 -12px}}
+    section{padding:55px 0}.section-head{display:flex;align-items:end;justify-content:space-between;gap:15px;margin-bottom:25px}.section-head h2{font-size:27px;margin:0}.section-head p{margin:6px 0 0;color:var(--muted);font-size:13px}
+    .ambassador-track{display:flex;gap:18px;overflow-x:auto;padding:12px 4px 25px;scroll-snap-type:x mandatory;scrollbar-width:thin}
+    .amb{min-width:145px;text-align:center;scroll-snap-align:start}.avatar-ring{width:112px;height:112px;border-radius:50%;padding:5px;margin:auto;background:conic-gradient(from 20deg,#d7b66d,#fff0c5,#4e9d7c,#d7b66d);box-shadow:0 12px 28px #173d2c18}
+    .avatar{height:100%;border-radius:50%;background:linear-gradient(145deg,#e7f1e9,#c5dfce);display:grid;place-items:center;font-size:43px;border:4px solid #fff}
+    .amb strong{display:block;margin-top:12px;font-size:13px}.amb small{color:var(--muted);font-size:11px}
+    .portals{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+    .portal{position:relative;min-height:190px;border-radius:25px;padding:22px;color:#fff;overflow:hidden;box-shadow:0 16px 35px #1a44301a;transition:.25s;cursor:pointer}
+    .portal:hover{transform:translateY(-7px)}.portal:after{content:"";position:absolute;width:170px;height:170px;border:1px solid #ffffff38;border-radius:50%;left:-55px;bottom:-90px;box-shadow:0 0 0 18px #ffffff0b,0 0 0 38px #ffffff08}
+    .portal .emoji{font-size:35px}.portal h3{margin:14px 0 5px;font-size:18px}.portal p{margin:0;font-size:12px;opacity:.82;line-height:1.8}.portal.market{background:linear-gradient(145deg,#287e60,#15533e)}.portal.city{background:linear-gradient(145deg,#313b66,#171f3d)}.portal.skills{background:linear-gradient(145deg,#b58a43,#765323)}.portal.support{background:linear-gradient(145deg,#477d91,#285365)}
+    .news-area{background:#eef3ed;border-radius:32px;padding:30px}.news-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:15px}.news{background:#fff;border-radius:20px;padding:20px;min-height:190px;display:flex;flex-direction:column;justify-content:space-between}.news.feature{background:linear-gradient(145deg,#173e31,#286d51);color:#fff}.news .kind{font-size:10px;color:#9a7b40;font-weight:800}.news.feature .kind{color:#e5c77e}.news h3{font-size:17px;line-height:1.7;margin:12px 0}.news p{font-size:12px;line-height:1.9;color:#718078}.news.feature p{color:#d3e4d9}.news a{font-size:12px;color:var(--green);font-weight:700;text-decoration:none}.news.feature a{color:#f0d48d}
+    .sponsors{display:flex;gap:14px;overflow:auto;padding:5px 0 15px}.sponsor{min-width:175px;background:#fff;border:1px solid #e9eee8;border-radius:18px;padding:18px;text-align:center;color:#728078;font-weight:700;font-size:13px}.sponsor b{display:block;font-size:25px;margin-bottom:8px;color:#b99a5b}
+    footer{padding:30px 0 45px;border-top:1px solid #e7ece6;color:#7d8982;font-size:12px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+    .sound{position:fixed;z-index:10;left:18px;bottom:18px;border:1px solid #dce6dd;background:#fff;border-radius:50px;padding:11px 15px;box-shadow:0 8px 25px #173d2c1a;color:var(--green);font-weight:700}
+    .toast{position:fixed;z-index:20;bottom:78px;left:18px;background:#173e31;color:#fff;padding:12px 16px;border-radius:14px;font-size:12px;opacity:0;transform:translateY(8px);transition:.25s;pointer-events:none}.toast.show{opacity:1;transform:translateY(0)}
+    @media(max-width:800px){.nav{display:none}.hero{grid-template-columns:1fr;padding-top:25px}.hero-copy{text-align:center}.lead{margin:auto}.hero-actions{justify-content:center}.scene{height:370px}.portals{grid-template-columns:repeat(2,1fr)}.news-grid{grid-template-columns:1fr}.news-area{padding:20px}.section-head{align-items:start;flex-direction:column}}
+    @media(max-width:420px){.portals{gap:10px}.portal{padding:16px;min-height:175px}.portal h3{font-size:16px}.scene{transform:scale(.9);margin:-10px -15px}.hero{min-height:unset}h1{font-size:36px}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="topbar">
+      <div class="brand"><div class="brandmark">ت</div><div>توان‌یار<small>جهانی برای توانمندی و فرصت</small></div></div>
+      <nav class="nav"><a href="#ambassadors">سفیران</a><a href="#portals">جهان توان‌یار</a><a href="#news">پایگاه خبری</a><a href="#supporters">حامیان</a></nav>
+      <button class="pill" onclick="showToast('این بخش در نسخه پیش‌نمایش نمایشی است')">ورود به توان‌یار</button>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow">✦ یک جهان، هزاران امکان</div>
+          <h1>توان‌یار؛ جایی برای<br><span>ساختن فرصت‌های تازه</span></h1>
+          <p class="lead">اینجا افراد دارای معلولیت فقط مخاطب خدمات نیستند؛ آن‌ها سازندگان، مدیران، فروشندگان و سفیران یک اقتصاد فراگیرند. جهانی زنده برای همکاری، یادگیری و درآمد پایدار.</p>
+          <div class="hero-actions">
+            <button class="pill" onclick="showToast('به‌زودی در نسخه اصلی فعال می‌شود')">کشف جهان توان‌یار</button>
+            <button class="outline" onclick="document.querySelector('#ambassadors').scrollIntoView({behavior:'smooth'})">آشنایی با سفیران</button>
+          </div>
+          <div class="hero-note">پیش‌نمایش مستقل رابط کاربری · بدون اتصال به اطلاعات واقعی کاربران</div>
+        </div>
+        <div class="scene" aria-label="تصویرسازی مفهومی از جامعه توان‌یار">
+          <div class="orb one"></div><div class="orb two"></div>
+          <div class="float-tag tag-a">🌱 رشد با هم</div><div class="float-tag tag-b">♿ فرصت برابر</div><div class="float-tag tag-c">✦ توانمندی، نه ترحم</div>
+          <div class="platform"></div>
+          <div class="person p2"><div class="head"></div><div class="body"><div class="wheel"></div></div></div>
+          <div class="person"><div class="head"></div><div class="body"><div class="wheel"></div></div></div>
+          <div class="person p3"><div class="head"></div><div class="body"><div class="wheel"></div></div></div>
+        </div>
+      </section>
+
+      <section id="ambassadors">
+        <div class="section-head"><div><h2>چهره‌های جهان توان‌یار</h2><p>سفیرانی که حلقه‌های ارتباط و فرصت را گسترش می‌دهند</p></div><span class="eyebrow">همراهی، اعتماد، اثرگذاری</span></div>
+        <div class="ambassador-track">
+          <div class="amb"><div class="avatar-ring"><div class="avatar">🧑🏻‍🦽</div></div><strong>سفیر توانمندی</strong><small>جامعه و ارتباطات</small></div>
+          <div class="amb"><div class="avatar-ring"><div class="avatar">👩🏻‍💻</div></div><strong>سفیر مهارت</strong><small>آموزش و فناوری</small></div>
+          <div class="amb"><div class="avatar-ring"><div class="avatar">🧑🏽‍🦽</div></div><strong>سفیر بازار</strong><small>فروش و همکاری</small></div>
+          <div class="amb"><div class="avatar-ring"><div class="avatar">👨🏻‍🎨</div></div><strong>سفیر خلاقیت</strong><small>هنر و تولید</small></div>
+          <div class="amb"><div class="avatar-ring"><div class="avatar">👩🏽‍🦽</div></div><strong>سفیر شهر</strong><small>توسعه محلی</small></div>
+          <div class="amb"><div class="avatar-ring"><div class="avatar">🤝</div></div><strong>همراه توان‌یار</strong><small>همکاری اجتماعی</small></div>
+        </div>
+      </section>
+
+      <section id="portals">
+        <div class="section-head"><div><h2>دروازه‌های ورود به جهان توان‌یار</h2><p>هر مسیر، شروع یک تجربه و فرصت تازه است</p></div></div>
+        <div class="portals">
+          <article class="portal market" onclick="showToast('بازار در نسخه اصلی به فروشگاه متصل خواهد شد')"><div class="emoji">🛍️</div><h3>بازار توان‌یار</h3><p>خرید، فروش و همکاری با کسب‌وکارهای همراه</p></article>
+          <article class="portal city" onclick="showToast('شهر توان در حال طراحی و توسعه است')"><div class="emoji">🏙️</div><h3>شهر توان</h3><p>بازی، ساخت منابع، کارگاه و مسیرهای پیشرفت</p></article>
+          <article class="portal skills" onclick="showToast('بخش مهارت و اشتغال به‌زودی فعال می‌شود')"><div class="emoji">🧩</div><h3>مهارت و اشتغال</h3><p>نمایش توانایی‌ها و اتصال به فرصت‌های کاری</p></article>
+          <article class="portal support" onclick="showToast('درگاه همکاری و حمایت در نسخه اصلی تکمیل می‌شود')"><div class="emoji">🌍</div><h3>همکاری و حمایت</h3><p>پیوند شرکت‌ها، حامیان و جامعه توان‌یار</p></article>
+        </div>
+      </section>
+
+      <section id="news">
+        <div class="news-area">
+          <div class="section-head"><div><h2>پایگاه خبری توان‌یار</h2><p>روایت فرصت‌ها، تجربه‌ها و دستاوردهای جامعه فراگیر</p></div><span class="eyebrow">رسانه مستقل توان‌یار</span></div>
+          <div class="news-grid">
+            <article class="news feature"><div><span class="kind">ویژه · نمونه نمایشی</span><h3>اقتصاد فراگیر؛ وقتی فرصت‌ها با مشارکت همه ساخته می‌شوند</h3><p>توان‌یار به دنبال ساخت بستری است که نقش افراد دارای معلولیت را از دریافت‌کننده خدمت به شریک و سازنده فرصت تغییر دهد.</p></div><a href="#supporters">بیشتر درباره چشم‌انداز ←</a></article>
+            <article class="news"><div><span class="kind">جامعه · نمونه</span><h3>سفیران محلی؛ حلقه اتصال کسب‌وکارها و مردم</h3><p>معرفی مدلی برای همکاری محلی، ارتباط انسانی و ایجاد درآمد از مسیر اعتماد.</p></div><a href="#ambassadors">آشنایی با سفیران ←</a></article>
+            <article class="news"><div><span class="kind">فناوری · نمونه</span><h3>طراحی دسترس‌پذیر، از ابتدا و برای همه</h3><p>تجربه‌ای ساده و قابل استفاده با صفحه‌خوان، موبایل و حرکت کمتر؛ بدون کنار گذاشتن زیبایی.</p></div><a href="#portals">دیدن بخش‌ها ←</a></article>
+          </div>
+        </div>
+      </section>
+
+      <section id="supporters">
+        <div class="section-head"><div><h2>همراهان و حامیان</h2><p>جایگاهی برای برندها و مجموعه‌هایی که به فرصت برابر باور دارند</p></div></div>
+        <div class="sponsors">
+          <div class="sponsor"><b>✦</b>جایگاه حامی نخست</div>
+          <div class="sponsor"><b>◈</b>همراه توسعه محلی</div>
+          <div class="sponsor"><b>◎</b>حامی نوآوری</div>
+          <div class="sponsor"><b>❖</b>شریک اجتماعی</div>
+          <div class="sponsor"><b>✧</b>همراه توان‌یار</div>
+        </div>
+      </section>
+    </main>
+    <footer><span>© توان‌یار · پیش‌نمایش مستقل رابط کاربری</span><span>ساخته‌شده با رویکرد RTL و دسترس‌پذیری</span></footer>
+  </div>
+  <button class="sound" id="soundBtn" aria-pressed="false" onclick="toggleSound()">♪ صدای تعامل: خاموش</button>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script>
+    let audioOn=false, audioCtx=null;
+    function showToast(message){const t=document.getElementById('toast');t.textContent=message;t.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove('show'),2600)}
+    function toggleSound(){audioOn=!audioOn;const b=document.getElementById('soundBtn');b.textContent=audioOn?'♪ صدای تعامل: روشن':'♪ صدای تعامل: خاموش';b.setAttribute('aria-pressed',String(audioOn));if(audioOn)playTone(660,.09)}
+    function playTone(freq,duration){if(!audioOn)return;try{audioCtx=audioCtx||new(window.AudioContext||window.webkitAudioContext)();const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.frequency.value=freq;o.type='sine';g.gain.setValueAtTime(.0001,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(.045,audioCtx.currentTime+.02);g.gain.exponentialRampToValueAtTime(.0001,audioCtx.currentTime+duration);o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+duration)}catch(e){}}
+    document.querySelectorAll('.portal').forEach((p,i)=>p.addEventListener('click',()=>playTone(420+i*75,.12)));
+  </script>
+</body>
+</html>
