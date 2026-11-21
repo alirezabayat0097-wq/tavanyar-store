@@ -96,7 +96,7 @@ function setTouch(e){
  const nx=Math.abs(dx)<dead?0:Math.sign(dx)*Math.min(1,(Math.abs(dx)-dead)/72);
  const ny=Math.abs(dy)<dead?0:Math.sign(dy)*Math.min(1,(Math.abs(dy)-dead)/78);
  targetSpeed=THREE.MathUtils.clamp(-ny*maxSpeed,-maxSpeed,maxSpeed);
- targetSteerAngle=THREE.MathUtils.clamp(-nx*maxSteerAngle,-maxSteerAngle,maxSteerAngle);
+ targetSteerAngle=THREE.MathUtils.clamp(nx*maxSteerAngle,-maxSteerAngle,maxSteerAngle);
  lastTouch={x:e.clientX,y:e.clientY};
 }
 canvas.addEventListener('pointerdown',e=>{
@@ -142,9 +142,9 @@ function cameraPositionAvoidingWalls(target,preferred,dt){
  const right=new THREE.Vector3(Math.cos(yaw),0,Math.sin(yaw));
  const candidates=[
   preferred.clone(),
-  avatar.position.clone().addScaledVector(back,7.8).addScaledVector(right,3.4).add(new THREE.Vector3(0,4.0,0)),
-  avatar.position.clone().addScaledVector(back,7.8).addScaledVector(right,-3.4).add(new THREE.Vector3(0,4.0,0)),
-  avatar.position.clone().addScaledVector(back,5.4).add(new THREE.Vector3(0,3.3,0))
+  avatar.position.clone().addScaledVector(back,4.6).addScaledVector(right,1.8).add(new THREE.Vector3(0,2.7,0)),
+  avatar.position.clone().addScaledVector(back,4.6).addScaledVector(right,-1.8).add(new THREE.Vector3(0,2.7,0)),
+  avatar.position.clone().addScaledVector(back,3.6).add(new THREE.Vector3(0,2.4,0))
  ];
  let chosen=candidates[candidates.length-1];
  for(const candidate of candidates){
@@ -196,7 +196,7 @@ function animate(){
   // فاصلهٔ پشت شانه با جهت حرکت هماهنگ است؛ دوربین دیگر آواتار را از کادر置 نمی‌گذارد.
   const back=new THREE.Vector3(Math.sin(yaw),0,-Math.cos(yaw));
   const side=new THREE.Vector3(Math.cos(yaw),0,Math.sin(yaw));
-  const preferred=avatar.position.clone().addScaledVector(back,7.2).addScaledVector(side,-1.15).add(new THREE.Vector3(0,3.7,0));
+  const preferred=avatar.position.clone().addScaledVector(back,3.9).addScaledVector(side,-0.8).add(new THREE.Vector3(0,2.35,0));
   const safe=cameraPositionAvoidingWalls(target,preferred,dt);
   camera.position.lerp(safe,1-Math.exp(-6.5*dt));
   camera.lookAt(target.clone().add(new THREE.Vector3(0,.35,0)));
