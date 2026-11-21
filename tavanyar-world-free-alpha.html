@@ -106,7 +106,6 @@ function setTouch(e){
  targetSpeed=THREE.MathUtils.clamp(-ny*maxSpeed,-maxSpeed,maxSpeed);
  
  // ۲. سرعت چرخش: هرچه انگشت را بیشتر به کنار بکشید، سریعتر می‌چرخد
- // علامت منفی: کشیدن به راست = چرخش به راست
  targetTurnVelocity = -nx * maxTurnSpeed;
 }
 canvas.addEventListener('pointerdown',e=>{
@@ -203,8 +202,17 @@ function animate(){
   camera.position.lerp(camPos, 1-Math.exp(-5.5*dt));
   camera.lookAt(camPos.clone().addScaledVector(lookDir, 8));
  } else {
-  // ۴. دوربین سینمایی (با تاخیر نرم)
-  camYaw = THREE.MathUtils.damp(camYaw, yaw, 3.5, dt); 
+  // ۴. دوربین با حل مشکل پرش زاویه (Angle Wrapping)
+  // محاسبه اختلاف زاویه و محدود کردن آن به کوتاه‌ترین مسیر (بین -180 تا +180)
+  let diff = yaw - camYaw;
+  
+  // نرمال‌سازی اختلاف زاویه برای جلوگیری از جهش در مرز ۳۶۰ درجه
+  while (diff > Math.PI) diff -= Math.PI * 2;
+  while (diff < -Math.PI) diff += Math.PI * 2;
+  
+  // حالا دوربین با نرمی به سمت زاویه جدید حرکت می‌کند
+  // عدد 4.5 سرعت واکنش دوربین است (کمتر = نرم‌تر، بیشتر = سریع‌تر)
+  camYaw += diff * (1 - Math.exp(-4.5 * dt));
   
   const camBack = new THREE.Vector3(-Math.sin(camYaw), 0, -Math.cos(camYaw));
   const camRight = new THREE.Vector3(Math.cos(camYaw), 0, -Math.sin(camYaw));
