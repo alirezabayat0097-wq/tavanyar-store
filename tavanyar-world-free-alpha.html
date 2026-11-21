@@ -28,7 +28,7 @@ button.primary{background:#087b5d;border-color:#72e5b5;font-weight:bold}
 <body>
 <div id="world"></div>
 <header><div class="pill brand"><b>توان‌یار | جهان آزاد</b><small>نسخه آزمایشی · کنترل تک‌انگشتی و دوربین هوشمند</small></div><div class="pill" id="coords">میدان مرکزی</div></header>
-<div class="tip">یک انگشت را مثل دستهٔ مجازی بکش: بالا جلو، پایین عقب، چپ و راست فرمان؛ حرکت مورب یعنی حرکت و پیچیدن هم‌زمان. رها کنی، توقف می‌کند.</div>
+<div class="tip">یک انگشت را مثل دستهٔ مجازی بکش: بالا جلو، پایین عقب، راست برای گردش به راست و چپ برای گردش به چپ؛ زاویهٔ گردش حداکثر ۳۰ درجه است.</div>
 <div class="actions"><button id="home">بازگشت به میدان</button><button id="behind">دوربین پشت شخصیت</button><button class="primary" id="interact">تعامل با مکان نزدیک</button></div>
 <div id="panel"><h2 id="panelTitle"></h2><p id="panelText"></p><button id="close">ادامه گشت‌وگذار</button></div>
 <div id="toast"></div>
@@ -78,8 +78,8 @@ cube(avatar,0,.62,.12,1.2,.15,1.1,chair);cube(avatar,0,.94,-.34,1,.95,.16,chair)
 const wheelMeshes=[];for(let s of [-1,1]){let wheel=new THREE.Mesh(new THREE.TorusGeometry(.58,.075,8,24),rubber);wheel.rotation.y=Math.PI/2;wheel.position.set(s*.7,.63,.1);avatar.add(wheel);wheelMeshes.push(wheel);let hub=cyl(avatar,s*.71,.63,.1,.14,.12,metal);hub.rotation.z=Math.PI/2}
 avatar.position.set(0,0,9);
 let yaw=0;
-let currentSpeed=0,targetSpeed=0,lateralSpeed=0,targetLateralSpeed=0;
-const maxSpeed=7.2,lateralMaxSpeed=5.2;
+let currentSpeed=0,targetSpeed=0,steerAngle=0,targetSteerAngle=0;
+const maxSpeed=7.2,maxSteerAngle=THREE.MathUtils.degToRad(30);
 const pointers=new Map();
 let touchStart=null,lastTouch=null;
 const canvas=renderer.domElement;
@@ -90,13 +90,13 @@ function setTouch(e){
  if(!p)return;
  p.x=e.clientX;p.y=e.clientY;
  const dx=e.clientX-touchStart.x,dy=e.clientY-touchStart.y;
- // محور عمودی فقط جلو/عقب می‌رود؛ محور افقی فقط حرکت جانبی می‌دهد.
- // حرکت افقی بدنه را نمی‌چرخاند و جهت جلوی ویلچر ثابت می‌ماند.
+ // محور عمودی سرعت جلو/عقب را کنترل می‌کند و محور افقی فرمان گردش را.
+ // علامت فرمان اصلاح شده: کشیدن به راست، گردش به راست ایجاد می‌کند.
  const dead=13;
  const nx=Math.abs(dx)<dead?0:Math.sign(dx)*Math.min(1,(Math.abs(dx)-dead)/72);
  const ny=Math.abs(dy)<dead?0:Math.sign(dy)*Math.min(1,(Math.abs(dy)-dead)/78);
  targetSpeed=THREE.MathUtils.clamp(-ny*maxSpeed,-maxSpeed,maxSpeed);
- targetLateralSpeed=THREE.MathUtils.clamp(nx*lateralMaxSpeed,-lateralMaxSpeed,lateralMaxSpeed);
+ targetSteerAngle=THREE.MathUtils.clamp(-nx*maxSteerAngle,-maxSteerAngle,maxSteerAngle);
  lastTouch={x:e.clientX,y:e.clientY};
 }
 canvas.addEventListener('pointerdown',e=>{
@@ -105,18 +105,17 @@ canvas.addEventListener('pointerdown',e=>{
  canvas.setPointerCapture(e.pointerId);
  pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
  touchStart={x:e.clientX,y:e.clientY};lastTouch={...touchStart};
- targetSpeed=0;targetLateralSpeed=0;
+ targetSpeed=0;targetSteerAngle=0;
 });
 canvas.addEventListener('pointermove',e=>{if(pointers.has(e.pointerId))setTouch(e)});
 function releasePointer(e){
  if(!pointers.has(e.pointerId))return;
  pointers.delete(e.pointerId);
- touchStart=null;lastTouch=null;targetSpeed=0;targetLateralSpeed=0;
+ touchStart=null;lastTouch=null;targetSpeed=0;targetSteerAngle=0;
 }
 canvas.addEventListener('pointerup',releasePointer);
 canvas.addEventListener('pointercancel',releasePointer);
 canvas.addEventListener('lostpointercapture',releasePointer);
-function wrapAngle(a){return Math.atan2(Math.sin(a),Math.cos(a))}
 function blockedAt(pos){
  // دیوار ساختمان‌ها: حاشیهٔ امن برای عرض ویلچر
  for(const p of places){
@@ -166,34 +165,22 @@ document.querySelector('#interact').onclick=interact;document.querySelector('#cl
 function behindCharacter(){notify('دوربین به‌صورت خودکار بهترین زاویه را انتخاب می‌کند.');}
 document.querySelector('#behind').onclick=behindCharacter;
 
-document.querySelector('#home').onclick=()=>{avatar.position.set(0,0,9);avatar.rotation.y=0;currentSpeed=0;targetSpeed=0;lateralSpeed=0;targetLateralSpeed=0;yaw=0;document.querySelector('#panel').classList.remove('show');notify('به میدان مرکزی برگشتی.')};
+document.querySelector('#home').onclick=()=>{avatar.position.set(0,0,9);avatar.rotation.y=0;currentSpeed=0;targetSpeed=0;steerAngle=0;targetSteerAngle=0;yaw=0;document.querySelector('#panel').classList.remove('show');notify('به میدان مرکزی برگشتی.')};
 const clock=new THREE.Clock(),look=new THREE.Vector3(),forward=new THREE.Vector3(),desired=new THREE.Vector3(),moveDir=new THREE.Vector3();
 function animate(){
  requestAnimationFrame(animate);
  const dt=Math.min(clock.getDelta(),.04);
- // جلو/عقب و چپ/راست دو محور مستقل‌اند؛ هیچ‌کدام بدنه را دور خودش نمی‌چرخاند.
- // رها کردن انگشت، هر دو حرکت را نرم متوقف می‌کند.
+ // فرمان نرم است و زاویهٔ بدنه هرگز از ۳۰ درجه به چپ یا راست بیشتر نمی‌شود.
  currentSpeed=THREE.MathUtils.damp(currentSpeed,targetSpeed,13.5,dt);
- lateralSpeed=THREE.MathUtils.damp(lateralSpeed,targetLateralSpeed,13.5,dt);
+ steerAngle=THREE.MathUtils.damp(steerAngle,targetSteerAngle,9,dt);
+ yaw=steerAngle;
  avatar.rotation.y=yaw;
  const forward=new THREE.Vector3(-Math.sin(yaw),0,Math.cos(yaw));
- const right=new THREE.Vector3(Math.cos(yaw),0,Math.sin(yaw));
- if(Math.abs(currentSpeed)>.025 || Math.abs(lateralSpeed)>.025){
-  const longitudinal=forward.clone().multiplyScalar(currentSpeed*dt);
-  const lateral=right.clone().multiplyScalar(lateralSpeed*dt);
-  const proposed=avatar.position.clone().add(longitudinal).add(lateral);
-  if(!blockedAt(proposed)){
-   avatar.position.copy(proposed);
-  }else{
-   // کنار مانع، اگر یکی از محور‌ها آزاد بود همان محور حرکت می‌کند.
-   const forwardOnly=avatar.position.clone().add(longitudinal);
-   const lateralOnly=avatar.position.clone().add(lateral);
-   let moved=false;
-   if(Math.abs(currentSpeed)>.025 && !blockedAt(forwardOnly)){avatar.position.copy(forwardOnly);moved=true;}
-   if(Math.abs(lateralSpeed)>.025 && !blockedAt(lateralOnly)){avatar.position.copy(lateralOnly);moved=true;}
-   if(!moved){currentSpeed=0;targetSpeed=0;lateralSpeed=0;targetLateralSpeed=0;}
-  }
-  // چرخ‌های اصلی فقط با حرکت طولی می‌چرخند؛ حرکت جانبی باعث چرخش بدنه نمی‌شود.
+ if(Math.abs(currentSpeed)>.025){
+  const longitudinal=forward.multiplyScalar(currentSpeed*dt);
+  const proposed=avatar.position.clone().add(longitudinal);
+  if(!blockedAt(proposed)) avatar.position.copy(proposed);
+  else {currentSpeed=0;targetSpeed=0;}
   for(const wheel of wheelMeshes)wheel.rotation.x-=currentSpeed*dt/.58;
  }
  const indoor=isInsideBuilding();
@@ -218,6 +205,6 @@ function animate(){
  renderer.render(scene,camera);
 }
 animate();addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.2));renderer.setSize(innerWidth,innerHeight)});
-notify('کنترل تک‌انگشتی فعال شد: جلو، عقب و تغییر مسیر');
+notify('کنترل فعال شد: جلو/عقب و گردش حداکثر ۳۰ درجه');
 </script>
 </body></html>
