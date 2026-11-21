@@ -90,11 +90,16 @@ function setTouch(e){
  if(!p)return;
  p.x=e.clientX;p.y=e.clientY;
  const dx=e.clientX-touchStart.x,dy=e.clientY-touchStart.y;
- const sx=Math.max(-1,Math.min(1,dx/85));
  const sy=Math.max(-1,Math.min(1,dy/85));
- // بالا = جلو، پایین = عقب؛ چپ و راست فقط فرمان نرم تغییر مسیر هستند
+ // حرکت عمودی مستقل است؛ لرزش طبیعی انگشت هنگام جلو/عقب نباید فرمان چرخش بسازد.
  targetSpeed=THREE.MathUtils.clamp(-sy*maxSpeed,-maxSpeed,maxSpeed);
- targetSteer=THREE.MathUtils.clamp(sx,-1,1);
+ const horizontalIntent=Math.abs(dx)>24 && Math.abs(dx)>Math.abs(dy)*0.55;
+ if(horizontalIntent){
+  const steerAmount=Math.sign(dx)*Math.min(1,(Math.abs(dx)-24)/65);
+  targetSteer=steerAmount;
+ }else{
+  targetSteer=0;
+ }
  lastTouch={x:e.clientX,y:e.clientY};
 }
 canvas.addEventListener('pointerdown',e=>{
