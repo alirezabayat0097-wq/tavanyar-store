@@ -27,8 +27,8 @@ button.primary{background:#087b5d;border-color:#72e5b5;font-weight:bold}
 </head>
 <body>
 <div id="world"></div>
-<header><div class="pill brand"><b>توان‌یار | جهان آزاد</b><small>نسخه آزمایشی · چرخش ۳۶۰ درجه</small></div><div class="pill" id="coords">میدان مرکزی</div></header>
-<div class="tip">با کشیدن انگشت به بالا/پایین حرکت کنید. برای دور زدن کامل، انگشت را به چپ یا راست بکشید.</div>
+<header><div class="pill brand"><b>توان‌یار | جهان آزاد</b><small>نسخه آزمایشی · کنترل نرم و طبیعی</small></div><div class="pill" id="coords">میدان مرکزی</div></header>
+<div class="tip">با کشیدن انگشت به بالا/پایین حرکت کنید. برای دور زدن، انگشت را به آرامی به چپ یا راست بکشید.</div>
 <div class="actions"><button id="home">بازگشت به میدان</button><button id="behind">دوربین پشت شخصیت</button><button class="primary" id="interact">تعامل با مکان نزدیک</button></div>
 <div id="panel"><h2 id="panelTitle"></h2><p id="panelText"></p><button id="close">ادامه گشت‌وگذار</button></div>
 <div id="toast"></div>
@@ -78,12 +78,14 @@ cube(avatar,0,.62,.12,1.2,.15,1.1,chair);cube(avatar,0,.94,-.34,1,.95,.16,chair)
 const wheelMeshes=[];for(let s of [-1,1]){let wheel=new THREE.Mesh(new THREE.TorusGeometry(.58,.075,8,24),rubber);wheel.rotation.y=Math.PI/2;wheel.position.set(s*.7,.63,.1);avatar.add(wheel);wheelMeshes.push(wheel);let hub=cyl(avatar,s*.71,.63,.1,.14,.12,metal);hub.rotation.z=Math.PI/2}
 avatar.position.set(0,0,9);
 
-// متغیرهای حرکت و چرخش
-let yaw=0; // جهت ویلچر (دلخواه، بدون محدودیت)
+// متغیرهای حرکت و چرخش (اصلاح‌شده برای کنترل نرم‌تر)
+let yaw=0; 
 let currentSpeed=0, targetSpeed=0;
-let turnVelocity=0, targetTurnVelocity=0; // سرعت چرخش (نه زاویه)
+let turnVelocity=0, targetTurnVelocity=0; 
+
 const maxSpeed=7.2;
-const maxTurnSpeed=Math.PI * 1.5; // حداکثر سرعت چرخش: ۱.۵ دور در ثانیه
+// ۱. کاهش سرعت چرخش: از 1.5 دور در ثانیه به 0.5 دور در ثانیه
+const maxTurnSpeed=Math.PI * 0.5; 
 
 // مقداردهی اولیه دوربین
 let camYaw = 0; 
@@ -98,14 +100,15 @@ function setTouch(e){
  if(!p)return;
  p.x=e.clientX;p.y=e.clientY;
  const dx=e.clientX-touchStart.x,dy=e.clientY-touchStart.y;
- const dead=13;
- const nx=Math.abs(dx)<dead?0:Math.sign(dx)*Math.min(1,(Math.abs(dx)-dead)/72);
- const ny=Math.abs(dy)<dead?0:Math.sign(dy)*Math.min(1,(Math.abs(dy)-dead)/78);
  
- // ۱. سرعت حرکت جلو/عقب
+ // ۲. افزایش آستانه مرده (deadzone) برای جلوگیری از حساسیت بیش از حد
+ const deadX=25; // آستانه افقی
+ const deadY=13; // آستانه عمودی
+ 
+ const nx=Math.abs(dx)<deadX?0:Math.sign(dx)*Math.min(1,(Math.abs(dx)-deadX)/100);
+ const ny=Math.abs(dy)<deadY?0:Math.sign(dy)*Math.min(1,(Math.abs(dy)-deadY)/78);
+ 
  targetSpeed=THREE.MathUtils.clamp(-ny*maxSpeed,-maxSpeed,maxSpeed);
- 
- // ۲. سرعت چرخش: هرچه انگشت را بیشتر به کنار بکشید، سریعتر می‌چرخد
  targetTurnVelocity = -nx * maxTurnSpeed;
 }
 canvas.addEventListener('pointerdown',e=>{
@@ -171,12 +174,11 @@ function animate(){
  // ۱. به‌روزرسانی فیزیک حرکت
  currentSpeed=THREE.MathUtils.damp(currentSpeed,targetSpeed,13.5,dt);
  
- // ۲. به‌روزرسانی چرخش
- turnVelocity=THREE.MathUtils.damp(turnVelocity,targetTurnVelocity,10,dt);
+ // ۲. به‌روزرسانی چرخش (شتاب و ایستادن نرم‌تر)
+ // عدد 6 (به جای 10) باعث می‌شود ویلچر با نرمی شروع به چرخش کند و با نرمی بایستد
+ turnVelocity=THREE.MathUtils.damp(turnVelocity,targetTurnVelocity,6,dt);
  
- // جهت ویلچر آزادانه تغییر می‌کند (دور کامل)
  yaw += turnVelocity * dt;
- // جلوگیری از بزرگ شدن بی‌نهایت عدد (بازگشت به محدوده ۰ تا ۳۶۰)
  if (yaw > Math.PI * 2) yaw -= Math.PI * 2;
  if (yaw < 0) yaw += Math.PI * 2;
  
@@ -184,7 +186,6 @@ function animate(){
  
  const forward=new THREE.Vector3(Math.sin(yaw),0,Math.cos(yaw));
  
- // ۳. حرکت به جلو/عقب با برخورد
  if(Math.abs(currentSpeed)>.025){
   const longitudinal=forward.clone().multiplyScalar(currentSpeed*dt);
   const proposed=avatar.position.clone().add(longitudinal);
@@ -202,17 +203,13 @@ function animate(){
   camera.position.lerp(camPos, 1-Math.exp(-5.5*dt));
   camera.lookAt(camPos.clone().addScaledVector(lookDir, 8));
  } else {
-  // ۴. دوربین با حل مشکل پرش زاویه (Angle Wrapping)
-  // محاسبه اختلاف زاویه و محدود کردن آن به کوتاه‌ترین مسیر (بین -180 تا +180)
+  // ۴. دوربین با حل مشکل پرش زاویه
   let diff = yaw - camYaw;
-  
-  // نرمال‌سازی اختلاف زاویه برای جلوگیری از جهش در مرز ۳۶۰ درجه
   while (diff > Math.PI) diff -= Math.PI * 2;
   while (diff < -Math.PI) diff += Math.PI * 2;
   
-  // حالا دوربین با نرمی به سمت زاویه جدید حرکت می‌کند
-  // عدد 4.5 سرعت واکنش دوربین است (کمتر = نرم‌تر، بیشتر = سریع‌تر)
-  camYaw += diff * (1 - Math.exp(-4.5 * dt));
+  // ۳. کاهش سرعت واکنش دوربین (از 4.5 به 3.0) برای نرم‌تر شدن
+  camYaw += diff * (1 - Math.exp(-3.0 * dt));
   
   const camBack = new THREE.Vector3(-Math.sin(camYaw), 0, -Math.cos(camYaw));
   const camRight = new THREE.Vector3(Math.cos(camYaw), 0, -Math.sin(camYaw));
@@ -242,6 +239,6 @@ function animate(){
 }
 animate();
 addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.2));renderer.setSize(innerWidth,innerHeight)});
-notify('آماده حرکت. برای دور کامل، به چپ یا راست بکشید.');
+notify('آماده حرکت. برای دور زدن، به آرامی به چپ یا راست بکشید.');
 </script>
 </body></html>
