@@ -177,15 +177,13 @@ document.getElementById('reset').addEventListener('click',()=>{avatar.position.s
 function clampWorld(){avatar.position.x=THREE.MathUtils.clamp(avatar.position.x,-37,37);avatar.position.z=THREE.MathUtils.clamp(avatar.position.z,-37,37)}
 const clock=new THREE.Clock();
 function animate(){requestAnimationFrame(animate);const dt=Math.min(clock.getDelta(),.04);
- let dx=(move.right?1:0)-(move.left?1:0),dz=(move.back?1:0)-(move.forward?1:0);
- if(dx||dz){const len=Math.hypot(dx,dz);dx/=len;dz/=len;const speed=7;const desired=Math.atan2(dx,dz);facing=desired;avatar.position.x+=dx*speed*dt;avatar.position.z+=dz*speed*dt;clampWorld()}
  avatar.rotation.y=THREE.MathUtils.lerp(avatar.rotation.y,facing,.18);
  // third-person camera follows behind the avatar, with a soft elevated view
  const moving= Math.hypot(moveX,moveY)>.12;
  if(moving){
   const forwardAngle=cameraYaw;
   const worldX=moveX*Math.cos(forwardAngle)-moveY*Math.sin(forwardAngle);
-  const worldZ=-moveY*Math.cos(forwardAngle)-moveX*Math.sin(forwardAngle);
+  const worldZ=moveX*Math.sin(forwardAngle)+moveY*Math.cos(forwardAngle);
   const len=Math.hypot(worldX,worldZ)||1;
   const dx=worldX/len,dz=worldZ/len;
   facing=Math.atan2(dx,dz);
