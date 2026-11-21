@@ -196,7 +196,8 @@ function animate(){
   // فاصلهٔ پشت شانه با جهت حرکت هماهنگ است؛ دوربین دیگر آواتار را از کادر置 نمی‌گذارد.
   const back=new THREE.Vector3(-Math.sin(yaw),0,-Math.cos(yaw));
   const left=new THREE.Vector3(-Math.cos(yaw),0,Math.sin(yaw));
-  const shoulderCamera=avatar.position.clone().addScaledVector(back,2.65).addScaledVector(left,0.62).add(new THREE.Vector3(0,1.95,0));
+  // دوربین سه‌رخ از سمت شانهٔ چپ: جابه‌جایی جانبی واضح‌تر، کمی عقب‌تر و هم‌ارتفاع شانه.
+  const shoulderCamera=avatar.position.clone().addScaledVector(back,3.25).addScaledVector(left,1.35).add(new THREE.Vector3(0,2.25,0));
   camera.position.lerp(shoulderCamera,1-Math.exp(-9*dt));
   camera.lookAt(target.clone().add(new THREE.Vector3(0,.35,0)));
  }
