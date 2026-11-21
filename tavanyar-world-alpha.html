@@ -148,7 +148,7 @@ function animate(){requestAnimationFrame(animate);const dt=Math.min(clock.getDel
  if(dx||dz){const len=Math.hypot(dx,dz);dx/=len;dz/=len;const speed=7;const desired=Math.atan2(dx,dz);facing=desired;avatar.position.x+=dx*speed*dt;avatar.position.z+=dz*speed*dt;clampWorld()}
  avatar.rotation.y=THREE.MathUtils.lerp(avatar.rotation.y,facing,.18);
  // third-person camera follows behind the avatar, with a soft elevated view
- const behind=new THREE.Vector3(Math.sin(facing)*8,5.2,Math.cos(facing)*8);
+ const behind=new THREE.Vector3(-Math.sin(facing)*8,5.2,-Math.cos(facing)*8);
  target.copy(avatar.position).add(new THREE.Vector3(0,1.25,0));
  const camPos=avatar.position.clone().add(behind);camera.position.lerp(camPos,.075);camera.lookAt(target);
  renderer.render(scene,camera)}
