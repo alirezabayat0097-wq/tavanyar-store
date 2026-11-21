@@ -1,6 +1,86 @@
-<script type="module">
-    import * as THREE from 'three';
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101b35">
+  <title>شهر سه‌بعدی توان‌یار | پیش‌نمایش زنده</title>
+  <style>
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%;background:#081326;color:#f8fafc;font-family:Tahoma,Arial,sans-serif}
+    body{padding:clamp(10px,3vw,24px);background:radial-gradient(circle at 50% -10%,#334b72 0,#101b35 48%,#080f1e 100%)}
+    .page{width:min(1180px,100%);margin:auto}
+    header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:4px 0 14px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .mark{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(145deg,#34d399,#0f766e);font-size:25px;box-shadow:0 8px 24px #10b98140}
+    h1{font-size:clamp(18px,4vw,26px);margin:0 0 5px}
+    .sub{color:#b8c7dc;font-size:12px}
+    .tag{border:1px solid #ffffff25;background:#ffffff0d;padding:8px 12px;border-radius:999px;font-size:12px;color:#d1fae5}
+    .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+    button{font:inherit;color:#f8fafc;background:#ffffff13;border:1px solid #ffffff2c;border-radius:12px;padding:10px 14px;min-height:42px;cursor:pointer}
+    button.primary{background:#047857;border-color:#10b981}
+    button:active{transform:scale(.97)}
+    #city-canvas-container{position:relative;width:100%;height:min(74vh,760px);min-height:480px;overflow:hidden;border:1px solid #ffffff2b;border-radius:22px;background:linear-gradient(#87ceeb,#b7d7e8 55%,#4ade80);box-shadow:0 24px 70px #0008;touch-action:none}
+    #city-canvas-container canvas{display:block;width:100%;height:100%;touch-action:none;outline:none}
+    #loading-city{position:absolute;inset:0;display:grid;place-items:center;background:#101b35;color:#d1fae5;z-index:2}
+    .loader{display:flex;flex-direction:column;align-items:center;gap:12px}
+    .spinner{width:34px;height:34px;border:3px solid #ffffff30;border-top-color:#34d399;border-radius:50%;animation:spin .8s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    #city-toast{position:absolute;z-index:3;bottom:14px;right:14px;left:14px;margin:auto;width:max-content;max-width:calc(100% - 28px);padding:11px 14px;border-radius:12px;background:#071426eF;border:1px solid #ffffff30;color:#e2e8f0;font-size:12px;line-height:1.8;opacity:0;transform:translateY(8px);pointer-events:none;transition:.2s}
+    #city-toast.show{opacity:1;transform:translateY(0)}
+    .hint{margin:12px 2px 0;color:#c1cde0;font-size:12px;line-height:2}
+    .hint strong{color:#a7f3d0}
+    footer{margin-top:16px;color:#8495ae;font-size:11px;text-align:center}
+    @media(max-width:600px){body{padding:10px}.tag{font-size:10px}#city-canvas-container{height:68vh;min-height:440px;border-radius:17px}.toolbar button{flex:1;padding:9px 8px;font-size:12px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+  </style>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <div class="brand">
+        <div class="mark">🌱</div>
+        <div><h1>شهر سه‌بعدی توان‌یار</h1><div class="sub">پیش‌نمایش تعاملی جهان توان‌یار</div></div>
+      </div>
+      <div class="tag">نسخه آزمایشی مستقل · نمای ۳۶۰ درجه</div>
+    </header>
+    <div class="toolbar">
+      <button class="primary" id="rotate-toggle" type="button">⏸ توقف چرخش خودکار</button>
+      <button id="reset-view" type="button">⌖ بازگشت به نمای آغازین</button>
+      <button id="main-site" type="button">↗ وب‌سایت توان‌یار</button>
+    </div>
+    <section id="city-canvas-container" aria-label="محیط سه‌بعدی شهر توان‌یار">
+      <div id="loading-city"><div class="loader"><div class="spinner"></div><div>در حال ساخت شهر توان‌یار…</div></div></div>
+      <div id="city-toast" role="status" aria-live="polite"></div>
+    </section>
+    <p class="hint"><strong>راهنمای حرکت:</strong> با یک انگشت یا ماوس محیط را بچرخانید؛ برای نزدیک و دور شدن از دو انگشت یا چرخ ماوس استفاده کنید. روی ساختمان‌ها بزنید تا معرفی بخش آن‌ها نمایش داده شود.</p>
+    <footer>توان‌یار · شهر فرصت‌ها، مهارت‌ها و همکاری</footer>
+  </main>
+  <script type="module">
+import * as THREE from 'three';
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+    const toast = document.getElementById('city-toast');
+    function switchTab(tab) {
+        const labels = {
+            home: 'مرکز سفیران',
+            market: 'بازار توان‌یار',
+            'ambassador-app': 'برج مهارت',
+            city: 'پارک شهر توان'
+        };
+        toast.textContent = (labels[tab] || 'بخش انتخاب‌شده') + ' — این پیش‌نمایش مستقل است؛ اتصال به بخش‌های اصلی در مرحله یکپارچه‌سازی انجام می‌شود.';
+        toast.classList.add('show');
+        window.clearTimeout(toast._hideTimer);
+        toast._hideTimer = window.setTimeout(() => toast.classList.remove('show'), 3200);
+    }
 
     const container = document.getElementById('city-canvas-container');
     const loading = document.getElementById('loading-city');
@@ -16,6 +96,7 @@
     camera.position.set(0, 30, 60);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
     renderer.setSize(container.clientWidth, container.clientHeight);
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap; // سایه‌های نرم
@@ -294,15 +375,20 @@
     const mouse = new THREE.Vector2();
     let isDragging = false;
 
-    container.addEventListener('mousedown', () => { isDragging = false; });
-    container.addEventListener('mousemove', () => { isDragging = true; });
+    // انتخاب ساختمان‌ها با لمس یا کلیک؛ حرکت دوربین به‌عنوان کلیک ثبت نمی‌شود
+    let pointerStart = null;
+    container.addEventListener('pointerdown', (event) => {
+        pointerStart = { x: event.clientX, y: event.clientY };
+    });
+    container.addEventListener('pointerup', (event) => {
+        if (!pointerStart) return;
+        const moved = Math.hypot(event.clientX - pointerStart.x, event.clientY - pointerStart.y);
+        pointerStart = null;
+        if (moved > 8) return;
 
-    container.addEventListener('click', (event) => {
-        if (isDragging) return;
         const rect = container.getBoundingClientRect();
         mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
         mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-
         raycaster.setFromCamera(mouse, camera);
         const intersects = raycaster.intersectObjects(scene.children, true);
 
@@ -310,33 +396,27 @@
             let obj = intersects[i].object;
             while (obj.parent && !obj.userData.isBuilding) obj = obj.parent;
             if (obj.userData.isBuilding && obj.userData.onClick) {
-                obj.scale.set(1.05, 1.05, 1.05);
-                setTimeout(() => obj.scale.set(1, 1, 1), 200);
                 obj.userData.onClick();
                 break;
             }
         }
     });
-    
-    container.addEventListener('touchstart', () => { isDragging = false; });
-    container.addEventListener('touchmove', () => { isDragging = true; });
-    container.addEventListener('touchend', (event) => {
-        if (isDragging) return;
-        const touch = event.changedTouches[0];
-        const rect = container.getBoundingClientRect();
-        mouse.x = ((touch.clientX - rect.left) / rect.width) * 2 - 1;
-        mouse.y = -((touch.clientY - rect.top) / rect.height) * 2 + 1;
-        raycaster.setFromCamera(mouse, camera);
-        const intersects = raycaster.intersectObjects(scene.children, true);
-        for (let i = 0; i < intersects.length; i++) {
-            let obj = intersects[i].object;
-            while (obj.parent && !obj.userData.isBuilding) obj = obj.parent;
-            if (obj.userData.isBuilding && obj.userData.onClick) {
-                obj.scale.set(1.05, 1.05, 1.05);
-                setTimeout(() => obj.scale.set(1, 1, 1), 200);
-                obj.userData.onClick();
-                break;
-            }
-        }
+
+    const initialPosition = new THREE.Vector3(0, 30, 60);
+    document.getElementById('rotate-toggle').addEventListener('click', (event) => {
+        controls.autoRotate = !controls.autoRotate;
+        event.currentTarget.textContent = controls.autoRotate ? '⏸ توقف چرخش خودکار' : '▶ شروع چرخش خودکار';
     });
-</script>
+    document.getElementById('reset-view').addEventListener('click', () => {
+        camera.position.copy(initialPosition);
+        controls.target.set(0, 5, 0);
+        controls.autoRotate = false;
+        document.getElementById('rotate-toggle').textContent = '▶ شروع چرخش خودکار';
+        controls.update();
+    });
+    document.getElementById('main-site').addEventListener('click', () => {
+        window.open('https://alirezabayat0097-wq.github.io/tavanyar-store/', '_blank', 'noopener');
+    });
+  </script>
+</body>
+</html>
