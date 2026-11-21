@@ -19,9 +19,10 @@ canvas{display:block;width:100%;height:100%}
 .status b{color:var(--gold)}
 .hint{position:fixed;z-index:3;top:76px;left:12px;max-width:230px;padding:9px 12px;border-radius:13px;color:#d6e4f5;font-size:11px;line-height:1.8}
 .controls{position:fixed;z-index:4;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:14px;right:14px;display:flex;justify-content:space-between;align-items:flex-end;pointer-events:none}
-.pad{display:grid;grid-template-columns:48px 48px 48px;grid-template-rows:48px 48px;gap:5px;pointer-events:auto}
-.controls button{color:#fff;border-radius:15px;min-width:48px;min-height:46px;font-size:18px;touch-action:none}
-.pad .up{grid-column:2;grid-row:1}.pad .left{grid-column:1;grid-row:2}.pad .down{grid-column:2;grid-row:2}.pad .right{grid-column:3;grid-row:2}
+.joystick{width:126px;height:126px;border-radius:50%;background:radial-gradient(circle,#d9f7e933 0 28%,#102a3d99 30% 68%,#ffffff20 70%);border:1px solid #ffffff55;box-shadow:0 8px 30px #0005;position:relative;pointer-events:auto;touch-action:none;display:grid;place-items:center}
+.stick{width:48px;height:48px;border-radius:50%;background:linear-gradient(145deg,#b8f5df,#16866a);border:2px solid #eafff7aa;box-shadow:0 3px 12px #0006;transform:translate(0,0);pointer-events:none}
+.controls button{color:#fff;border-radius:15px;min-width:48px;min-height:42px;font-size:12px;touch-action:manipulation}
+.actions button{background:#10263bc9}
 .actions{display:flex;flex-direction:column;gap:8px;pointer-events:auto;align-items:flex-end}
 .actions button{font-size:12px;padding:0 14px}
 .actions .interact{background:#047857;border-color:#34d399;font-weight:bold;min-width:94px}
@@ -46,13 +47,10 @@ canvas{display:block;width:100%;height:100%}
  <div class="brand"><strong>توان‌یار | جهان زنده</strong><small>نمونه اولیه آلفا · میدان مرکزی</small></div>
  <div class="status">وضعیت: <b>در حال گشت‌وگذار</b></div>
 </div>
-<div class="hint">با دکمه‌ها یا کلیدهای جهت حرکت کن. نزدیک ساختمان‌ها، دکمه «تعامل» را بزن.</div>
+<div class="hint">سمت چپ صفحه: حرکت با انگشت · سمت راست: چرخاندن دوربین · نزدیک ساختمان‌ها تعامل کن</div>
 <div class="controls">
- <div class="pad" aria-label="کنترل حرکت">
-  <button class="up" data-move="forward" aria-label="جلو">▲</button>
-  <button class="left" data-move="left" aria-label="چپ">◀</button>
-  <button class="down" data-move="back" aria-label="عقب">▼</button>
-  <button class="right" data-move="right" aria-label="راست">▶</button>
+ <div class="joystick" id="joystick" aria-label="برای حرکت انگشت را در این محدوده بکش">
+  <div class="stick" id="stick"></div>
  </div>
  <div class="actions">
   <button id="reset">بازگشت به میدان</button>
@@ -96,16 +94,35 @@ cylinder(scene,0,.75,0,.35,.55,.5,glass);
 const water=new THREE.Mesh(new THREE.CircleGeometry(1.45,32),new THREE.MeshStandardMaterial({color:0x57c8d1,roughness:.2,metalness:.25}));water.rotation.x=-Math.PI/2;water.position.y=.55;scene.add(water);
 // buildings
 const buildings=[];
-function building(name,desc,x,z,color,w=10,d=8,h=5){
+function building(name,desc,x,z,color,w=12,d=10,h=7){
  const g=new THREE.Group();g.position.set(x,0,z);scene.add(g);
- box(g,0,h/2,0,w,h,d,mat(color));
- box(g,0,h+.35,0,w+.5,.7,d+.5,g===null?white:mat(0xf0d9a9));
- for(let xx=-w/2+1.2;xx<w/2;xx+=2.2){box(g,xx,2.1,d/2+.035,1.15,1.65,.08,glass,false);box(g,xx,1.25,d/2+.09,1.18,.09,.12,white,false)}
- box(g,0,1.5,d/2+.12,2.2,2.8,.25,mat(0x263e50));
- // rooftop detail
- box(g,0,h+.85,0,w*.35,.25,d*.35,mat(0xffffff));
- const sign=box(g,0,h-1,d/2+.18,w*.72,.72,.16,mat(0x0e6653),false);
- buildings.push({name,desc,position:new THREE.Vector3(x,0,z),radius:Math.max(w,d)*.85});
+ const wall=mat(color),trim=mat(0xe9dfc9),dark=mat(0x334b59);
+ // حجم اصلی با عقب‌نشستگی و پیش‌آمدگی، به‌جای یک مکعب ساده
+ box(g,0,h/2,0,w,h,d,wall);
+ box(g,0,h+.22,-.25,w*.78,.44,d*.72,trim);
+ // طبقه همکف شیشه‌ای و ورودی عمیق
+ box(g,0,1.85,d/2+.055,w*.76,3.45,.12,glass,false);
+ box(g,0,1.55,d/2+.14,2.35,2.95,.18,dark,false);
+ box(g,0,3.2,d/2+.25,3.1,.22,.3,trim,false);
+ // ستون‌های ورودی
+ for(const sx of [-1.65,1.65]){box(g,sx,1.75,d/2+.48,.22,3.5,.32,trim);box(g,sx,3.55,d/2+.48,.42,.18,.42,trim)}
+ // پنجره‌های عمیق طبقه بالا با قاب
+ for(let xx=-w/2+1.6;xx<w/2;xx+=2.7){
+  box(g,xx,h-2.25,d/2+.065,1.35,1.65,.12,glass,false);
+  box(g,xx,h-1.35,d/2+.13,1.48,.12,.2,trim,false);
+ }
+ // سایبان و تراس
+ box(g,0,4.05,d/2+.55,w*.58,.18,1.05,trim);
+ // سقف چندلایه
+ const roof=new THREE.Mesh(new THREE.ConeGeometry(w*.68,1.7,4),mat(0x526f69));
+ roof.rotation.y=Math.PI/4;roof.position.set(0,h+1.05,0);roof.castShadow=true;g.add(roof);
+ // بالکن‌ها و گلدان‌های سبز
+ for(let xx=-w/2+1.3;xx<w/2;xx+=3.3){
+  box(g,xx,4.65,d/2+.5,1.35,.12,.9,trim,false);
+  const planter=box(g,xx,4.95,d/2+.72,.9,.34,.36,mat(0x497e5c),false);
+  planter.rotation.y=.02;
+ }
+ buildings.push({name,desc,position:new THREE.Vector3(x,0,z),radius:Math.max(w,d)*.9});
  return g;
 }
 building('بازار توان','اینجا در آینده بازار محصولات، فروشگاه‌های سفیران و کسب‌وکارهای مستقل قرار می‌گیرند.',-19,-18,0xe6cfa6,12,9,6);
@@ -128,19 +145,35 @@ box(avatar,0,.92,-.35,.95,.95,.16,chair);
 for(const side of [-1,1]){const wheel=new THREE.Mesh(new THREE.TorusGeometry(.57,.075,8,24),rubber);wheel.rotation.y=Math.PI/2;wheel.position.set(side*.68,.63,.12);avatar.add(wheel);const hub=cylinder(avatar,side*.69,.63,.12,.13,.13,.12,rim);hub.rotation.z=Math.PI/2}
 box(avatar,0,.25,.35,.72,.1,.8,pants);
 avatar.position.set(0,0,7);
-let facing=0,velocity=new THREE.Vector3(),move={forward:false,back:false,left:false,right:false};
+let facing=0,moveX=0,moveY=0,cameraYaw=0,cameraPitch=.42;
 const target=new THREE.Vector3();
-function setMove(k,v){move[k]=v}
-document.querySelectorAll('[data-move]').forEach(b=>{const k=b.dataset.move;b.addEventListener('pointerdown',e=>{e.preventDefault();b.setPointerCapture(e.pointerId);setMove(k,true)});for(const ev of ['pointerup','pointercancel','lostpointercapture'])b.addEventListener(ev,()=>setMove(k,false))});
-addEventListener('keydown',e=>{if(['ArrowUp','w','W'].includes(e.key))setMove('forward',true);if(['ArrowDown','s','S'].includes(e.key))setMove('back',true);if(['ArrowLeft','a','A'].includes(e.key))setMove('left',true);if(['ArrowRight','d','D'].includes(e.key))setMove('right',true);if(e.key===' '||e.key==='Enter')interact()});
-addEventListener('keyup',e=>{if(['ArrowUp','w','W'].includes(e.key))setMove('forward',false);if(['ArrowDown','s','S'].includes(e.key))setMove('back',false);if(['ArrowLeft','a','A'].includes(e.key))setMove('left',false);if(['ArrowRight','d','D'].includes(e.key))setMove('right',false)});
+const joystick=document.getElementById('joystick'),stick=document.getElementById('stick');
+let joyPointer=null,joyRect=null;
+function updateJoystick(e){
+ if(!joyRect)joyRect=joystick.getBoundingClientRect();
+ const cx=joyRect.left+joyRect.width/2,cy=joyRect.top+joyRect.height/2;
+ const max=joyRect.width*.34,dx=e.clientX-cx,dy=e.clientY-cy,len=Math.hypot(dx,dy),scale=len>max?max/len:1;
+ const px=dx*scale,py=dy*scale;
+ stick.style.transform='translate('+px+'px,'+py+'px)';
+ moveX=px/max;moveY=py/max;
+}
+function releaseJoystick(){joyPointer=null;moveX=0;moveY=0;stick.style.transform='translate(0,0)';joyRect=null}
+joystick.addEventListener('pointerdown',e=>{e.preventDefault();joyPointer=e.pointerId;joystick.setPointerCapture(e.pointerId);joyRect=joystick.getBoundingClientRect();updateJoystick(e)});
+joystick.addEventListener('pointermove',e=>{if(e.pointerId===joyPointer){e.preventDefault();updateJoystick(e)}});
+for(const ev of ['pointerup','pointercancel','lostpointercapture'])joystick.addEventListener(ev,releaseJoystick);
+let cameraPointer=null,lastTouchX=0,lastTouchY=0;
+renderer.domElement.addEventListener('pointerdown',e=>{if(e.pointerType==='touch'&&e.clientX>innerWidth*.43){cameraPointer=e.pointerId;lastTouchX=e.clientX;lastTouchY=e.clientY;renderer.domElement.setPointerCapture(e.pointerId)}});
+renderer.domElement.addEventListener('pointermove',e=>{if(e.pointerId===cameraPointer){e.preventDefault();cameraYaw-=(e.clientX-lastTouchX)*.006;cameraPitch=THREE.MathUtils.clamp(cameraPitch+(e.clientY-lastTouchY)*.003,.2,.78);lastTouchX=e.clientX;lastTouchY=e.clientY}});
+for(const ev of ['pointerup','pointercancel','lostpointercapture'])renderer.domElement.addEventListener(ev,()=>cameraPointer=null);
+addEventListener('keydown',e=>{if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(e.key)){e.preventDefault();if(e.key===' ')interact()}},{passive:false});
+
 function nearest(){let best=null,dist=Infinity;for(const b of buildings){const d=avatar.position.distanceTo(b.position);if(d<dist){dist=d;best=b}}return dist<13?best:null}
 const dialog=document.getElementById('dialog'),toast=document.getElementById('toast');let toastTimer;
 function showToast(t){toast.textContent=t;toast.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.remove('show'),2100)}
 function interact(){const b=nearest();if(!b){showToast('برای تعامل، به یکی از ساختمان‌های اطراف نزدیک شو.');return}document.getElementById('dialogTitle').textContent=b.name;document.getElementById('dialogText').textContent=b.desc;dialog.classList.add('show')}
 document.getElementById('interact').addEventListener('click',interact);
 document.getElementById('closeDialog').addEventListener('click',()=>dialog.classList.remove('show'));
-document.getElementById('reset').addEventListener('click',()=>{avatar.position.set(0,0,7);facing=0;dialog.classList.remove('show');showToast('به میدان مرکزی برگشتی.')});
+document.getElementById('reset').addEventListener('click',()=>{avatar.position.set(0,0,7);facing=0;cameraYaw=0;cameraPitch=.42;dialog.classList.remove('show');showToast('به میدان مرکزی برگشتی.')});
 function clampWorld(){avatar.position.x=THREE.MathUtils.clamp(avatar.position.x,-37,37);avatar.position.z=THREE.MathUtils.clamp(avatar.position.z,-37,37)}
 const clock=new THREE.Clock();
 function animate(){requestAnimationFrame(animate);const dt=Math.min(clock.getDelta(),.04);
@@ -148,9 +181,22 @@ function animate(){requestAnimationFrame(animate);const dt=Math.min(clock.getDel
  if(dx||dz){const len=Math.hypot(dx,dz);dx/=len;dz/=len;const speed=7;const desired=Math.atan2(dx,dz);facing=desired;avatar.position.x+=dx*speed*dt;avatar.position.z+=dz*speed*dt;clampWorld()}
  avatar.rotation.y=THREE.MathUtils.lerp(avatar.rotation.y,facing,.18);
  // third-person camera follows behind the avatar, with a soft elevated view
- const behind=new THREE.Vector3(-Math.sin(facing)*8,5.2,-Math.cos(facing)*8);
- target.copy(avatar.position).add(new THREE.Vector3(0,1.25,0));
- const camPos=avatar.position.clone().add(behind);camera.position.lerp(camPos,.075);camera.lookAt(target);
+ const moving= Math.hypot(moveX,moveY)>.12;
+ if(moving){
+  const forwardAngle=cameraYaw;
+  const worldX=moveX*Math.cos(forwardAngle)-moveY*Math.sin(forwardAngle);
+  const worldZ=-moveY*Math.cos(forwardAngle)-moveX*Math.sin(forwardAngle);
+  const len=Math.hypot(worldX,worldZ)||1;
+  const dx=worldX/len,dz=worldZ/len;
+  facing=Math.atan2(dx,dz);
+  const speed=7.2*Math.min(1,Math.hypot(moveX,moveY));
+  avatar.position.x+=dx*speed*dt;avatar.position.z+=dz*speed*dt;clampWorld();
+ }
+ const camDistance=9.5;
+ const horizontal=Math.cos(cameraPitch)*camDistance;
+ const camPos=avatar.position.clone().add(new THREE.Vector3(Math.sin(cameraYaw)*horizontal,Math.sin(cameraPitch)*camDistance,-Math.cos(cameraYaw)*horizontal));
+ target.copy(avatar.position).add(new THREE.Vector3(0,1.35,0));
+ camera.position.lerp(camPos,.085);camera.lookAt(target);
  renderer.render(scene,camera)}
 animate();
 addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.5));renderer.setSize(innerWidth,innerHeight)});
