@@ -14,7 +14,7 @@ header{position:fixed;z-index:3;top:env(safe-area-inset-top,10px);right:12px;lef
 .brand b{display:block;color:#baf4d7;font-size:14px}.brand small{display:block;color:#d2e5df;font-size:10px;margin-top:4px}
 #coords{font-size:11px;color:#f4e8bd}
 .tip{position:fixed;z-index:3;top:74px;right:12px;max-width:260px;background:#102b32c9;border:1px solid #ffffff2a;border-radius:12px;padding:9px 11px;font-size:11px;line-height:1.8;color:#effaf5;pointer-events:none}
-.actions{position:fixed;z-index:4;left:12px;bottom:calc(14px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:8px}#movePad{position:fixed;z-index:2;display:none;width:112px;height:112px;border:1px solid #ffffff8a;border-radius:50%;background:#102b3240;pointer-events:none;transform:translate(-50%,-50%);align-items:center;justify-content:center}#movePad>div{width:38px;height:38px;border-radius:50%;background:#baf4d7a8;border:1px solid #fff}
+.actions{position:fixed;z-index:4;left:12px;bottom:calc(14px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:8px}
 button{border:1px solid #ffffff50;border-radius:13px;background:#102b32e8;color:white;padding:11px 14px;font:12px Tahoma;box-shadow:0 5px 18px #0003}
 button.primary{background:#087b5d;border-color:#72e5b5;font-weight:bold}
 #toast{position:fixed;z-index:6;bottom:calc(20px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:#102b32ed;border:1px solid #ffffff35;border-radius:30px;padding:10px 15px;font-size:11px;white-space:nowrap;opacity:0;transition:opacity .2s;pointer-events:none}
@@ -29,7 +29,7 @@ button.primary{background:#087b5d;border-color:#72e5b5;font-weight:bold}
 <div id="world"></div>
 <header><div class="pill brand"><b>توان‌یار | جهان آزاد</b><small>نسخه آزمایشی · حرکت بدون جوی‌استیک</small></div><div class="pill" id="coords">میدان مرکزی</div></header>
 <div class="tip">نیمه چپ صفحه: حرکت شخصیت مثل کنترل شناور GTA. نیمه راست: چرخش آزاد دوربین. دو انگشت: زوم. دکمه «دوربین پشت شخصیت» برای تنظیم سریع نمای پشت سر.</div>
-<div class="actions"><button id="home">بازگشت به میدان</button><button id="behind">دوربین پشت شخصیت</button><button class="primary" id="interact">تعامل با مکان نزدیک</button></div><div id="movePad"><div></div></div>
+<div class="actions"><button id="home">بازگشت به میدان</button><button id="behind">دوربین پشت شخصیت</button><button class="primary" id="interact">تعامل با مکان نزدیک</button></div>
 <div id="panel"><h2 id="panelTitle"></h2><p id="panelText"></p><button id="close">ادامه گشت‌وگذار</button></div>
 <div id="toast"></div>
 <script type="module">
@@ -77,67 +77,38 @@ let head=new THREE.Mesh(new THREE.SphereGeometry(.36,14,10),skin);head.position.
 cube(avatar,0,.62,.12,1.2,.15,1.1,chair);cube(avatar,0,.94,-.34,1,.95,.16,chair);cube(avatar,0,.24,.36,.78,.12,.8,mat(0x283c58));
 for(let s of [-1,1]){let wheel=new THREE.Mesh(new THREE.TorusGeometry(.58,.075,8,24),rubber);wheel.rotation.y=Math.PI/2;wheel.position.set(s*.7,.63,.1);avatar.add(wheel);let hub=cyl(avatar,s*.71,.63,.1,.14,.12,metal);hub.rotation.z=Math.PI/2}
 avatar.position.set(0,0,9);
-let yaw=0,pitch=.42,cameraDistance=11,targetDistance=11,destination=null;
-const movePad=document.querySelector('#movePad'),pointers=new Map();let movePointer=null,cameraPointer=null,pinchDistance=0;
-let moveOrigin={x:0,y:0},moveVector=new THREE.Vector2(),moving=false,cameraLast={x:0,y:0},tapCandidate=null;
-const raycaster=new THREE.Raycaster(),ndc=new THREE.Vector2(),groundPlane=new THREE.Plane(new THREE.Vector3(0,1,0),0);
-const marker=new THREE.Mesh(new THREE.RingGeometry(.55,.8,28),new THREE.MeshBasicMaterial({color:0xffd36b,side:THREE.DoubleSide}));marker.rotation.x=-Math.PI/2;marker.position.y=.075;marker.visible=false;scene.add(marker);
+let yaw=0,pitch=.42,cameraDistance=11,targetDistance=11;
+const pointers=new Map();let throttlePointer=null,cameraPointer=null,pinchDistance=0,moving=false;
 const canvas=renderer.domElement;
-function updateMove(e){
- const dx=e.clientX-moveOrigin.x,dy=e.clientY-moveOrigin.y,len=Math.hypot(dx,dy),limit=42;
- const scale=Math.min(1,len/limit);
- moveVector.set(dx/Math.max(len,1)*scale,-dy/Math.max(len,1)*scale);
- const padX=moveOrigin.x+dx/Math.max(len,1)*Math.min(len,limit),padY=moveOrigin.y+dy/Math.max(len,1)*Math.min(len,limit);
- movePad.style.left=moveOrigin.x+'px';movePad.style.top=moveOrigin.y+'px';movePad.firstElementChild.style.transform='translate('+(padX-moveOrigin.x)+'px,'+(padY-moveOrigin.y)+'px)';
- moving=len>8;destination=null;marker.visible=false;
-}
-function setDestination(x,y){
- ndc.set(x/innerWidth*2-1,-y/innerHeight*2+1);raycaster.setFromCamera(ndc,camera);let p=new THREE.Vector3();
- if(raycaster.ray.intersectPlane(groundPlane,p)&&p.distanceTo(avatar.position)<270){destination.set(THREE.MathUtils.clamp(p.x,-310,310),0,THREE.MathUtils.clamp(p.z,-310,310));marker.position.set(destination.x,.075,destination.z);marker.visible=true}
-}
+function rightPointers(){return [...pointers.values()].filter(p=>p.side==='camera')}
 canvas.addEventListener('pointerdown',e=>{
  if(e.pointerType==='mouse'&&e.button!==0)return;
- canvas.setPointerCapture(e.pointerId);pointers.set(e.pointerId,{x:e.clientX,y:e.clientY,startX:e.clientX,startY:e.clientY});
- if(pointers.size===1){
-  tapCandidate={x:e.clientX,y:e.clientY,side:e.clientX<innerWidth*.5?'move':'camera',moved:false};
-  if(tapCandidate.side==='move'){movePointer=e.pointerId;moveOrigin={x:e.clientX,y:e.clientY};movePad.style.display='flex';movePad.style.left=e.clientX+'px';movePad.style.top=e.clientY+'px';movePad.firstElementChild.style.transform='translate(0,0)'}
-  else{cameraPointer=e.pointerId;cameraLast={x:e.clientX,y:e.clientY}}
- }else if(pointers.size===2){
-  tapCandidate=null;moving=false;movePad.style.display='none';movePointer=null;cameraPointer=null;
-  const a=[...pointers.values()];pinchDistance=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y);
- }
+ canvas.setPointerCapture(e.pointerId);
+ const side=e.clientX<innerWidth*.5?'throttle':'camera';
+ pointers.set(e.pointerId,{x:e.clientX,y:e.clientY,side});
+ if(side==='throttle'){throttlePointer=e.pointerId;moving=true}
+ else{cameraPointer=e.pointerId}
+ const rp=rightPointers();if(rp.length===2)pinchDistance=Math.hypot(rp[0].x-rp[1].x,rp[0].y-rp[1].y);
 });
 canvas.addEventListener('pointermove',e=>{
  const p=pointers.get(e.pointerId);if(!p)return;
- p.x=e.clientX;p.y=e.clientY;
- if(pointers.size>=2){
-  const a=[...pointers.values()],d=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y);
+ const oldX=p.x,oldY=p.y;p.x=e.clientX;p.y=e.clientY;
+ const rp=rightPointers();
+ if(rp.length>=2){
+  const d=Math.hypot(rp[0].x-rp[1].x,rp[0].y-rp[1].y);
   if(pinchDistance>0)targetDistance=THREE.MathUtils.clamp(targetDistance-(d-pinchDistance)*.075,8,190);
   pinchDistance=d;return;
  }
- if(e.pointerId===movePointer){
-  if(Math.hypot(e.clientX-p.startX,e.clientY-p.startY)>8&&tapCandidate)tapCandidate.moved=true;
-  updateMove(e);
- }else if(e.pointerId===cameraPointer){
-  const dx=e.clientX-cameraLast.x,dy=e.clientY-cameraLast.y;
-  if(Math.abs(dx)+Math.abs(dy)>2&&tapCandidate)tapCandidate.moved=true;
-  yaw-=dx*.006;
-  pitch=THREE.MathUtils.clamp(pitch-dy*.003,.22,1.15);
-  cameraLast={x:e.clientX,y:e.clientY};
+ if(p.side==='camera'){
+  const dx=e.clientX-oldX,dy=e.clientY-oldY;
+  yaw+=dx*.006;pitch=THREE.MathUtils.clamp(pitch-dy*.003,.22,1.15);
  }
 });
 function release(e){
- const p=pointers.get(e.pointerId);if(!p)return;
- const wasSingle=pointers.size===1,info=tapCandidate;
- pointers.delete(e.pointerId);
- if(wasSingle){
-  if(info&&!info.moved&&info.side==='move')setDestination(p.x,p.y);
-  tapCandidate=null;moving=false;movePointer=null;cameraPointer=null;movePad.style.display='none';moveVector.set(0,0);pinchDistance=0;
- }else if(pointers.size===1){
-  const remain=[...pointers.entries()][0];tapCandidate=null;
-  // پس از پایان pinch، لمس باقی‌مانده برای جلوگیری از پرش دوربین بی‌اثر می‌ماند تا رها شود.
-  pointers.delete(remain[0]);pinchDistance=0;
- }
+ const p=pointers.get(e.pointerId);if(!p)return;pointers.delete(e.pointerId);
+ if(p.side==='throttle'&&throttlePointer===e.pointerId){throttlePointer=null;moving=false}
+ if(p.side==='camera'&&cameraPointer===e.pointerId)cameraPointer=null;
+ const rp=rightPointers();pinchDistance=rp.length===2?Math.hypot(rp[0].x-rp[1].x,rp[0].y-rp[1].y):0;
 }
 canvas.addEventListener('pointerup',release);canvas.addEventListener('pointercancel',release);
 canvas.addEventListener('wheel',e=>{targetDistance=THREE.MathUtils.clamp(targetDistance+e.deltaY*.035,8,190)},{passive:true});
@@ -145,19 +116,18 @@ const toast=document.querySelector('#toast');let toastTimer;function notify(t){t
 function nearPlace(){let best=null,d=Infinity;for(let p of places){let n=avatar.position.distanceTo(p.pos);if(n<d){d=n;best=p}}return d<23?best:null}
 function interact(){let p=nearPlace();if(!p){notify('به یکی از ساختمان‌ها نزدیک‌تر شو تا بتوانی تعامل کنی.');return}document.querySelector('#panelTitle').textContent=p.name;document.querySelector('#panelText').textContent=p.info;document.querySelector('#panel').classList.add('show')}
 document.querySelector('#interact').onclick=interact;document.querySelector('#close').onclick=()=>document.querySelector('#panel').classList.remove('show');
-function behindCharacter(){yaw=avatar.rotation.y;pitch=.42;targetDistance=11;notify('دوربین پشت شخصیت تنظیم شد.')}
+function behindCharacter(){yaw=-avatar.rotation.y;pitch=.42;targetDistance=11;notify('دوربین پشت شخصیت تنظیم شد.')}
 document.querySelector('#behind').onclick=behindCharacter;
-document.querySelector('#home').onclick=()=>{avatar.position.set(0,0,9);avatar.rotation.y=0;destination=null;moving=false;marker.visible=false;yaw=0;pitch=.42;targetDistance=11;document.querySelector('#panel').classList.remove('show');notify('به میدان مرکزی برگشتی.')};
-const clock=new THREE.Clock(),look=new THREE.Vector3(),forward=new THREE.Vector3(),right=new THREE.Vector3(),desired=new THREE.Vector3(),moveDir=new THREE.Vector3();
+document.querySelector('#home').onclick=()=>{avatar.position.set(0,0,9);avatar.rotation.y=0;moving=false;yaw=0;pitch=.42;targetDistance=11;document.querySelector('#panel').classList.remove('show');notify('به میدان مرکزی برگشتی.')};
+const clock=new THREE.Clock(),look=new THREE.Vector3(),forward=new THREE.Vector3(),desired=new THREE.Vector3(),moveDir=new THREE.Vector3();
 function animate(){
  requestAnimationFrame(animate);let dt=Math.min(clock.getDelta(),.04);
  if(moving){
-  // جهت‌ها نسبت به دوربین؛ کشیدن به راست واقعاً حرکت به راست صفحه است.
-  forward.set(-Math.sin(yaw),0,Math.cos(yaw));right.set(Math.cos(yaw),0,Math.sin(yaw));
-  moveDir.copy(right).multiplyScalar(moveVector.x).addScaledVector(forward,moveVector.y);
-  if(moveDir.lengthSq()>.001){moveDir.normalize();avatar.position.addScaledVector(moveDir,7.2*dt);avatar.rotation.y=Math.atan2(moveDir.x,moveDir.z)}
+  // لمس سمت چپ فقط گاز است؛ حرکت همیشه رو به جهت دوربین و شخصیت است.
+  forward.set(-Math.sin(yaw),0,Math.cos(yaw));
+  moveDir.copy(forward);avatar.position.addScaledVector(moveDir,7.2*dt);
+  avatar.rotation.y=Math.atan2(moveDir.x,moveDir.z);
  }
- if(destination){let dx=destination.x-avatar.position.x,dz=destination.z-avatar.position.z,dist=Math.hypot(dx,dz);if(dist<.7){destination=null;marker.visible=false}else{let vx=dx/dist,vz=dz/dist;avatar.position.x+=vx*Math.min(6.5*dt,dist);avatar.position.z+=vz*Math.min(6.5*dt,dist);avatar.rotation.y=Math.atan2(vx,vz)}}
  cameraDistance=THREE.MathUtils.lerp(cameraDistance,targetDistance,.13);
  const far=THREE.MathUtils.clamp((cameraDistance-24)/85,0,1),elevation=THREE.MathUtils.lerp(pitch,1.12,far);
  const horizontal=Math.cos(elevation)*cameraDistance,vertical=Math.sin(elevation)*cameraDistance;
@@ -167,6 +137,6 @@ function animate(){
  renderer.render(scene,camera)
 }
 animate();addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.2));renderer.setSize(innerWidth,innerHeight)});
-notify('چپ صفحه: حرکت · راست صفحه: چرخش دوربین · دو انگشت: زوم');
+notify('نگه‌داشتن سمت چپ: حرکت رو به جلو · کشیدن سمت راست: چرخش دوربین · دو انگشت سمت راست: زوم');
 </script>
 </body></html>
