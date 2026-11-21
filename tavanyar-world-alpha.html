@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101b35">
+<title>جهان توان‌یار | نمونه اولیه آلفا</title>
+<style>
+:root{color-scheme:dark;--mint:#6ee7b7;--gold:#f6c96b;--panel:rgba(9,20,39,.82)}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#0b1730;color:#f8fafc;font-family:Tahoma,Arial,sans-serif;touch-action:none}
+#world{position:fixed;inset:0}
+canvas{display:block;width:100%;height:100%}
+.top{position:fixed;z-index:3;top:env(safe-area-inset-top,10px);left:12px;right:12px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;pointer-events:none}
+.brand,.status,.hint,.dialog,.controls button{background:var(--panel);border:1px solid #ffffff25;backdrop-filter:blur(12px);box-shadow:0 8px 30px #0003}
+.brand{padding:10px 13px;border-radius:16px;pointer-events:auto}
+.brand strong{display:block;font-size:14px;color:#d1fae5}.brand small{display:block;color:#b9c9dc;font-size:10px;margin-top:4px}
+.status{padding:9px 12px;border-radius:14px;font-size:11px;color:#dbeafe}
+.status b{color:var(--gold)}
+.hint{position:fixed;z-index:3;top:76px;left:12px;max-width:230px;padding:9px 12px;border-radius:13px;color:#d6e4f5;font-size:11px;line-height:1.8}
+.controls{position:fixed;z-index:4;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:14px;right:14px;display:flex;justify-content:space-between;align-items:flex-end;pointer-events:none}
+.pad{display:grid;grid-template-columns:48px 48px 48px;grid-template-rows:48px 48px;gap:5px;pointer-events:auto}
+.controls button{color:#fff;border-radius:15px;min-width:48px;min-height:46px;font-size:18px;touch-action:none}
+.pad .up{grid-column:2;grid-row:1}.pad .left{grid-column:1;grid-row:2}.pad .down{grid-column:2;grid-row:2}.pad .right{grid-column:3;grid-row:2}
+.actions{display:flex;flex-direction:column;gap:8px;pointer-events:auto;align-items:flex-end}
+.actions button{font-size:12px;padding:0 14px}
+.actions .interact{background:#047857;border-color:#34d399;font-weight:bold;min-width:94px}
+.dialog{position:fixed;z-index:5;left:50%;top:50%;transform:translate(-50%,-50%);width:min(340px,calc(100% - 36px));border-radius:20px;padding:18px;display:none}
+.dialog.show{display:block;animation:pop .18s ease-out}
+.dialog h2{font-size:18px;margin:0 0 9px;color:#a7f3d0}
+.dialog p{font-size:13px;line-height:1.9;color:#dbeafe;margin:0 0 14px}
+.dialog button{width:100%;background:#047857;border:0;border-radius:12px;padding:12px;color:white;font:inherit}
+#toast{position:fixed;z-index:6;bottom:calc(125px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:#071426eF;border:1px solid #ffffff30;border-radius:30px;padding:9px 14px;font-size:11px;white-space:nowrap;opacity:0;transition:opacity .2s;pointer-events:none}
+#toast.show{opacity:1}
+@keyframes pop{from{opacity:0;transform:translate(-50%,-47%) scale(.97)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+@media(min-width:760px){.controls{left:30px;right:30px;bottom:25px}.pad{transform:scale(1.08);transform-origin:bottom left}.hint{top:90px;max-width:280px}.brand strong{font-size:16px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}
+</script>
+</head>
+<body>
+<div id="world"></div>
+<div class="top">
+ <div class="brand"><strong>توان‌یار | جهان زنده</strong><small>نمونه اولیه آلفا · میدان مرکزی</small></div>
+ <div class="status">وضعیت: <b>در حال گشت‌وگذار</b></div>
+</div>
+<div class="hint">با دکمه‌ها یا کلیدهای جهت حرکت کن. نزدیک ساختمان‌ها، دکمه «تعامل» را بزن.</div>
+<div class="controls">
+ <div class="pad" aria-label="کنترل حرکت">
+  <button class="up" data-move="forward" aria-label="جلو">▲</button>
+  <button class="left" data-move="left" aria-label="چپ">◀</button>
+  <button class="down" data-move="back" aria-label="عقب">▼</button>
+  <button class="right" data-move="right" aria-label="راست">▶</button>
+ </div>
+ <div class="actions">
+  <button id="reset">بازگشت به میدان</button>
+  <button class="interact" id="interact">تعامل با محیط</button>
+ </div>
+</div>
+<div class="dialog" id="dialog" role="dialog" aria-modal="true">
+ <h2 id="dialogTitle">به جهان توان‌یار خوش آمدی</h2>
+ <p id="dialogText">این ساختمان در نسخه‌های بعدی به یک بخش واقعی از اکوسیستم توان‌یار متصل می‌شود.</p>
+ <button id="closeDialog">ادامه گشت‌وگذار</button>
+</div>
+<div id="toast"></div>
+<script type="module">
+import * as THREE from 'three';
+const host=document.getElementById('world');
+const scene=new THREE.Scene();
+scene.background=new THREE.Color(0x9bc8d7);
+scene.fog=new THREE.Fog(0x9bc8d7,34,105);
+const camera=new THREE.PerspectiveCamera(52,innerWidth/innerHeight,.1,220);
+const renderer=new THREE.WebGLRenderer({antialias:true,powerPreference:'low-power'});
+renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.5));
+renderer.setSize(innerWidth,innerHeight);
+renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+renderer.outputColorSpace=THREE.SRGBColorSpace;
+host.appendChild(renderer.domElement);
+scene.add(new THREE.HemisphereLight(0xe8f6ff,0x63765c,2.0));
+const sun=new THREE.DirectionalLight(0xfff0d2,2.1);sun.position.set(-22,35,18);sun.castShadow=true;sun.shadow.mapSize.set(1024,1024);sun.shadow.camera.left=-45;sun.shadow.camera.right=45;sun.shadow.camera.top=45;sun.shadow.camera.bottom=-45;scene.add(sun);
+const mat=(color,roughness=.82)=>new THREE.MeshStandardMaterial({color,roughness});
+const grass=mat(0x77ad78),road=mat(0x526477),cream=mat(0xf1e5c9),white=mat(0xf5f5ed),green=mat(0x16866a),teal=mat(0x35b9a0),navy=mat(0x243b60),gold=mat(0xe6b95f),glass=new THREE.MeshStandardMaterial({color:0x8dd6df,roughness:.25,metalness:.15});
+function box(parent,x,y,z,w,h,d,material,cast=true){const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),material);m.position.set(x,y,z);m.castShadow=cast;m.receiveShadow=true;parent.add(m);return m}
+function cylinder(parent,x,y,z,r1,r2,h,material,segments=16){const m=new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,segments),material);m.position.set(x,y,z);m.castShadow=true;parent.add(m);return m}
+const floor=new THREE.Mesh(new THREE.PlaneGeometry(150,150),grass);floor.rotation.x=-Math.PI/2;floor.receiveShadow=true;scene.add(floor);
+// Central paths and plaza
+box(scene,0,.025,0,12,.05,78,road,false);box(scene,0,.03,0,78,.05,12,road,false);
+box(scene,0,.06,0,19,.08,19,cream,false);
+for(let i=-3;i<=3;i++){box(scene,i*2,.11,0,.08,.025,17,mat(0xd5c6a8),false);box(scene,0,.11,i*2,17,.025,.08,mat(0xd5c6a8),false)}
+// plaza fountain
+cylinder(scene,0,.25,0,2.15,2.15,.42,mat(0x8ba5a7));
+cylinder(scene,0,.49,0,1.55,1.55,.08,glass);
+cylinder(scene,0,.75,0,.35,.55,.5,glass);
+const water=new THREE.Mesh(new THREE.CircleGeometry(1.45,32),new THREE.MeshStandardMaterial({color:0x57c8d1,roughness:.2,metalness:.25}));water.rotation.x=-Math.PI/2;water.position.y=.55;scene.add(water);
+// buildings
+const buildings=[];
+function building(name,desc,x,z,color,w=10,d=8,h=5){
+ const g=new THREE.Group();g.position.set(x,0,z);scene.add(g);
+ box(g,0,h/2,0,w,h,d,mat(color));
+ box(g,0,h+.35,0,w+.5,.7,d+.5,g===null?white:mat(0xf0d9a9));
+ for(let xx=-w/2+1.2;xx<w/2;xx+=2.2){box(g,xx,2.1,d/2+.035,1.15,1.65,.08,glass,false);box(g,xx,1.25,d/2+.09,1.18,.09,.12,white,false)}
+ box(g,0,1.5,d/2+.12,2.2,2.8,.25,mat(0x263e50));
+ // rooftop detail
+ box(g,0,h+.85,0,w*.35,.25,d*.35,mat(0xffffff));
+ const sign=box(g,0,h-1,d/2+.18,w*.72,.72,.16,mat(0x0e6653),false);
+ buildings.push({name,desc,position:new THREE.Vector3(x,0,z),radius:Math.max(w,d)*.85});
+ return g;
+}
+building('بازار توان','اینجا در آینده بازار محصولات، فروشگاه‌های سفیران و کسب‌وکارهای مستقل قرار می‌گیرند.',-19,-18,0xe6cfa6,12,9,6);
+building('کارگاه سازندگان','محیط ساخت، یادگیری مهارت، همکاری و تولید محصولات.',19,-18,0xb8cdbd,12,9,6);
+building('خانه اجتماع','میدان آشنایی، رویدادها، معرفی استعدادها و همکاری اعضا.',-19,19,0xd8c7e8,12,9,6);
+building('مرکز شهر توان','بازی‌ها، منابع، مأموریت‌ها و پیشرفت دنیای بازی‌گونه توان‌یار.',19,19,0xa9c9df,12,9,6);
+// low garden islands, trees, lamps
+function tree(x,z,s=1){cylinder(scene,x,.9*s,z,.18*s,.27*s,1.8*s,mat(0x76543b));const crown=new THREE.Mesh(new THREE.IcosahedronGeometry(1.05*s,1),mat(0x277b58));crown.position.set(x,2.15*s,z);crown.castShadow=true;scene.add(crown);const c2=new THREE.Mesh(new THREE.IcosahedronGeometry(.68*s,0),mat(0x42a56c));c2.position.set(x+.48*s,2.45*s,z+.1*s);scene.add(c2)}
+for(const [x,z] of [[-31,-29],[-30,-7],[-31,29],[-7,-31],[8,-31],[31,-29],[31,-7],[31,29],[8,31],[-8,31]])tree(x,z,.8+Math.random()*.35);
+for(let x=-28;x<=28;x+=14)for(let z=-28;z<=28;z+=14){if(Math.abs(x)<10&&Math.abs(z)<10)continue;cylinder(scene,x,.8,z,.12,.12,1.6,mat(0x46566a));const lamp=new THREE.Mesh(new THREE.SphereGeometry(.22,12,8),new THREE.MeshBasicMaterial({color:0xffe7a3}));lamp.position.set(x,1.65,z);scene.add(lamp)}
+// Character: friendly stylized avatar seated in an accessible mobility chair
+const avatar=new THREE.Group();scene.add(avatar);
+const skin=mat(0xc98d69),shirt=mat(0x0f8b72),pants=mat(0x263b59),chair=mat(0x27384b),rubber=mat(0x151b24),rim=mat(0xa8c2cc);
+const torso=new THREE.Mesh(new THREE.CapsuleGeometry(.48,.72,4,8),shirt);torso.position.y=1.45;torso.castShadow=true;avatar.add(torso);
+const head=new THREE.Mesh(new THREE.SphereGeometry(.37,16,12),skin);head.position.set(0,2.35,.02);head.castShadow=true;avatar.add(head);
+const hair=new THREE.Mesh(new THREE.SphereGeometry(.38,16,8,0,Math.PI*2,0,Math.PI*.55),mat(0x29303a));hair.position.set(0,2.48,.02);avatar.add(hair);
+for(const side of [-1,1]){const arm=new THREE.Mesh(new THREE.CapsuleGeometry(.13,.65,4,7),shirt);arm.position.set(side*.57,1.45,.12);arm.rotation.z=side*-.62;avatar.add(arm);const hand=new THREE.Mesh(new THREE.SphereGeometry(.14,10,8),skin);hand.position.set(side*.86,1.18,.35);avatar.add(hand)}
+box(avatar,0,.62,.15,1.12,.16,1.1,chair);
+box(avatar,0,.92,-.35,.95,.95,.16,chair);
+for(const side of [-1,1]){const wheel=new THREE.Mesh(new THREE.TorusGeometry(.57,.075,8,24),rubber);wheel.rotation.y=Math.PI/2;wheel.position.set(side*.68,.63,.12);avatar.add(wheel);const hub=cylinder(avatar,side*.69,.63,.12,.13,.13,.12,rim);hub.rotation.z=Math.PI/2}
+box(avatar,0,.25,.35,.72,.1,.8,pants);
+avatar.position.set(0,0,7);
+let facing=0,velocity=new THREE.Vector3(),move={forward:false,back:false,left:false,right:false};
+const target=new THREE.Vector3();
+function setMove(k,v){move[k]=v}
+document.querySelectorAll('[data-move]').forEach(b=>{const k=b.dataset.move;b.addEventListener('pointerdown',e=>{e.preventDefault();b.setPointerCapture(e.pointerId);setMove(k,true)});for(const ev of ['pointerup','pointercancel','lostpointercapture'])b.addEventListener(ev,()=>setMove(k,false))});
+addEventListener('keydown',e=>{if(['ArrowUp','w','W'].includes(e.key))setMove('forward',true);if(['ArrowDown','s','S'].includes(e.key))setMove('back',true);if(['ArrowLeft','a','A'].includes(e.key))setMove('left',true);if(['ArrowRight','d','D'].includes(e.key))setMove('right',true);if(e.key===' '||e.key==='Enter')interact()});
+addEventListener('keyup',e=>{if(['ArrowUp','w','W'].includes(e.key))setMove('forward',false);if(['ArrowDown','s','S'].includes(e.key))setMove('back',false);if(['ArrowLeft','a','A'].includes(e.key))setMove('left',false);if(['ArrowRight','d','D'].includes(e.key))setMove('right',false)});
+function nearest(){let best=null,dist=Infinity;for(const b of buildings){const d=avatar.position.distanceTo(b.position);if(d<dist){dist=d;best=b}}return dist<13?best:null}
+const dialog=document.getElementById('dialog'),toast=document.getElementById('toast');let toastTimer;
+function showToast(t){toast.textContent=t;toast.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.remove('show'),2100)}
+function interact(){const b=nearest();if(!b){showToast('برای تعامل، به یکی از ساختمان‌های اطراف نزدیک شو.');return}document.getElementById('dialogTitle').textContent=b.name;document.getElementById('dialogText').textContent=b.desc;dialog.classList.add('show')}
+document.getElementById('interact').addEventListener('click',interact);
+document.getElementById('closeDialog').addEventListener('click',()=>dialog.classList.remove('show'));
+document.getElementById('reset').addEventListener('click',()=>{avatar.position.set(0,0,7);facing=0;dialog.classList.remove('show');showToast('به میدان مرکزی برگشتی.')});
+function clampWorld(){avatar.position.x=THREE.MathUtils.clamp(avatar.position.x,-37,37);avatar.position.z=THREE.MathUtils.clamp(avatar.position.z,-37,37)}
+const clock=new THREE.Clock();
+function animate(){requestAnimationFrame(animate);const dt=Math.min(clock.getDelta(),.04);
+ let dx=(move.right?1:0)-(move.left?1:0),dz=(move.back?1:0)-(move.forward?1:0);
+ if(dx||dz){const len=Math.hypot(dx,dz);dx/=len;dz/=len;const speed=7;const desired=Math.atan2(dx,dz);facing=desired;avatar.position.x+=dx*speed*dt;avatar.position.z+=dz*speed*dt;clampWorld()}
+ avatar.rotation.y=THREE.MathUtils.lerp(avatar.rotation.y,facing,.18);
+ // third-person camera follows behind the avatar, with a soft elevated view
+ const behind=new THREE.Vector3(Math.sin(facing)*8,5.2,Math.cos(facing)*8);
+ target.copy(avatar.position).add(new THREE.Vector3(0,1.25,0));
+ const camPos=avatar.position.clone().add(behind);camera.position.lerp(camPos,.075);camera.lookAt(target);
+ renderer.render(scene,camera)}
+animate();
+addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.5));renderer.setSize(innerWidth,innerHeight)});
+showToast('به میدان مرکزی توان‌یار خوش آمدی!');
+</script>
+</body>
+</html>
