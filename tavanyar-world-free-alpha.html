@@ -27,8 +27,8 @@ button.primary{background:#087b5d;border-color:#72e5b5;font-weight:bold}
 </head>
 <body>
 <div id="world"></div>
-<header><div class="pill brand"><b>توان‌یار | جهان آزاد</b><small>نسخه آزمایشی · کنترل یکپارچه با دو انگشت</small></div><div class="pill" id="coords">میدان مرکزی</div></header>
-<div class="tip">دو انگشت را باز کن: آواتار نرم شتاب می‌گیرد. انگشت‌ها را جمع کن: سرعت کم می‌شود و پس از توقف دوربین بالا می‌رود. چرخاندن دو انگشت و جابه‌جایی آن‌ها زاویه دوربین را تغییر می‌دهد.</div>
+<header><div class="pill brand"><b>توان‌یار | جهان آزاد</b><small>نسخه آزمایشی · کنترل تک‌انگشتی و دوربین هوشمند</small></div><div class="pill" id="coords">میدان مرکزی</div></header>
+<div class="tip">یک انگشت را روی صفحه بکش: بالا حرکت رو به جلو، پایین حرکت رو به عقب، چپ و راست تغییر مسیر. دوربین خودش زاویه و فاصله را تنظیم می‌کند.</div>
 <div class="actions"><button id="home">بازگشت به میدان</button><button id="behind">دوربین پشت شخصیت</button><button class="primary" id="interact">تعامل با مکان نزدیک</button></div>
 <div id="panel"><h2 id="panelTitle"></h2><p id="panelText"></p><button id="close">ادامه گشت‌وگذار</button></div>
 <div id="toast"></div>
@@ -59,7 +59,7 @@ function building(name,info,x,z,color,w=16,d=13,h=12){
  cube(g,0,4.15,d/2+.6,w*.62,.2,1.1,trim);
  for(let xx=-w/2+2;xx<w/2;xx+=4){cube(g,xx,4.65,d/2+.95,1.6,.14,.9,trim);cube(g,xx,4.95,d/2+1.15,1.1,.35,.45,green)}
  cube(g,0,h+1.1,0,w*.42,1.5,d*.42,mat(0x526c65));
- places.push({name,info,pos:new THREE.Vector3(x,0,z)});
+ places.push({name,info,pos:new THREE.Vector3(x,0,z),halfW:w/2,halfD:d/2});
 }
 building('بازار توان','بازار محصولات و فروشگاه‌های سفیران توان‌یار؛ در نسخه‌های بعدی به داده‌های واقعی فروشگاه متصل می‌شود.',-34,-34,0xe5cfa7,17,14,11);
 building('کارگاه سازندگان','فضای تولید، مهارت‌آموزی و همکاری کسب‌وکارهای اعضا.',34,-34,0xb8cdbd,17,14,13);
@@ -77,109 +77,120 @@ let head=new THREE.Mesh(new THREE.SphereGeometry(.36,14,10),skin);head.position.
 cube(avatar,0,.62,.12,1.2,.15,1.1,chair);cube(avatar,0,.94,-.34,1,.95,.16,chair);cube(avatar,0,.24,.36,.78,.12,.8,mat(0x283c58));
 const wheelMeshes=[];for(let s of [-1,1]){let wheel=new THREE.Mesh(new THREE.TorusGeometry(.58,.075,8,24),rubber);wheel.rotation.y=Math.PI/2;wheel.position.set(s*.7,.63,.1);avatar.add(wheel);wheelMeshes.push(wheel);let hub=cyl(avatar,s*.71,.63,.1,.14,.12,metal);hub.rotation.z=Math.PI/2}
 avatar.position.set(0,0,9);
-let yaw=0,pitch=.42,targetYaw=0,targetPitch=.42;
-let currentSpeed=0,targetSpeed=0,aerialLevel=0,targetAerialLevel=0;
-const maxSpeed=8.2,pointers=new Map();let pinchDistance=0,pinchAngle=0,pinchCenterY=0;
+let yaw=0;
+let currentSpeed=0,targetSpeed=0,steer=0,targetSteer=0;
+const maxSpeed=7.2,turnRate=1.35;
+const pointers=new Map();
+let touchStart=null,lastTouch=null;
 const canvas=renderer.domElement;
-function getPinch(){
- const pts=[...pointers.values()];
- if(pts.length!==2)return null;
- const dx=pts[1].x-pts[0].x,dy=pts[1].y-pts[0].y;
- return {distance:Math.hypot(dx,dy),angle:Math.atan2(dy,dx),centerY:(pts[0].y+pts[1].y)*.5};
-}
-function wrapAngle(a){return Math.atan2(Math.sin(a),Math.cos(a))}
-function beginPinch(){
- const g=getPinch();if(!g)return;
- pinchDistance=g.distance;pinchAngle=g.angle;pinchCenterY=g.centerY;
+const raycaster=new THREE.Raycaster();
+const cameraCandidates=[];
+function setTouch(e){
+ const p=pointers.get(e.pointerId);
+ if(!p)return;
+ p.x=e.clientX;p.y=e.clientY;
+ const dx=e.clientX-touchStart.x,dy=e.clientY-touchStart.y;
+ const sx=Math.max(-1,Math.min(1,dx/85));
+ const sy=Math.max(-1,Math.min(1,dy/85));
+ // بالا = جلو، پایین = عقب؛ چپ و راست فقط فرمان نرم تغییر مسیر هستند
+ targetSpeed=THREE.MathUtils.clamp(-sy*maxSpeed,-maxSpeed,maxSpeed);
+ targetSteer=THREE.MathUtils.clamp(sx,-1,1);
+ lastTouch={x:e.clientX,y:e.clientY};
 }
 canvas.addEventListener('pointerdown',e=>{
  if(e.pointerType==='mouse'&&e.button!==0)return;
- if(pointers.size>=2)return;
+ if(pointers.size>0)return;
  canvas.setPointerCapture(e.pointerId);
  pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
- if(pointers.size===2)beginPinch();
+ touchStart={x:e.clientX,y:e.clientY};lastTouch={...touchStart};
+ targetSpeed=0;targetSteer=0;
 });
-canvas.addEventListener('pointermove',e=>{
- const p=pointers.get(e.pointerId);if(!p)return;
- p.x=e.clientX;p.y=e.clientY;
- const g=getPinch();if(!g)return;
- const delta=g.distance-pinchDistance;
- // باز کردن فاصله انگشت‌ها: ابتدا بازگشت نرم از نمای هوایی، سپس شتاب گرفتن
- if(delta>0){
-  let amount=delta;
-  if(targetAerialLevel>0){
-   const used=Math.min(amount,targetAerialLevel/0.008);
-   targetAerialLevel=Math.max(0,targetAerialLevel-used*0.008);
-   amount-=used;
-  }
-  if(amount>0)targetSpeed=THREE.MathUtils.clamp(targetSpeed+amount*0.035,0,maxSpeed);
- }else if(delta<0){
-  // جمع کردن انگشت‌ها: ابتدا ترمز نرم، پس از توقف حرکت دوربین به بالا می‌رود
-  let amount=-delta;
-  if(targetSpeed>0){
-   const used=Math.min(amount,targetSpeed/0.035);
-   targetSpeed=Math.max(0,targetSpeed-used*0.035);
-   amount-=used;
-  }
-  if(amount>0&&targetSpeed<0.08&&currentSpeed<0.16)
-   targetAerialLevel=THREE.MathUtils.clamp(targetAerialLevel+amount*0.008,0,1);
- }
- // چرخاندن دو انگشت، جهت دوربین را نرم تغییر می‌دهد؛ جابه‌جایی عمودی مرکز، زاویه بالا/پایین را
- const angleDelta=wrapAngle(g.angle-pinchAngle);
- targetYaw+=angleDelta*1.05;
- targetPitch=THREE.MathUtils.clamp(targetPitch-(g.centerY-pinchCenterY)*0.0022,0.18,1.18);
- pinchDistance=g.distance;pinchAngle=g.angle;pinchCenterY=g.centerY;
-});
+canvas.addEventListener('pointermove',e=>{if(pointers.has(e.pointerId))setTouch(e)});
 function releasePointer(e){
  if(!pointers.has(e.pointerId))return;
  pointers.delete(e.pointerId);
- if(pointers.size===2)beginPinch();else{pinchDistance=0;pinchAngle=0;pinchCenterY=0}
+ touchStart=null;lastTouch=null;targetSpeed=0;targetSteer=0;
 }
 canvas.addEventListener('pointerup',releasePointer);
 canvas.addEventListener('pointercancel',releasePointer);
 canvas.addEventListener('lostpointercapture',releasePointer);
+function wrapAngle(a){return Math.atan2(Math.sin(a),Math.cos(a))}
+function isInsideBuilding(){
+ for(const p of places){
+  if(Math.abs(avatar.position.x-p.pos.x)<p.halfW*.43 &&
+     Math.abs(avatar.position.z-p.pos.z)<p.halfD*.43)return true;
+ }
+ return false;
+}
+function cameraPositionAvoidingWalls(target,preferred,dt){
+ // چند جایگاه اطراف آواتار آزمایش می‌شوند؛ اولین مسیر بدون برخورد انتخاب می‌شود.
+ const back=new THREE.Vector3(Math.sin(yaw),0,-Math.cos(yaw));
+ const right=new THREE.Vector3(Math.cos(yaw),0,Math.sin(yaw));
+ const candidates=[
+  preferred.clone(),
+  avatar.position.clone().addScaledVector(back,7.8).addScaledVector(right,3.4).add(new THREE.Vector3(0,4.0,0)),
+  avatar.position.clone().addScaledVector(back,7.8).addScaledVector(right,-3.4).add(new THREE.Vector3(0,4.0,0)),
+  avatar.position.clone().addScaledVector(back,5.4).add(new THREE.Vector3(0,3.3,0))
+ ];
+ let chosen=candidates[candidates.length-1];
+ for(const candidate of candidates){
+  const direction=candidate.clone().sub(target);
+  const distance=direction.length();
+  raycaster.set(target,direction.normalize());
+  const hits=raycaster.intersectObjects(scene.children,true).filter(h=>h.object!==ground && h.distance<distance-.45);
+  if(hits.length===0){chosen=candidate;break;}
+  const safeDistance=Math.max(2.0,hits[0].distance-.55);
+  if(safeDistance>2.8)chosen=target.clone().addScaledVector(direction.normalize(),safeDistance);
+ }
+ return chosen;
+}
 const toast=document.querySelector('#toast');let toastTimer;function notify(t){toast.textContent=t;toast.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.remove('show'),2400)}
 function nearPlace(){let best=null,d=Infinity;for(let p of places){let n=avatar.position.distanceTo(p.pos);if(n<d){d=n;best=p}}return d<23?best:null}
 function interact(){let p=nearPlace();if(!p){notify('به یکی از ساختمان‌ها نزدیک‌تر شو تا بتوانی تعامل کنی.');return}document.querySelector('#panelTitle').textContent=p.name;document.querySelector('#panelText').textContent=p.info;document.querySelector('#panel').classList.add('show')}
 document.querySelector('#interact').onclick=interact;document.querySelector('#close').onclick=()=>document.querySelector('#panel').classList.remove('show');
-function behindCharacter(){targetYaw=-avatar.rotation.y;targetPitch=.42;targetAerialLevel=0;notify('دوربین پشت شخصیت تنظیم شد.')}
+function behindCharacter(){notify('دوربین به‌صورت خودکار بهترین زاویه را انتخاب می‌کند.');}
 document.querySelector('#behind').onclick=behindCharacter;
 
-document.querySelector('#home').onclick=()=>{avatar.position.set(0,0,9);avatar.rotation.y=0;currentSpeed=0;targetSpeed=0;aerialLevel=0;targetAerialLevel=0;yaw=0;pitch=.42;targetYaw=0;targetPitch=.42;document.querySelector('#panel').classList.remove('show');notify('به میدان مرکزی برگشتی.')};
+document.querySelector('#home').onclick=()=>{avatar.position.set(0,0,9);avatar.rotation.y=0;currentSpeed=0;targetSpeed=0;steer=0;targetSteer=0;yaw=0;document.querySelector('#panel').classList.remove('show');notify('به میدان مرکزی برگشتی.')};
 const clock=new THREE.Clock(),look=new THREE.Vector3(),forward=new THREE.Vector3(),desired=new THREE.Vector3(),moveDir=new THREE.Vector3();
 function animate(){
  requestAnimationFrame(animate);
  const dt=Math.min(clock.getDelta(),.04);
- // شتاب و ترمز نرم و مستقل از نرخ فریم
- currentSpeed=THREE.MathUtils.damp(currentSpeed,targetSpeed,2.35,dt);
- aerialLevel=THREE.MathUtils.damp(aerialLevel,targetAerialLevel,2.0,dt);
- const yawDiff=wrapAngle(targetYaw-yaw);
- yaw+=yawDiff*(1-Math.exp(-4.2*dt));
- pitch=THREE.MathUtils.damp(pitch,targetPitch,4.0,dt);
- if(currentSpeed>.018){
-  forward.set(-Math.sin(yaw),0,Math.cos(yaw));
-  moveDir.copy(forward);
-  avatar.position.addScaledVector(moveDir,currentSpeed*dt);
-  const faceYaw=Math.atan2(moveDir.x,moveDir.z);
-  avatar.rotation.y+=wrapAngle(faceYaw-avatar.rotation.y)*(1-Math.exp(-5.5*dt));
+ currentSpeed=THREE.MathUtils.damp(currentSpeed,targetSpeed,3.2,dt);
+ steer=THREE.MathUtils.damp(steer,targetSteer,5.0,dt);
+ // فرمان چپ/راست جهت ویلچر را آرام تغییر می‌دهد؛ عقب‌رفتن جهت بدن را برعکس نمی‌کند.
+ if(Math.abs(currentSpeed)>.06)yaw+=steer*turnRate*dt*(currentSpeed<0?-.72:1);
+ avatar.rotation.y=yaw;
+ if(Math.abs(currentSpeed)>.018){
+  const forward=new THREE.Vector3(-Math.sin(yaw),0,Math.cos(yaw));
+  avatar.position.addScaledVector(forward,currentSpeed*dt);
   for(const wheel of wheelMeshes)wheel.rotation.x-=currentSpeed*dt/.58;
  }
- // هنگام حرکت دوربین نزدیک آواتار می‌ماند؛ فقط پس از توقف با جمع‌کردن زوم بالا می‌رود
- const groundHorizontal=Math.cos(pitch)*9.2;
- const groundVertical=Math.max(3.4,Math.sin(pitch)*9.2);
- const horizontal=THREE.MathUtils.lerp(groundHorizontal,48,aerialLevel);
- const vertical=THREE.MathUtils.lerp(groundVertical,58,aerialLevel);
- desired.set(avatar.position.x+Math.sin(yaw)*horizontal,
-             avatar.position.y+vertical,
-             avatar.position.z-Math.cos(yaw)*horizontal);
- camera.position.lerp(desired,1-Math.exp(-3.2*dt));
- look.set(avatar.position.x,avatar.position.y+1.2+aerialLevel*8,avatar.position.z);
- camera.lookAt(look);
- const closest=nearPlace();
- document.querySelector('#coords').textContent=aerialLevel>.12?'نمای هوایی شهر توان':closest?closest.name:'جهان آزاد · '+(currentSpeed>.15?'در حال حرکت':'ایستاده');
+ const indoor=isInsideBuilding();
+ const target=new THREE.Vector3(avatar.position.x,avatar.position.y+(indoor?2.05:1.35),avatar.position.z);
+ if(indoor){
+  // داخل ساختمان: نمای اول‌شخص از دید آواتار، بدون نمایش خود آواتار.
+  const lookDir=new THREE.Vector3(-Math.sin(yaw),0,Math.cos(yaw));
+  const firstPerson=target.clone().add(new THREE.Vector3(0,.02,0));
+  camera.position.lerp(firstPerson,1-Math.exp(-5.5*dt));
+  camera.lookAt(firstPerson.clone().addScaledVector(lookDir,8).add(new THREE.Vector3(0,.1,0)));
+ }else{
+  // نمای بیرونی روی شانه چپ؛ قاب روی شهر و مسیر پیش رو تمرکز دارد.
+  const back=new THREE.Vector3(Math.sin(yaw),0,-Math.cos(yaw));
+  const left=new THREE.Vector3(-Math.cos(yaw),0,-Math.sin(yaw));
+  const preferred=avatar.position.clone()
+   .addScaledVector(back,8.2).addScaledVector(left,2.0)
+   .add(new THREE.Vector3(0,4.1,0));
+  const safe=cameraPositionAvoidingWalls(target,preferred,dt);
+  camera.position.lerp(safe,1-Math.exp(-3.4*dt));
+  const lookDir=new THREE.Vector3(-Math.sin(yaw),0,Math.cos(yaw));
+  const focus=avatar.position.clone().addScaledVector(lookDir,5.5).add(new THREE.Vector3(0,1.2,0));
+  camera.lookAt(focus);
+ }
+ document.querySelector('#coords').textContent=indoor?'نمای داخلی · دید آواتار':Math.abs(currentSpeed)>.15?(currentSpeed<0?'حرکت به عقب':'حرکت رو به جلو'):'جهان آزاد · آماده حرکت';
  renderer.render(scene,camera);
 }
 animate();addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.2));renderer.setSize(innerWidth,innerHeight)});
-notify('کنترل کامل حرکت و دوربین با ژست دو انگشتی');
+notify('کنترل تک‌انگشتی فعال شد: جلو، عقب و تغییر مسیر');
 </script>
 </body></html>
